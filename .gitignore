@@ -1,3 +1,4 @@
 backend/node_modules/
 .idea/
 .DS_Store
+frontend/payment/node_modules/
