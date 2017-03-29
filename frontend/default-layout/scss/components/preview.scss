@@ -1,0 +1,22 @@
+.preview-data {
+  margin-bottom: 20px;
+
+  ul {
+    padding: 15px 12px;
+    margin-bottom: 0;
+
+    list-style: none;
+
+    background: $gray-light-8;
+
+    border: 1px solid $gray-light-6;
+
+    border-radius: 4px;
+  }
+}
+
+.preview-edit {
+  float: right;
+
+  font-size: .85em;
+}

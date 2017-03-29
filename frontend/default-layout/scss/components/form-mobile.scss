@@ -1,0 +1,69 @@
+.form-mobile {
+  $form-font-size: .85em;
+
+  .fieldset-mobile {
+    margin-bottom: 20px;
+
+    border: 1px solid $gray-light-4;
+
+    border-radius: 5px;
+
+    .form-group {
+      display: table;
+
+      width: 100%;
+      padding: 0 0;
+      margin-bottom: 0;
+
+      border-bottom: 1px solid $gray-light-4;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      & > label,
+      & > .form-field {
+        display: table-cell;
+        vertical-align: middle;
+
+        padding: 12px 10px;
+      }
+
+      & > label {        
+        width: 100px;
+
+        color: $gray-dark-4;
+
+        font-size: $form-font-size;
+        font-weight: normal;
+
+        background: $gray-light-9;
+
+        border-right: 1px solid $gray-light-4;
+      }
+    }
+
+    .form-control {
+      height: auto;
+      padding: 0;
+
+      color: $gray-dark-4;
+
+      font-size: $form-font-size;
+
+      background: transparent;
+
+      border: none;
+
+      border-radius: 0;
+      box-shadow: none;
+
+      &:focus,
+      &:hover {
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+

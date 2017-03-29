@@ -1,0 +1,49 @@
+//
+// Buttons
+// --------------------------------------------------
+
+/* =[ Button Custom Colors ]= */
+
+.btn-primary {
+  @include button-variant($white, $brand-primary, darken($brand-primary, 7.5%));
+}
+
+.btn-secondary {
+  @include button-variant($white, $brand-secondary, darken($brand-secondary, 7.5%));
+}
+
+.btn-tertiary {
+  @include button-variant($white, $brand-tertiary, darken($brand-tertiary, 7.5%));
+}
+
+
+
+/* =[ Button Outline Colors ]= */
+
+.btn-primary-outline {
+  @include button-outline-variant ($brand-primary, $white, #ddd);
+}
+
+.btn-secondary-outline {
+  @include button-outline-variant ($brand-secondary, $white, #ddd);
+}
+
+.btn-tertiary-outline {
+  @include button-outline-variant ($brand-tertiary, $white, #ddd);
+}
+
+.btn-warning-outline {
+  @include button-outline-variant ($brand-warning, $white, #ddd);
+}
+
+.btn-danger-outline {
+  @include button-outline-variant ($brand-danger, $white, #ddd);
+}
+
+.btn-success-outline {
+  @include button-outline-variant ($brand-success, $white, #ddd);
+}
+
+.btn-info-outline {
+  @include button-outline-variant ($brand-info, $white, #ddd);
+}

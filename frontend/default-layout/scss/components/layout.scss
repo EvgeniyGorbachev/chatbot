@@ -1,0 +1,69 @@
+.slide {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  
+  width: 100%;
+  height: 100%;
+
+  background: #fff;
+
+  border: 1px solid $gray-light-4;
+}
+
+header {
+  height: 44px;
+
+  text-align: center;
+
+  background: #222;
+}
+
+.body {  
+  flex: 1 1 auto;
+
+  padding: 20px 0;
+
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.content {
+  padding: 0 15px;
+}
+
+nav.actions {
+  width: 100%;
+  padding: 10px 10px;
+
+  background: #fff;
+
+  border-top: 1px solid $gray-light-6;  
+
+  .btn {
+    height: 40px;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    line-height: 36px;
+  }
+
+  .action-full {
+    width: 100%;
+  }
+
+  .action-back {
+    float: left;
+
+    width: 30%;
+  }
+
+  .action-next {
+    float: right;
+
+    width: 67%;
+  }
+}
+
+  
+

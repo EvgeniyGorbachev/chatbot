@@ -1,0 +1,19 @@
+{
+  "name": "chatbot_payment",
+  "version": "1.0.0",
+  "description": "Payment web app for chatbot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/valanteam/chatbot_payment.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/valanteam/chatbot_payment#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}

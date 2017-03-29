@@ -1,0 +1,100 @@
+//
+// Helpers
+// --------------------------------------------------
+
+/* =[ Global Scrollbar ]= */
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(113,112,107,0.1);
+  -webkit-border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  background-color: rgba(0,0,0,.2);
+  -webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:vertical:hover,
+::-webkit-scrollbar-thumb:horizontal:hover {
+  background: rgba(0,0,0,.35);
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  background-color: rgba(0,0,0,.2);
+  -webkit-border-radius: 6px;
+}
+
+
+
+/* =[ Icon Helper ]= */
+
+.icon-right {
+  margin-left: 3px !important;
+}
+
+.icon-left {
+  margin-right: 3px !important;
+}
+
+
+
+/* =[ Font Weight ]= */
+
+.text-normal {
+  font-weight: 300;
+}
+
+.text-semibold {
+  font-weight: 600;
+}
+
+.text-bold {
+  font-weight: 800;
+}
+
+
+
+/* =[ Text Color ]= */
+
+.text-success {
+  color: $brand-success;
+}
+
+.text-warning {
+  color: $brand-warning;
+}
+
+.text-danger {
+  color: $brand-danger;
+}
+
+.text-info {
+  color: $brand-info;
+}
+
+
+/* =[ Well Styles ]= */
+
+.well {
+  padding: 9px 12px;
+  margin-bottom: 20px;
+
+  box-shadow: none;
+}
+
+.well-white {
+  background: #fff;
+}
+
+
+
+/* =[ Beach Body Button ]= */
+
+.btn-piyo-pink {
+  @include button-variant (#fff, #C63E99, #C63E99);
+}
