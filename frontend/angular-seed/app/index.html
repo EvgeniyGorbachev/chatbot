@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+  <link rel="stylesheet" href="app.css">
+  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+
+  <title>Mobile Checkout Flow</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+
+  <!-- Bootstrap and OneUI CSS framework -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+  <link rel="stylesheet" id="css-main" href="assets/css/custom.css">
+
+</head>
+<body>
+
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+  <div ng-view></div>
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="app.js"></script>
+
+  <script src="main/main.js"></script>
+  <script src="order/order.js"></script>
+  <script src="shipping/shipping.js"></script>
+  <script src="payment/payment.js"></script>
+  <script src="review/review.js"></script>
+
+  <script src="components/version/version.js"></script>
+  <script src="components/version/version-directive.js"></script>
+  <script src="components/version/interpolate-filter.js"></script>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+  <script src="assets/js/core/jquery.min.js"></script>
+  <script src="assets/js/core/bootstrap.min.js"></script>
+  <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
+
+  <!-- Page JS Code -->
+  <script>
+
+    $(function () {
+
+      var docWidth = $('body').width ()
+        , $slide = $('.slide')
+        , $actionBtns = $('.action-next, .action-back, .action-full')
+
+
+      if (docWidth < 770) {
+        $slide.hide ().eq (0).css ({ display: 'flex' })
+
+        $actionBtns.on ('click', actionClick)
+      }
+
+
+      function actionClick (e) {
+        var $this = $(this)
+          , $parent = $this.parents ('.slide')
+          , direction = $this.data ('direction')
+          , $next = (direction == 'next') ? $parent.next ('.slide') : $parent.prev ('.slide')
+
+        if ($next.length == 0) { return false }
+
+        $parent.css ({ display: 'none' })
+        $next.css ({ display: 'flex' })
+        $next.find ('.body').scrollTop (0)
+      }
+    })
+
+
+  </script>
+    </body>
+</html>

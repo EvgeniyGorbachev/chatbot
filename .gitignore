@@ -1,4 +1,6 @@
 backend/node_modules/
 .idea/
+db.json
 .DS_Store
-frontend/payment/node_modules/
+frontend/angular-seed/app/bower_components/
+frontend/angular-seed/node_modules/
