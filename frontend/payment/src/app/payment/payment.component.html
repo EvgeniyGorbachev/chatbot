@@ -1,0 +1,161 @@
+<header class="header">
+  <img src="../../assets/img/logo.png" alt="Logo">
+</header> <!-- /.header -->
+
+<div class="body">
+
+  <div class="content">
+
+    <form action="#" class="form-mobile">
+
+      <h3 class="text-center">Payment</h3>
+      <h4 class="text-center text-muted">Step 2 / 3</h4>
+
+      <br>
+
+      <div class="preview-data">
+        <h5 class="text-uppercase text-semibold">
+          Shipping Address
+          <a href="#" class="preview-edit">Edit</a>
+        </h5>
+
+        <ul class="preview-list">
+          <li>1234 Springs Way</li>
+          <li>Apt. 1234</li>
+          <li>Las Vegas, NV 89183</li>
+        </ul>
+      </div> <!-- /.preview-data -->
+
+
+
+
+
+
+
+      <h5 class="text-uppercase text-semibold">Billing Address</h5>
+
+      <div class="well well-white">
+        <label class="sc-switch sc-switch-warning toggle-billing" data-toggle="collapse" data-target="#new-billing-address">
+          <input name="billingaddress" id="billingaddress" type="checkbox" class="sc-switch-input ng-pristine ng-untouched ng-valid ng-not-empty"  checked="checked">
+          <span class="sc-switch-label" data-on="Yes" data-off="No"></span>
+          <span class="sc-switch-handle"></span>
+        </label>
+        &nbsp;
+        <label for="billingaddress" class="text-normal" data-toggle="collapse" data-target="#new-billing-address">Use My Shipping Address</label>
+      </div>
+
+      <div class="collapse" id="new-billing-address">
+
+        <p class="text-success"><em>Enter your billing address below:</em></p>
+
+        <fieldset class="fieldset-mobile">
+          <div class="form-group">
+            <label for="fname">First Name</label>
+            <div class="form-field">
+              <input type="text" id="fname" class="form-control">
+            </div> <!-- /.form-field -->
+          </div> <!-- /.form-group -->
+
+          <div class="form-group">
+            <label for="lname">Last Name</label>
+            <div class="form-field">
+              <input type="text" id="lname" class="form-control">
+            </div> <!-- /.form-field -->
+          </div> <!-- /.form-group -->
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <div class="form-field">
+              <input type="email" id="email" class="form-control">
+            </div> <!-- /.form-field -->
+          </div> <!-- /.form-group -->
+        </fieldset> <!-- /.fieldset-mobile -->
+
+
+
+        <fieldset class="fieldset-mobile">
+          <div class="form-group">
+            <label for="address1">Address 1</label>
+            <div class="form-field">
+              <input type="text" id="address1" class="form-control">
+            </div> <!-- /.form-field -->
+          </div> <!-- /.form-group -->
+
+          <div class="form-group">
+            <label for="address2">Address 2</label>
+            <div class="form-field">
+              <input type="text" id="address2" class="form-control">
+            </div> <!-- /.form-field -->
+          </div> <!-- /.form-group -->
+
+          <div class="form-group">
+            <label for="city">City</label>
+            <div class="form-field">
+              <input type="text" id="city" class="form-control">
+            </div> <!-- /.form-field -->
+          </div> <!-- /.form-group -->
+
+          <div class="form-group">
+            <label for="state">State</label>
+            <div class="form-field">
+              <select name="" id="state" class="form-control">
+                <option value=""></option>
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+                <option value="AR">Arkansas</option>
+                <option value="CA">California</option>
+              </select>
+            </div> <!-- /.form-field -->
+          </div> <!-- /.form-group -->
+
+          <div class="form-group">
+            <label for="zipcode">Zip Code</label>
+            <div class="form-field">
+              <input type="number" id="zipcode" class="form-control">
+            </div> <!-- /.form-field -->
+          </div> <!-- /.form-group -->
+        </fieldset> <!-- /.fieldset-mobile -->
+
+      </div> <!-- /.collapse-billing -->
+
+
+
+
+
+
+      <h5 class="text-uppercase text-semibold">Payment Information</h5>
+
+      <fieldset class="fieldset-mobile">
+        <div class="form-group">
+          <label for="cardnumber">Card Number</label>
+          <div class="form-field">
+            <input type="number" id="cardnumber" class="form-control">
+          </div> <!-- /.form-field -->
+        </div> <!-- /.form-group -->
+
+        <div class="form-group">
+          <label for="cardexpiry">Exp. Date</label>
+          <div class="form-field">
+            <input type="number" id="cardexpiry" class="form-control">
+          </div> <!-- /.form-field -->
+        </div> <!-- /.form-group -->
+
+        <div class="form-group">
+          <label for="cardcvc">CVC</label>
+          <div class="form-field">
+            <input type="number" id="cardcvc" class="form-control">
+          </div> <!-- /.form-field -->
+        </div> <!-- /.form-group -->
+      </fieldset> <!-- /.fieldset-mobile -->
+
+    </form>
+
+  </div> <!-- /.content -->
+
+</div>  <!-- /.body -->
+
+<nav class="actions">
+  <button routerLink="/shipping" class="btn btn-default action-back" data-direction="back">Back</button>
+  <button routerLink="/review" class="btn btn-piyo-pink action-next" data-direction="next">Continue</button>
+</nav> <!-- /.actions -->
