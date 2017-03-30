@@ -26,7 +26,7 @@
       <div class="preview-data">
         <h5 class="text-uppercase text-semibold">
           Shipping Address
-          <a href="#" class="preview-edit">Edit</a>
+          <a ng-click="ReviewCtrl.go('/shipping')" class="preview-edit">Edit</a>
         </h5>
 
         <ul class="preview-list">
@@ -39,7 +39,7 @@
       <div class="preview-data">
         <h5 class="text-uppercase text-semibold">
           Billing Address
-          <a href="#" class="preview-edit">Edit</a>
+          <a ng-click="ReviewCtrl.go('/payment')" class="preview-edit">Edit</a>
         </h5>
 
         <ul class="preview-list">
@@ -52,7 +52,7 @@
       <div class="preview-data">
         <h5 class="text-uppercase text-semibold">
           Payment Information
-          <a href="#" class="preview-edit">Edit</a>
+          <a ng-click="ReviewCtrl.go('/payment')" class="preview-edit">Edit</a>
         </h5>
 
         <ul class="preview-list">
@@ -66,8 +66,8 @@
   </div>  <!-- /.body -->
 
   <nav class="actions">
-    <button ng-click="ReviewCtrl.go('/payment')" class="btn btn-default action-back" data-direction="back">Back</button>
-    <button ng-click="ReviewCtrl.save()" class="btn btn-success btn-block action-next" data-direction="next"><i class="fa fa-lock"></i>{{ReviewCtrl.buttonText}}</button>
+    <button ng-click="ReviewCtrl.go('/payment')" ng-disabled="ReviewCtrl.user.isPaymentCompleted" class="btn btn-default action-back" data-direction="back">Back</button>
+    <button ng-click="ReviewCtrl.save()" ng-disabled="ReviewCtrl.user.isPaymentCompleted" class="btn btn-success btn-block action-next" data-direction="next"><i class="fa fa-lock"></i>{{ReviewCtrl.buttonText}}</button>
   </nav> <!-- /.actions -->
 
 </section> <!-- /.slide -->

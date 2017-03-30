@@ -34,6 +34,6 @@
   </div>  <!-- /.body -->
 
   <nav class="actions">
-    <button ng-click="MainCtrl.go('/order')" class="btn btn-piyo-pink btn-block action-full" data-direction="next">Order Now!</button>
+    <button ng-click="MainCtrl.go('/order')" ng-disabled="MainCtrl.user.isPaymentCompleted" class="btn btn-piyo-pink btn-block action-full" data-direction="next">Order Now!</button>
   </nav> <!-- /.actions -->
 </section>

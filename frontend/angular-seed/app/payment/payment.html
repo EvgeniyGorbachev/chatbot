@@ -69,7 +69,7 @@
             <div class="form-group">
               <label for="email">Email</label>
               <div class="form-field">
-                <input type="email" id="email" name="email" class="form-control"
+                <input type="text" id="email" name="email" class="form-control"
                        ng-required=!PaymentCtrl.isCheckedBillingAddres
                        ng-model="PaymentCtrl.user.billing.email">
               </div> <!-- /.form-field -->
@@ -167,8 +167,8 @@
   </div>  <!-- /.body -->
 
   <nav class="actions">
-    <button ng-click="PaymentCtrl.go('/shipping')" class="btn btn-default action-back" data-direction="back">Back</button>
-    <button ng-click="PaymentCtrl.go('/review')" class="btn btn-piyo-pink action-next" data-direction="next">Continue</button>
+    <button ng-click="PaymentCtrl.go('/shipping')" ng-disabled="PaymentCtrl.user.isPaymentCompleted" class="btn btn-default action-back" data-direction="back">Back</button>
+    <button ng-click="PaymentCtrl.go('/review')" ng-disabled="PaymentCtrl.user.isPaymentCompleted" class="btn btn-piyo-pink action-next" data-direction="next">Continue</button>
   </nav> <!-- /.actions -->
 
 </section> <!-- /.slide -->

@@ -10,9 +10,9 @@ angular.module('myApp.order', ['ngRoute'])
   });
 }])
 
-.controller('OrderCtrl', ['$location', function($location) {
+.controller('OrderCtrl', ['$location', 'userService', function($location, userService) {
   var vm = this;
-
+  vm.user = userService.getUser();
   vm.go = function ( path ) {
     $location.path( path );
   };

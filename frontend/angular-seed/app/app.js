@@ -37,6 +37,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     },
 
     userMock: {
+      isPaymentCompleted: false,
       userName: 'Mike',
       phone: '+1234567890',
       email: 'email@google.com',

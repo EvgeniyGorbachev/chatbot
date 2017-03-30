@@ -13,6 +13,7 @@ angular.module('myApp.review', ['ngRoute'])
 .controller('ReviewCtrl', ['$location', 'userService', function($location, userService) {
   var vm = this;
 
+  vm.user = userService.getUser();
   vm.buttonText = ' Complete Payment';
 
   vm.go = function ( path ) {
@@ -20,20 +21,19 @@ angular.module('myApp.review', ['ngRoute'])
   };
 
   vm.save = function () {
-    console.log('save: ', userService.getUser())
 
     userService.sendData(userService.getUser())
       .then(function (res) {
-        console.log('sussecc: ', res);
 
         if (res.status == 200) {
           vm.buttonText = ' Complete successfully!';
+          vm.user.isPaymentCompleted = true;
+          userService.saveUser(vm.user);
         } else {
           vm.buttonText = ' Payment error';
         }
       }, function (res) {
         vm.buttonText = ' Payment error';
-        console.log('error: ', res);
       });
   };
 }]);

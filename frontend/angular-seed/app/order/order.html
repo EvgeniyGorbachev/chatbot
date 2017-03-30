@@ -88,8 +88,8 @@
   </div>  <!-- /.body -->
 
   <nav class="actions">
-    <button ng-click="OrderCtrl.go('/main')" class="btn btn-default action-back" data-direction="back">Back</button>
-    <button ng-click="OrderCtrl.go('/shipping')" class="btn btn-piyo-pink action-next" data-direction="next">Continue</button>
+    <button ng-click="OrderCtrl.go('/main')"  ng-disabled="OrderCtrl.user.isPaymentCompleted" class="btn btn-default action-back" data-direction="back">Back</button>
+    <button ng-click="OrderCtrl.go('/shipping')" ng-disabled="OrderCtrl.user.isPaymentCompleted" class="btn btn-piyo-pink action-next" data-direction="next">Continue</button>
   </nav> <!-- /.actions -->
 
 </section> <!-- /.slide -->

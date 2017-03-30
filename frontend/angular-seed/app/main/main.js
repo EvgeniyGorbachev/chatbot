@@ -12,13 +12,13 @@ angular.module('myApp.main', ['ngRoute'])
 
 .controller('MainCtrl', ['$location', 'userService', function($location, userService) {
   var vm = this;
-  vm.user = userService.getUser()
+  vm.user = userService.getUser();
 
-  vm.user.phone = $location.search().phone
-  vm.user.email = $location.search().email
-  vm.user.userName = $location.search().userName
+  vm.user.phone = $location.search().phone;
+  vm.user.email = $location.search().email;
+  vm.user.userName = $location.search().userName;
 
-  userService.saveUser(vm.user)
+  userService.saveUser(vm.user);
 
   vm.go = function ( path ) {
     $location.path( path );
