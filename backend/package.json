@@ -4,7 +4,8 @@
   "description": "Payment web app for chatbot",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "api": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -14,10 +15,15 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/valanteam/chatbot_payment#readme",
   "dependencies": {
+    "dotenv": "^4.0.0",
+    "pg": "^6.1.2",
+    "pg-hstore": "^2.3.2",
     "body-parser": "^1.17.1",
     "cors": "^2.8.2",
     "express": "^4.15.2",
     "jsonfile": "^2.4.0",
-    "lowdb": "^0.16.0"
+    "lowdb": "^0.16.0",
+    "sequelize": "^3.23.6",
+    "sequelize-cli": "^2.5.1"
   }
 }
