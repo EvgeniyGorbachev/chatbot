@@ -35,8 +35,9 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
       });
       return deferred.promise;
     },
+
     userMock: {
-      userName: 'Zhenya',
+      userName: 'Mike',
       phone: '+1234567890',
       email: 'email@google.com',
       shipping: {
@@ -66,9 +67,4 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
       }
     }
   };
-
-
-
-
-
 }]);

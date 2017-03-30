@@ -12,29 +12,36 @@
 
       <br>
 
-      <form action="#" class="form-mobile">
+      <form role="form" class="form-mobile" name="ShippingCtrl.form" novalidate>
 
         <h5 class="text-uppercase text-semibold">Shipping Information</h5>
+        <p ng-if="!ShippingCtrl.isFormFalid && ShippingCtrl.isFormSend" class="bg-danger">Required all fields!</p>
 
         <fieldset class="fieldset-mobile">
           <div class="form-group">
             <label for="fname">First Name</label>
             <div class="form-field">
-              <input type="text" id="fname" name="firstName" class="form-control" ng-model="ShippingCtrl.user.shipping.firstName">
+              <input type="text" id="fname" name="firstName" class="form-control"
+                     ng-required="true"
+                     ng-model="ShippingCtrl.user.shipping.firstName">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
 
           <div class="form-group">
             <label for="lname">Last Name</label>
             <div class="form-field">
-              <input type="text" id="lname" name="secondName" class="form-control"  ng-model="ShippingCtrl.user.shipping.secondName">
+              <input type="text" id="lname" name="lastName" class="form-control"
+                     ng-required="true"
+                     ng-model="ShippingCtrl.user.shipping.lastName">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
 
           <div class="form-group">
             <label for="email">Email</label>
             <div class="form-field">
-              <input type="email" id="email" name="email" class="form-control" ng-model="ShippingCtrl.user.shipping.email">
+              <input type="text" id="email" name="email" class="form-control"
+                     ng-required="true"
+                     ng-model="ShippingCtrl.user.shipping.email">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
         </fieldset> <!-- /.fieldset-mobile -->
@@ -45,49 +52,52 @@
           <div class="form-group">
             <label for="address1">Address 1</label>
             <div class="form-field">
-              <input type="text" id="address1" name="addressFirst" class="form-control" ng-model="ShippingCtrl.user.shipping.addressFirst">
+              <input type="text" id="address1" name="addressFirst" class="form-control"
+                     ng-required="true"
+                     ng-model="ShippingCtrl.user.shipping.addressFirst">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
 
           <div class="form-group">
             <label for="address2">Address 2</label>
             <div class="form-field">
-              <input type="text" id="address2" name="addressSecond" class="form-control" ng-model="ShippingCtrl.user.shipping.addressSecond">
+              <input type="text" id="address2" name="addressSecond" class="form-control"
+                     ng-required="true"
+                     ng-model="ShippingCtrl.user.shipping.addressSecond">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
 
           <div class="form-group">
             <label for="city">City</label>
             <div class="form-field">
-              <input type="text" id="city" name="city" class="form-control"  ng-model="ShippingCtrl.user.shipping.city">
+              <input type="text" id="city" name="city" class="form-control"
+                     ng-required="true"
+                     ng-model="ShippingCtrl.user.shipping.city">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
 
           <div class="form-group">
             <label for="state">State</label>
             <div class="form-field">
-              <select name="" id="state" name="state" class="form-control" ng-model="ShippingCtrl.user.shipping.state">
-                <option value=""></option>
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-                <option value="AR">Arkansas</option>
-                <option value="CA">California</option>
-                <option value="NV">Nevada</option>
+
+              <select id="state" name="state" class="form-control"
+                      ng-model="ShippingCtrl.user.shipping.state"
+                      ng-required="true">
+                <option ng-repeat="(key, value) in ShippingCtrl.states" value="{{key}}">{{value}}</option>
               </select>
+
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
 
           <div class="form-group">
             <label for="zipcode">Zip Code</label>
             <div class="form-field">
-              <input type="number" id="zipcode" name="zipCode" class="form-control" ng-model="ShippingCtrl.user.shipping.zipCode">
+              <input type="number" id="zipcode" name="zipCode" class="form-control"
+                     ng-required="true"
+                     ng-model="ShippingCtrl.user.shipping.zipCode">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
         </fieldset> <!-- /.fieldset-mobile -->
-
-
-
       </form>
     </div> <!-- /.content -->
   </div>  <!-- /.body -->

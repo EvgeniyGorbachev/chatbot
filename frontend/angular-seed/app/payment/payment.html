@@ -9,7 +9,7 @@
 
     <div class="content">
 
-      <form action="#" class="form-mobile">
+      <form role="form" class="form-mobile" name="PaymentCtrl.formp" novalidate>
 
         <h3 class="text-center">Payment</h3>
         <h4 class="text-center text-muted">Step 2 / 3</h4>
@@ -19,7 +19,7 @@
         <div class="preview-data">
           <h5 class="text-uppercase text-semibold">
             Shipping Address
-            <a href="#" class="preview-edit">Edit</a>
+            <a ng-click="PaymentCtrl.go('/shipping')"  class="preview-edit">Edit</a>
           </h5>
 
           <ul class="preview-list">
@@ -29,23 +29,19 @@
           </ul>
         </div> <!-- /.preview-data -->
 
-
-
-
-
-
-
         <h5 class="text-uppercase text-semibold">Billing Address</h5>
 
         <div class="well well-white">
           <label class="sc-switch sc-switch-warning toggle-billing" data-toggle="collapse" data-target="#new-billing-address">
-            <input name="billingaddress" id="billingaddress" type="checkbox" class="sc-switch-input ng-pristine ng-untouched ng-valid ng-not-empty"  checked="checked">
-            <span class="sc-switch-label" data-on="Yes" data-off="No"></span>
+            <input ng-click="PaymentCtrl.isCheckedBillingAddres = !PaymentCtrl.isCheckedBillingAddres" name="billingaddress" id="billingaddress" type="checkbox" class="sc-switch-input ng-pristine ng-untouched ng-valid ng-not-empty"  checked="checked">
+            <span  class="sc-switch-label" data-on="Yes" data-off="No"></span>
             <span class="sc-switch-handle"></span>
           </label>
           &nbsp;
           <label for="billingaddress" class="text-normal" data-toggle="collapse" data-target="#new-billing-address">Use My Shipping Address</label>
         </div>
+
+        <p ng-if="!PaymentCtrl.isFormFalid && PaymentCtrl.isFormSend" class="bg-danger">Required all fields!</p>
 
         <div class="collapse" id="new-billing-address">
 
@@ -55,77 +51,83 @@
             <div class="form-group">
               <label for="fname">First Name</label>
               <div class="form-field">
-                <input type="text" id="fname" name="firstName" class="form-control" ng-model="PaymentCtrl.user.billing.firstName">
+                <input type="text" id="fname" name="firstName" class="form-control"
+                       ng-required=!PaymentCtrl.isCheckedBillingAddres
+                       ng-model="PaymentCtrl.user.billing.firstName">
               </div> <!-- /.form-field -->
             </div> <!-- /.form-group -->
 
             <div class="form-group">
               <label for="lname">Last Name</label>
               <div class="form-field">
-                <input type="text" id="lname" name="secondName" class="form-control"  ng-model="PaymentCtrl.user.billing.secondName">
+                <input type="text" id="lname" name="lastName" class="form-control"
+                       ng-required=!PaymentCtrl.isCheckedBillingAddres
+                       ng-model="PaymentCtrl.user.billing.lastName">
               </div> <!-- /.form-field -->
             </div> <!-- /.form-group -->
 
             <div class="form-group">
               <label for="email">Email</label>
               <div class="form-field">
-                <input type="email" id="email" name="email" class="form-control" ng-model="PaymentCtrl.user.billing.email">
+                <input type="email" id="email" name="email" class="form-control"
+                       ng-required=!PaymentCtrl.isCheckedBillingAddres
+                       ng-model="PaymentCtrl.user.billing.email">
               </div> <!-- /.form-field -->
             </div> <!-- /.form-group -->
           </fieldset> <!-- /.fieldset-mobile -->
-
-
 
           <fieldset class="fieldset-mobile">
             <div class="form-group">
               <label for="address1">Address 1</label>
               <div class="form-field">
-                <input type="text" id="address1" name="addressFirst" class="form-control" ng-model="PaymentCtrl.user.billing.addressFirst">
+                <input type="text" id="address1" name="addressFirst" class="form-control"
+                       ng-required=!PaymentCtrl.isCheckedBillingAddres
+                       ng-model="PaymentCtrl.user.billing.addressFirst">
               </div> <!-- /.form-field -->
             </div> <!-- /.form-group -->
 
             <div class="form-group">
               <label for="address2">Address 2</label>
               <div class="form-field">
-                <input type="text" id="address2" name="addressSecond" class="form-control" ng-model="PaymentCtrl.user.billing.addressSecond">
+                <input type="text" id="address2" name="addressSecond" class="form-control"
+                       ng-required=!PaymentCtrl.isCheckedBillingAddres
+                       ng-model="PaymentCtrl.user.billing.addressSecond">
               </div> <!-- /.form-field -->
             </div> <!-- /.form-group -->
 
             <div class="form-group">
               <label for="city">City</label>
               <div class="form-field">
-                <input type="text" id="city" name="city" class="form-control"  ng-model="PaymentCtrl.user.billing.city">
+                <input type="text" id="city" name="city" class="form-control"
+                       ng-required=!PaymentCtrl.isCheckedBillingAddres
+                       ng-model="PaymentCtrl.user.billing.city">
               </div> <!-- /.form-field -->
             </div> <!-- /.form-group -->
 
             <div class="form-group">
               <label for="state">State</label>
               <div class="form-field">
-                <select name="" id="state" name="state" class="form-control" ng-model="PaymentCtrl.user.billing.state">
-                  <option value=""></option>
-                  <option value="AL">Alabama</option>
-                  <option value="AK">Alaska</option>
-                  <option value="AZ">Arizona</option>
-                  <option value="AR">Arkansas</option>
-                  <option value="CA">California</option>
+
+                <select id="state" name="state" class="form-control"
+                        ng-required=!PaymentCtrl.isCheckedBillingAddres
+                        ng-model="PaymentCtrl.user.billing.state">
+                  <option ng-repeat="(key, value) in PaymentCtrl.states" value="{{key}}">{{value}}</option>
                 </select>
+
               </div> <!-- /.form-field -->
             </div> <!-- /.form-group -->
 
             <div class="form-group">
               <label for="zipcode">Zip Code</label>
               <div class="form-field">
-                <input type="number" id="zipcode" name="zipCode" class="form-control" ng-model="PaymentCtrl.user.billing.zipCode">
+                <input type="number" id="zipcode" name="zipCode" class="form-control"
+                       ng-required=!PaymentCtrl.isCheckedBillingAddres
+                       ng-model="PaymentCtrl.user.billing.zipCode">
               </div> <!-- /.form-field -->
             </div> <!-- /.form-group -->
           </fieldset> <!-- /.fieldset-mobile -->
 
         </div> <!-- /.collapse-billing -->
-
-
-
-
-
 
         <h5 class="text-uppercase text-semibold">Payment Information</h5>
 
@@ -133,21 +135,27 @@
           <div class="form-group">
             <label for="number">Card Number</label>
             <div class="form-field">
-              <input type="number" id="number" name="number" class="form-control" ng-model="PaymentCtrl.user.billing.card.number">
+              <input type="number" id="number" name="number" class="form-control"
+                     ng-required="true"
+                     ng-model="PaymentCtrl.user.billing.card.number">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
 
           <div class="form-group">
             <label for="cardexpiry">Exp. Date</label>
             <div class="form-field">
-              <input type="number" id="cardexpiry" name="expDate" class="form-control" ng-model="PaymentCtrl.user.billing.card.expDate">
+              <input type="text" id="cardexpiry" name="expDate" class="form-control"
+                     ng-required="true"
+                     ng-model="PaymentCtrl.user.billing.card.expDate">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
 
           <div class="form-group">
             <label for="cardcvc">CVC</label>
             <div class="form-field">
-              <input type="number" id="cardcvc" name="cvv" class="form-control" ng-model="PaymentCtrl.user.billing.card.cvv">
+              <input type="number" id="cardcvc" name="cvv" class="form-control"
+                     ng-required="true"
+                     ng-model="PaymentCtrl.user.billing.card.cvv">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
         </fieldset> <!-- /.fieldset-mobile -->
