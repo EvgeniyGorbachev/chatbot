@@ -11,8 +11,8 @@ angular.module('myApp', [
   'myApp.version'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
-  $locationProvider.hashPrefix('!');
-
+  $locationProvider.hashPrefix('');
+  // $locationProvider.html5Mode(true);
   $routeProvider.otherwise({redirectTo: '/main'});
 }]).factory('userService',['$http', '$q', function($http, $q) {
   return {

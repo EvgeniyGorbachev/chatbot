@@ -1,29 +1,57 @@
-# README #
+##Backend - Expressjs apps (REST API)
+### Local Setup
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Install [Node.js](https://nodejs.org/) stable release. This will also include the node package manager (npm).
 
-### What is this repository for? ###
+Change directory:
+```sh
+cd backend/
+```
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+Install node modules:
+```sh
+npm install
+```
 
-### How do I get set up? ###
+### Run the Application
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+We have preconfigured the project with a simple development web server. The simplest way to start
+this server is:
 
-### Contribution guidelines ###
+```
+node app.js
+```
 
-* Writing tests
-* Code review
-* Other guidelines
+Now browse to the app at [`localhost:8181`].
 
-### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+
+##Frontend - AngularJS apps
+### Local Setup
+
+Install [Node.js](https://nodejs.org/) stable release. This will also include the node package manager (npm).
+
+Change directory:
+```sh
+cd frontend/angular-seed/
+```
+
+Install node modules:
+```sh
+npm install
+```
+
+### Run the Application
+
+We have preconfigured the project with a simple development web server. The simplest way to start
+this server is:
+
+```
+npm start
+```
+
+Now browse to the app at [`localhost:8000`].
+
+
+
+
