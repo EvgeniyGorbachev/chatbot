@@ -24,13 +24,11 @@ sequelize db:migrate
 ```sh
 npm run api
 ```
-Now browse to the app at [`localhost:8181`].
+Now browse to the app at [`localhost:8000`].
 
 
 ##Frontend - AngularJS apps
 ### Local Setup
-
-Install [Node.js](https://nodejs.org/) stable release. This will also include the node package manager (npm).
 
 Change directory:
 ```sh
@@ -52,6 +50,13 @@ npm start
 ```
 
 Now browse to the app at [`localhost:8000`].
+
+### Troubleshooting:
+
+1. You may need to install sequelize globally:
+```bash
+$ npm install -g sequelize-cli
+```
 
 
 
