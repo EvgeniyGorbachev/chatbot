@@ -14,12 +14,11 @@
       <div class="text-center">
         <img src="../assets/img/piyo-product.png" alt="Piyo">
         <br>
-        <h4><a href="#learn-more-content" data-toggle="collapse">Learn more about Piyo</a></h4>
+        <h4><a ng-click="MainCtrl.isLearnMore = !MainCtrl.isLearnMore">Learn more about Piyo</a></h4>
       </div>
     </div> <!-- /.content -->
 
-
-    <div class="collapse" id="learn-more-content">
+    <div ng-show="MainCtrl.isLearnMore">
 
       <section class="why-what">
         <img id="why-what-athletes" src="../assets/img/why-what-athletes.png" class="img-responsive" alt="">

@@ -12,6 +12,8 @@ angular.module('myApp.main', ['ngRoute'])
 
 .controller('MainCtrl', ['$location', 'userService', function($location, userService) {
   var vm = this;
+
+  vm.isLearnMore = false;
   vm.user = userService.getUser();
 
   vm.user.phone = $location.search().phone;
