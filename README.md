@@ -40,6 +40,11 @@ Install node modules:
 npm install
 ```
 
+### Setup REST API url
+
+Open file frontend/angular-seed/app/app.js and set your url instead: http://localhost:8181
+
+
 ### Run the Application
 
 We have preconfigured the project with a simple development web server. The simplest way to start
@@ -50,6 +55,9 @@ npm start
 ```
 
 Now browse to the app at [`localhost:8000`].
+
+### How to pass parameters to an application
+Example: http://localhost:8000/#/main?userName=Mick&email=email@google.com&phone=123456789
 
 ### Troubleshooting:
 

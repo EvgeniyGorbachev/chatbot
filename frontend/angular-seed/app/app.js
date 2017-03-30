@@ -1,6 +1,5 @@
 'use strict';
 
-// Declare app level module which depends on views, and components
 angular.module('myApp', [
   'ngRoute',
   'myApp.main',
@@ -10,11 +9,18 @@ angular.module('myApp', [
   'myApp.review',
   'myApp.version'
 ]).
+constant('config', {
+
+  // set API URL //
+  apiUrl: 'http://localhost:8181'
+  // set API URL //
+
+}).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('');
   // $locationProvider.html5Mode(true);
   $routeProvider.otherwise({redirectTo: '/main'});
-}]).factory('userService',['$http', '$q', function($http, $q) {
+}]).factory('userService',['$http', '$q', 'config', function($http, $q, config) {
   return {
     user: false,
 
@@ -28,7 +34,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
     sendData: function setData (params) {
       var deferred = $q.defer();
-      $http.post('http://localhost:8181/api/user', params).then(function (response) {
+      $http.post(config.apiUrl + '/api/user', params).then(function (response) {
         deferred.resolve(response);
       }, function (response) {
         deferred.reject(response);
@@ -38,9 +44,9 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
     userMock: {
       isPaymentCompleted: false,
-      userName: 'Mike',
-      phone: '+1234567890',
-      email: 'email@google.com',
+      userName: '',
+      phone: '',
+      email: '',
       shipping: {
         firstName: '',
         lastName: '',
