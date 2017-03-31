@@ -39,5 +39,5 @@ app.use(function(req, res, next) {
 })
 
 app.listen(8181, function () {
-  console.log('Example app listening on port 8181!')
+  console.log('Sample app listening on port 8181!')
 })
