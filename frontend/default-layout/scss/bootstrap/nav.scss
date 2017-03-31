@@ -1,0 +1,21 @@
+//
+// Nav
+// --------------------------------------------------
+
+.nav-tabs {
+  & > li {
+    & > a {
+      color: $gray-dark-8;
+
+      font-weight: 600;
+    }
+  }
+
+  & > li.active {
+    & > a {
+      color: $brand-primary;
+
+      font-weight: 600;
+    }
+  }
+}

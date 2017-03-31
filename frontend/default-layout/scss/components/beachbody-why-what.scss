@@ -1,0 +1,259 @@
+.why-what {
+
+  background: url('../img/green-marble.png') no-repeat center top;
+  background-color: #ffffff;
+  background-size: contain;
+  max-width: 960px;
+  padding: 41px 0 30px 0;
+  #why-what-port-athletes {display: none;}
+
+  #why-what-athletes {
+    margin-top:100px;
+    margin-bottom:30px;
+  }
+
+  p {
+    width: 91%;
+    margin: 0 auto 26px;
+    font-family: "texgyreadventorregular";
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  p.what-do-you-get{
+    font-family: "texgyreadventorbold";
+    font-size: 60px;
+    font-weight: 500;
+    color: #000;
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 60px;
+  }
+&.removeBG {
+  background: none #fff;
+}
+  .why-what-rows {
+    margin-bottom: 30px;
+    position: relative;
+    .why-what-tiles {
+      position: relative;
+      display: inline-block;
+      background: url('piyo/why-what-CD.png') no-repeat;
+      width: 44%;
+      height: 200px;
+      margin: 0 23px;
+
+      &.alt-cd {
+        background: url('piyo/why-what-CD2.png') no-repeat;
+        left: 50%;
+        margin: 0 0 0 -22%;
+        position: relative;
+      }
+      &.alt-cd-two {
+        background: url('piyo/why-what-CD3.png') no-repeat;
+      }
+
+      img {
+        position: relative;
+        top: 20px;
+        left: 47px;
+        width: 40.5%;
+      }
+
+      h2 {
+        font-family: "texgyreadventorbold_italic";
+        font-size: 27px;
+        color: #339999;
+        position: relative;
+        margin-left: 103px;
+        top: 4px;
+        width: 320px;
+
+        span {
+          color: #339999;
+        }
+      }
+
+      p {
+        position: relative;
+        float: right;
+        top: 18px;
+        width: 46.3%;
+        font-family: "texgyreadventorregular";
+        font-size: 14px;
+        line-height: 1.1;
+        text-align: left;
+      }
+    }
+  }
+
+}
+@media (max-width: 960px) {
+  .why-what {
+    background-size: 100%;
+    #why-what-athletes {
+      width: 100%;
+    }
+  }
+}
+@media (max-width: 890px) {
+  .why-what {
+    p.what-do-you-get {
+      font-size: 35px;
+    }
+    .why-what-rows {
+      .why-what-tiles {
+        width: auto;
+        &.alt-cd{
+          left: 2%;
+          margin: 0;
+          width: 96%;
+        }
+        img {
+          width: 26%;
+        }
+        h2 {
+          left: auto;
+          margin-left: 108px;
+        }
+        p {
+          width: 64%;
+        }
+      }
+    }
+  }
+}
+@media (min-width: 768px) and (max-width: 890px) {
+  .why-what {
+    p.what-do-you-get {
+      font-size: 48px;
+    }
+  }
+}
+@media (min-width: 568px) and (max-width: 667px) {
+  .why-what {
+    .why-what-rows{
+      margin-bottom: 0;
+      .why-what-tiles {
+        margin: 0 15%;
+        img{
+          width: 40%;
+        }
+        p {
+          right: 10%;
+          width: 35%;
+        }
+        &.alt-cd {
+          left: 0;
+          margin: 3% 15% 0;
+          width: auto;
+
+          p{
+            right: 10%;
+          }
+        }
+      }
+    }
+p.what-do-you-get {
+  font-size: 42px;
+}
+  }
+}
+@media (max-width: 568px) {
+  .why-what {
+    padding-bottom: 10px;
+    #why-what-athletes {
+      margin-top:40px;
+      margin-bottom:30px;
+    }
+    p.what-do-you-get {
+      margin-bottom: 30px;
+      font-size: 30px;
+    }
+    .why-what-rows {
+      .why-what-tiles {
+        margin: 0 13% 5%;
+        h2 {
+          width: auto;
+        }
+        p{
+          right: 2%;
+          width: 42%;
+        }
+        &.alt-cd {
+          p{
+            right: 20%;
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 480px) {
+  .why-what{
+    .why-what-rows{
+      .why-what-tiles{
+        height: 156px;
+        margin: 0 3% 0%;
+        p{
+          width: 56%;
+        }
+        &.alt-cd {
+          p{
+            right: 3%;
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 360px) {
+  .why-what {
+    #why-what-port-athletes {
+      display: block;
+      width: 100%;
+      margin: 30px 0 20px;
+    }
+
+    #why-what-athletes {
+      display: none;
+    }
+    p.what-do-you-get {
+      width: 100%;
+      font-size: 22px;
+    }
+    .why-what-rows {
+      .why-what-tiles {
+        img {
+          position: absolute;
+          top: 69px;
+          left: 0;
+          width: 97px;
+        }
+        h2 {
+          font-size: 24px;
+        }
+        p {
+          width: 65%;
+          margin-left: 108px;
+        }
+        &.alt-cd {
+          p{
+            right: 3%;
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 320px){
+  .why-what {
+    .why-what-rows {
+      .why-what-tiles {
+        p {
+          width: 60%;
+        }
+      }
+    }
+  }
+}

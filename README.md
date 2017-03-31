@@ -1,29 +1,70 @@
-# README #
+##Backend - Expressjs apps (REST API)
+### Local Setup
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Install [Node.js](https://nodejs.org/) stable release. This will also include the node package manager (npm).
 
-### What is this repository for? ###
+#### Change directory:
+```sh
+cd backend/
+```
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+#### Install node modules
+```sh
+npm install
+```
 
-### How do I get set up? ###
+#### Create .env file (for example .example-env)
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+#### Run migration
+```sh
+sequelize db:migrate
+```
 
-### Contribution guidelines ###
+#### Run REST API (localhost:8181)
+```sh
+npm run api
+```
+Now browse to the app at [`localhost:8000`].
 
-* Writing tests
-* Code review
-* Other guidelines
 
-### Who do I talk to? ###
+##Frontend - AngularJS apps
+### Local Setup
 
-* Repo owner or admin
-* Other community or team contact
+#### Change directory:
+```sh
+cd frontend/angular-seed/
+```
+
+#### Install node modules:
+```sh
+npm install
+```
+
+#### Setup REST API url
+
+Open the main file frontend/angular-seed/app/app.js and change the local url (http://localhost:8181) to actual domain instead
+
+
+#### Run the Application
+
+We have preconfigured the project with a simple development web server. The simplest way to start this server is:
+
+```
+npm start
+```
+
+Now browse to the app at [`localhost:8000`].
+
+#### How to pass parameters to an application
+Example: http://localhost:8000/#/main?userName=Mick&email=email@google.com&phone=123456789&shipping={"address":"123 king st"}&billing={"address":"321 Queen st"}
+
+## Troubleshooting:
+
+1. You may need to install sequelize globally:
+```bash
+$ npm install -g sequelize-cli
+```
+
+
+
+

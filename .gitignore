@@ -1,0 +1,7 @@
+backend/node_modules/
+backend/.env
+.idea/
+db.json
+.DS_Store
+frontend/angular-seed/app/bower_components/
+frontend/angular-seed/node_modules/
