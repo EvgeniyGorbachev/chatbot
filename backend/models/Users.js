@@ -42,16 +42,16 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'Users',
     validate: {
       isJSON: function() {
-        try {
-          JSON.parse(this.shipping)
-        } catch (e) {
-          throw new Error('shipping contains not valid json')
-        }
-        try {
-          JSON.parse(this.billing)
-        } catch (e) {
-          throw new Error('billing contains not valid json')
-        }
+        // try {
+        //   JSON.parse(this.shipping)
+        // } catch (e) {
+        //   throw new Error('shipping contains not valid json')
+        // }
+        // try {
+        //   JSON.parse(this.billing)
+        // } catch (e) {
+        //   throw new Error('billing contains not valid json')
+        // }
       }
     }
   })
