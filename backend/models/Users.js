@@ -45,12 +45,12 @@ module.exports = function(sequelize, DataTypes) {
         try {
           JSON.parse(this.shipping)
         } catch (e) {
-          throw new Error('shipping contains not valid json')
+          throw new Error('shipping contains invalid json')
         }
         try {
           JSON.parse(this.billing)
         } catch (e) {
-          throw new Error('billing contains not valid json')
+          throw new Error('billing contains invalid json')
         }
       }
     }
