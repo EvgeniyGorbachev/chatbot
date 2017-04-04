@@ -18,9 +18,10 @@ app.post('/api/user', function (req, res) {
   var shipping = JSON.stringify(req.body.shipping)
   var billing = JSON.stringify(req.body.billing)
 
-  db.Users.create({ userName: req.body.userName, email: req.body.email, phone: req.body.phone, shipping: shipping, billing: billing}).then(function(model) {
+  db.Users.create({ userName: req.body.shipping.firstName+" "+req.body.shipping.lastName, email: req.body.shipping.email, phone: req.body.phone, shipping: shipping, billing: billing}).then(function(model) {
     res.json({msg: 'Saved successfully'})
   }).catch(db.Sequelize.ValidationError, function(err) {
+    console.log(err);
     res.json({msg: 'Invalid json on shipping and billing'})
   }).catch(function(err) {
     res.json({msg: 'An error has occurred'})

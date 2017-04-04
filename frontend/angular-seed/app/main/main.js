@@ -17,8 +17,12 @@ angular.module('myApp.main', ['ngRoute'])
   vm.user = userService.getUser();
 
   vm.user.phone = $location.search().phone;
-  vm.user.email = $location.search().email;
+  vm.user.billing.email = $location.search().email;
+  vm.user.shipping.email = $location.search().email;
   vm.user.userName = $location.search().userName;
+  vm.user.firstName = $location.search().userName;
+
+  console.log(vm.user.userName);
 
   userService.saveUser(vm.user);
 

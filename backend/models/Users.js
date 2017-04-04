@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     phone: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     shipping: {
       type: Sequelize.TEXT,
