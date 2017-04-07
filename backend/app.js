@@ -1,7 +1,9 @@
+require('dotenv').config()
 var express = require('express')
 var app = express()
 var cors = require('cors')
 var bodyParser = require('body-parser')
+var request = require('request');
 var db = require('./models/index.js')
 
 app.use(bodyParser.json({limit: '50mb'}))
@@ -20,6 +22,31 @@ app.post('/api/user', function (req, res) {
 
   db.Users.create({ userName: req.body.shipping.firstName+" "+req.body.shipping.lastName, email: req.body.shipping.email, phone: req.body.phone, shipping: shipping, billing: billing}).then(function(model) {
     res.json({msg: 'Saved successfully'})
+
+    // Set the headers
+    var headers = {
+      'User-Agent':       'Super Agent/0.0.1',
+      'Content-Type':     'application/x-www-form-urlencoded'
+    }
+
+// Configure the request
+    var options = {
+      url: process.env.CONFIRM_ORDER_CALLBACK,
+      method: 'POST',
+      headers: headers,
+      form: {'To': req.body.phone, 'orderCompleted': 'true', 'SmsStatus': 'delivered'},
+    }
+
+    console.log("REQUEST options", options);
+
+// Start the request
+    request(options, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        // Print out the response body
+        console.log(body)
+      }
+    })
+
   }).catch(db.Sequelize.ValidationError, function(err) {
     console.log(err);
     res.json({msg: 'Invalid json on shipping and billing'})
