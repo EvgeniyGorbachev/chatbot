@@ -29,6 +29,8 @@ angular.module('myApp.main', ['ngRoute'])
 
   userService.saveUser(vm.user);
 
+  $location.path( '/order' );
+
   vm.go = function ( path ) {
     $location.path( path );
   };

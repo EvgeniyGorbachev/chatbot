@@ -8,8 +8,8 @@
 
 
     <div class="content">
-      <h3 class="text-center">Your order!</h3>
-      <p class="text-center text-muted">Suspendisse potenti. In dictum, augue at efficitur tristique, lorem ante sodales massa.</p>
+      <h3 class="text-center">Congratulations!</h3>
+      <p class="text-center text-muted">You are taking the first step to transform your body. Here is your PiYo special offer.</p>
 
 
       <div class="cart">
@@ -88,8 +88,7 @@
   </div>  <!-- /.body -->
 
   <nav class="actions">
-    <button ng-click="OrderCtrl.go('/main')"  ng-disabled="OrderCtrl.user.isPaymentCompleted" class="btn btn-default action-back" data-direction="back">Back</button>
-    <button ng-click="OrderCtrl.go('/shipping')" ng-disabled="OrderCtrl.user.isPaymentCompleted" class="btn btn-piyo-pink action-next" data-direction="next">Continue</button>
+    <button ng-click="OrderCtrl.go('/shipping')" ng-disabled="OrderCtrl.user.isPaymentCompleted" class="btn btn-piyo-pink action-full" data-direction="next">Order Now!</button>
   </nav> <!-- /.actions -->
 
 </section> <!-- /.slide -->
