@@ -53,6 +53,8 @@ app.post('/api/user', function (req, res) {
 
 // Start the request
     request(options, function (error, response, body) {
+      console.log("RESPONSE");
+      console.log(err, response, body);
       if (!error && response.statusCode == 200) {
         // Print out the response body
         console.log(body)
