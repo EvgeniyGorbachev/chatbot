@@ -33,7 +33,6 @@ app.post('/api/user', function (req, res) {
   user.invoiceId = hash(user);
 
   db.Users.create(user).then(function(model) {
-    res.json({msg: 'Saved successfully'})
 
     // Set the headers
     var headers = {
@@ -59,6 +58,8 @@ app.post('/api/user', function (req, res) {
         // Print out the response body
         console.log(body)
       }
+      res.json({msg: 'Saved successfully'})
+
     })
 
   }).catch(db.Sequelize.ValidationError, function(err) {
