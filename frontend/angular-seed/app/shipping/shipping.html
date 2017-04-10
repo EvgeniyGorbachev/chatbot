@@ -15,7 +15,7 @@
       <form role="form" class="form-mobile" name="ShippingCtrl.form" novalidate>
 
         <h5 class="text-uppercase text-semibold">Shipping Information</h5>
-        <p ng-if="!ShippingCtrl.isFormFalid && ShippingCtrl.isFormSend" class="bg-danger">Required all fields!</p>
+        <p ng-if="!ShippingCtrl.form.$valid && ShippingCtrl.isFormSend" class="bg-danger">Required all fields!</p>
 
         <fieldset class="fieldset-mobile">
           <div class="form-group">

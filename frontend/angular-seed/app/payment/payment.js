@@ -13,14 +13,13 @@ angular.module('myApp.payment', ['ngRoute'])
 .controller('PaymentCtrl', ['$location', 'userService', function($location, userService) {
   var vm = this;
   vm.user = userService.getUser();
-  vm.isFormFalid = false;
   vm.isFormSend = false;
   vm.isCheckedBillingAddres = true;
 
   vm.go = function ( path ) {
 
     vm.isFormSend = true;
-    if (!vm.formp.$valid && path == '/review') {
+    if (!vm.form.$valid && path == '/review') {
       return false;
     }
 

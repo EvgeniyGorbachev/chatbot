@@ -22,22 +22,19 @@ angular.module('myApp.review', ['ngRoute'])
 
   vm.save = function () {
 
-    if (userService.getUser().isPaymentCompleted) {
-      userService.sendData(userService.getUser())
-        .then(function (res) {
+  userService.sendData(userService.getUser())
+    .then(function (res) {
 
-          if (res.status == 200) {
-            vm.buttonText = ' Complete successfully!';
-            vm.user.isPaymentCompleted = true;
-            userService.saveUser(vm.user);
-          } else {
-            vm.buttonText = ' Payment error';
-          }
-        }, function (res) {
-          vm.buttonText = ' Payment error';
-        });
-    } else {
-      $location.path( '/main' );
-    }
+      if (res.status == 200) {
+        vm.buttonText = ' Complete successfully!';
+        vm.user.isPaymentCompleted = true;
+        userService.saveUser(vm.user);
+      } else {
+        vm.buttonText = ' Payment error';
+      }
+    }, function (res) {
+      vm.buttonText = ' Payment error';
+    });
+
   };
 }]);

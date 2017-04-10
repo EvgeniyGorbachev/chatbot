@@ -8,7 +8,7 @@
 
     <div class="content">
 
-      <form role="form" class="form-mobile" name="PaymentCtrl.formp" novalidate>
+      <form role="form" class="form-mobile" name="PaymentCtrl.form" novalidate>
 
         <h3 class="text-center">Payment</h3>
         <h4 class="text-center text-muted">Step 2 / 3</h4>
@@ -40,7 +40,7 @@
           <label for="billingaddress" class="text-normal" data-toggle="collapse" data-target="#new-billing-address">Use My Shipping Address</label>
         </div>
 
-        <p ng-if="!PaymentCtrl.isFormFalid && PaymentCtrl.isFormSend" class="bg-danger">Required all fields!</p>
+        <p ng-if="!PaymentCtrl.form.$valid && PaymentCtrl.isFormSend" class="bg-danger">Required all fields!</p>
 
         <div class="collapse" id="new-billing-address">
 
