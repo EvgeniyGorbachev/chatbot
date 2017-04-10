@@ -30,9 +30,9 @@
         </h5>
 
         <ul class="preview-list">
-          <li>1234 Springs Way</li>
-          <li>Apt. 1234</li>
-          <li>Las Vegas, NV 89183</li>
+          <li>{{ ReviewCtrl.user.shipping.addressFirst }}</li>
+          <li>{{ ReviewCtrl.user.shipping.addressSecond }}</li>
+          <li>{{ ReviewCtrl.user.shipping.city }}, {{ ReviewCtrl.user.shipping.state }} {{ ReviewCtrl.user.shipping.zipCode }}</li>
         </ul>
       </div> <!-- /.preview-data -->
 
@@ -43,9 +43,9 @@
         </h5>
 
         <ul class="preview-list">
-          <li>1234 Springs Way</li>
-          <li>Apt. 1234</li>
-          <li>Las Vegas, NV 89183</li>
+          <li>{{ ReviewCtrl.user.billing.addressFirst }}</li>
+          <li>{{ ReviewCtrl.user.billing.addressSecond }}</li>
+          <li>{{ ReviewCtrl.user.billing.city }}, {{ ReviewCtrl.user.billing.state }} {{ ReviewCtrl.user.billing.zipCode }}</li>
         </ul>
       </div> <!-- /.preview-data -->
 
@@ -57,7 +57,7 @@
 
         <ul class="preview-list">
           <li><img src="../assets/img/visa-logo.png" alt=""></li>
-          <li>Credit Card Ending in 8011</li>
+          <li>Credit Card Ending in {{ ReviewCtrl.user.billing.card.expDate }}</li>
         </ul>
       </div> <!-- /.preview-data -->
 

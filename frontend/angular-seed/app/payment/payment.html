@@ -22,9 +22,9 @@
           </h5>
 
           <ul class="preview-list">
-            <li>1234 Springs Way</li>
-            <li>Apt. 1234</li>
-            <li>Las Vegas, NV 89183</li>
+            <li>{{ PaymentCtrl.user.shipping.addressFirst }}</li>
+            <li>{{ PaymentCtrl.user.shipping.addressSecond }}</li>
+            <li>{{ PaymentCtrl.user.shipping.city }}, {{ PaymentCtrl.user.shipping.state }} {{ PaymentCtrl.user.shipping.zipCode }}</li>
           </ul>
         </div> <!-- /.preview-data -->
 

@@ -18,7 +18,7 @@ angular.module('myApp.payment', ['ngRoute'])
   vm.isCheckedBillingAddres = true;
 
   vm.go = function ( path ) {
-    console.log(vm.isCheckedBillingAddres);
+
     vm.isFormSend = true;
     if (!vm.formp.$valid && path == '/review') {
       return false;
