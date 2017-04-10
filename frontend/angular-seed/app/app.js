@@ -7,6 +7,7 @@ angular.module('myApp', [
   'myApp.shipping',
   'myApp.payment',
   'myApp.review',
+  'myApp.invoice',
   'myApp.version'
 ]).
 constant('config', {
@@ -35,6 +36,16 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     sendData: function setData (params) {
       var deferred = $q.defer();
       $http.post(config.apiUrl + '/api/user', params).then(function (response) {
+        deferred.resolve(response);
+      }, function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    },
+
+    getInvoice: function getInvoice (id) {
+      var deferred = $q.defer();
+      $http.get(config.apiUrl + '/api/invoice/' + id).then(function (response) {
         deferred.resolve(response);
       }, function (response) {
         deferred.reject(response);

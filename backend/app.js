@@ -5,6 +5,7 @@ var cors = require('cors')
 var bodyParser = require('body-parser')
 var request = require('request');
 var db = require('./models/index.js')
+var hash = require('object-hash')
 
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
@@ -20,7 +21,18 @@ app.post('/api/user', function (req, res) {
   var shipping = JSON.stringify(req.body.shipping)
   var billing = JSON.stringify(req.body.billing)
 
-  db.Users.create({ userName: req.body.shipping.firstName+" "+req.body.shipping.lastName, email: req.body.shipping.email, phone: req.body.phone, shipping: shipping, billing: billing}).then(function(model) {
+  var user = {
+    userName: req.body.shipping.firstName+" "+req.body.shipping.lastName,
+    invoiceId: '',
+    email: req.body.shipping.email,
+    phone: req.body.phone,
+    shipping: shipping,
+    billing: billing
+  }
+
+  user.invoiceId = hash(user);
+
+  db.Users.create(user).then(function(model) {
     res.json({msg: 'Saved successfully'})
 
     // Set the headers
@@ -34,7 +46,7 @@ app.post('/api/user', function (req, res) {
       url: process.env.CONFIRM_ORDER_CALLBACK,
       method: 'POST',
       headers: headers,
-      form: {'To': req.body.phone, 'orderCompleted': 'true', 'SmsStatus': 'delivered'},
+      form: {'To': req.body.phone, 'orderCompleted': 'true', 'invoiceId': user.invoiceId, 'SmsStatus': 'delivered'},
     }
 
     console.log("REQUEST options", options);
@@ -60,6 +72,20 @@ app.get('/api/user', function (req, res) {
   // db.Users.all().then(function(users) {
   //   res.json(users)
   // })
+})
+
+app.get('/api/invoice/:id', function (req, res) {
+
+  db.Users.findOne({ where: {invoiceId: req.params.id}, plain: true }).then(function(user) {
+
+    user.billing = JSON.parse(user.billing)
+    user.shipping = JSON.parse(user.shipping)
+
+    res.json(user)
+  }).catch(function(err) {
+    res.json({msg: 'An error has occurred'})
+    console.log(err)
+  })
 })
 
 app.use(function(req, res, next) {

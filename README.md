@@ -24,7 +24,7 @@ sequelize db:migrate
 ```sh
 npm run api
 ```
-Now browse to the app at [`localhost:8000`].
+Now browse to the app at [`localhost:8181`].
 
 
 ##Frontend - AngularJS apps

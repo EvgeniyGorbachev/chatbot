@@ -12,6 +12,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       notEmpty: true
     },
+    invoiceId: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      notEmpty: true
+    },
     email: {
       type: Sequelize.STRING,
       allowNull: false,
