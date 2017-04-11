@@ -4,3 +4,4 @@ DB_PASS=pass
 DB_DATABASE=singlecomm_sso
 DB_HOST=127.0.0.1
 DB_DIALECT=postgres
+CONFIRM_ORDER_CALLBACK=https://aws-lambda.com/twillio
