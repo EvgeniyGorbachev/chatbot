@@ -10,13 +10,6 @@ angular.module('myApp', [
   'myApp.invoice',
   'myApp.version'
 ]).
-constant('config', {
-
-  // set API URL //
-  apiUrl: 'http://localhost:8181'
-  // set API URL //
-
-}).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('');
   // $locationProvider.html5Mode(true);

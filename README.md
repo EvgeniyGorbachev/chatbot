@@ -42,7 +42,7 @@ npm install
 
 #### Setup REST API url
 
-Open the main file frontend/angular-seed/app/app.js and change the local url (http://localhost:8181) to actual domain instead
+Create new file like frontend/angular-seed/app/config.js, use for example config.example.js and set the local url (http://localhost:8181) to actual domain instead
 
 
 #### Run the Application
