@@ -23,7 +23,7 @@ angular.module('myApp.invoice', ['ngRoute'])
       userService.getInvoice(id)
         .then(function (res) {
 
-          if (res.status == 200 && res.data != null) {
+          if (res.status == 200 && res.data.msg != 'Wrong invoice ID') {
             vm.invoice = res.data;
           } else {
             vm.invoice = 'wrong';

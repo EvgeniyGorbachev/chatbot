@@ -66,7 +66,7 @@ app.post('/api/user', function (req, res) {
     console.log(err);
     res.json({msg: 'Invalid json on shipping and billing'})
   }).catch(function(err) {
-    res.json({msg: 'An error has occurred'})
+    res.status(500).json({msg: 'An error has occurred'})
   })
 
 })
@@ -81,12 +81,16 @@ app.get('/api/invoice/:id', function (req, res) {
 
   db.Users.findOne({ where: {invoiceId: req.params.id}, plain: true }).then(function(user) {
 
-    user.billing = JSON.parse(user.billing)
-    user.shipping = JSON.parse(user.shipping)
+    if (user != null) {
+      user.billing = JSON.parse(user.billing)
+      user.shipping = JSON.parse(user.shipping)
+      res.json(user)
+    } else {
+      res.json({msg: 'Wrong invoice ID'})
+    }
 
-    res.json(user)
   }).catch(function(err) {
-    res.json({msg: 'An error has occurred'})
+    res.status(500).json({msg: 'An error has occurred'})
     console.log(err)
   })
 })
