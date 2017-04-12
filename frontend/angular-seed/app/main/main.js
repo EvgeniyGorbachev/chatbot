@@ -15,7 +15,12 @@ angular.module('myApp.main', ['ngRoute'])
   vm.isLearnMore = false;
   vm.user = userService.getUser();
 
-  var userData = JSON.parse(decodeURIComponent(escape(window.atob($routeParams.userData))));
+  try {
+    var userData = JSON.parse(decodeURIComponent(escape(window.atob($routeParams.userData))));
+  } catch(e) {
+    $location.path( '/order' );
+    throw new Error('Wrong base64 decode');
+  }
 
   var userName = userData.userName;
   var nameArr = userName.split(' ');

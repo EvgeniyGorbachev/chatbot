@@ -13,7 +13,7 @@ angular.module('myApp', [
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('');
   // $locationProvider.html5Mode(true);
-  $routeProvider.otherwise({redirectTo: '/main'});
+  $routeProvider.otherwise({redirectTo: '/order'});
 }]).factory('userService',['$http', '$q', 'config', function($http, $q, config) {
   return {
     user: false,

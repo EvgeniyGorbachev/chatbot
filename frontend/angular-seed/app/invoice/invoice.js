@@ -14,7 +14,13 @@ angular.module('myApp.invoice', ['ngRoute'])
     var vm = this;
 
     vm.invoice = 'load';
-    var invoice = JSON.parse(decodeURIComponent(escape(window.atob($routeParams.data))));
+
+    try {
+      var invoice = JSON.parse(decodeURIComponent(escape(window.atob($routeParams.data))));
+    } catch(e) {
+      $location.path( '/order' );
+      throw new Error('Wrong base64 decode');
+    }
 
     var id = invoice.id;
 
