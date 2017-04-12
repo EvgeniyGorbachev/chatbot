@@ -3,19 +3,20 @@
 angular.module('myApp.invoice', ['ngRoute'])
 
   .config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/invoice', {
+    $routeProvider.when('/invoice/:data', {
       templateUrl: 'invoice/invoice.html',
       controller: 'InvoiceCtrl',
       controllerAs: 'InvoiceCtrl'
     });
   }])
 
-  .controller('InvoiceCtrl', ['$location', 'userService', function($location, userService) {
+  .controller('InvoiceCtrl', ['$location', 'userService', '$routeParams', function($location, userService, $routeParams) {
     var vm = this;
 
     vm.invoice = 'load';
+    var invoice = JSON.parse(decodeURIComponent(escape(window.atob($routeParams.data))));
 
-    var id = $location.search().id;
+    var id = invoice.id;
 
     if (!id) {
       vm.invoice = 'empty';

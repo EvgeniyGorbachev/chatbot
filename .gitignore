@@ -1,5 +1,6 @@
 backend/node_modules/
 backend/.env
+backend/npm-debug.log
 .idea/
 db.json
 .DS_Store

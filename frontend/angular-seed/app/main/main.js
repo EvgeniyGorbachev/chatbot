@@ -3,32 +3,34 @@
 angular.module('myApp.main', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/main', {
+  $routeProvider.when('/main/:userData', {
     templateUrl: 'main/main.html',
     controller: 'MainCtrl',
     controllerAs: 'MainCtrl'
   });
 }])
 
-.controller('MainCtrl', ['$location', 'userService', function($location, userService) {
+.controller('MainCtrl', ['$location', 'userService', '$routeParams', function($location, userService, $routeParams) {
   var vm = this;
-
   vm.isLearnMore = false;
   vm.user = userService.getUser();
-  var userName = $location.search().userName;
+
+  var userData = JSON.parse(decodeURIComponent(escape(window.atob($routeParams.userData))));
+
+  var userName = userData.userName;
   var nameArr = userName.split(' ');
 
-  vm.user.phone = $location.search().phone;
-  vm.user.billing.email = $location.search().email;
-  vm.user.shipping.email = $location.search().email;
-  vm.user.email = $location.search().email;
-  vm.user.userName = $location.search().userName;
+  vm.user.phone = userData.phone;
+  vm.user.billing.email = userData.email;
+  vm.user.shipping.email = userData.email;
+  vm.user.email = userData.email;
+  vm.user.userName = userData.userName;
   vm.user.shipping.firstName = nameArr[0];
   vm.user.shipping.lastName = nameArr[1];
   vm.user.billing.firstName = nameArr[0];
   vm.user.billing.lastName = nameArr[1];
-  vm.user.shipping.addressFirst = $location.search().address;
-  vm.user.billing.addressFirst = $location.search().address;
+  vm.user.shipping.addressFirst = userData.address;
+  vm.user.billing.addressFirst = userData.address;
 
   userService.saveUser(vm.user);
 
