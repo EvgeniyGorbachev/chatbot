@@ -26,7 +26,7 @@
       <div class="preview-data">
         <h5 class="text-uppercase text-semibold">
           Shipping Address
-          <a ng-click="ReviewCtrl.go('/shipping')" class="preview-edit">Edit</a>
+          <a ng-click="ReviewCtrl.go('/shipping')" ng-if="!ReviewCtrl.user.isPaymentCompleted" class="preview-edit">Edit</a>
         </h5>
 
         <ul class="preview-list">
@@ -39,7 +39,7 @@
       <div class="preview-data">
         <h5 class="text-uppercase text-semibold">
           Billing Address
-          <a ng-click="ReviewCtrl.go('/payment')" class="preview-edit">Edit</a>
+          <a ng-click="ReviewCtrl.go('/payment')" ng-if="!ReviewCtrl.user.isPaymentCompleted" class="preview-edit">Edit</a>
         </h5>
 
         <ul class="preview-list">
@@ -52,7 +52,7 @@
       <div class="preview-data">
         <h5 class="text-uppercase text-semibold">
           Payment Information
-          <a ng-click="ReviewCtrl.go('/payment')" class="preview-edit">Edit</a>
+          <a ng-click="ReviewCtrl.go('/payment')" ng-if="!ReviewCtrl.user.isPaymentCompleted" class="preview-edit">Edit</a>
         </h5>
 
         <ul class="preview-list">
@@ -65,9 +65,20 @@
 
   </div>  <!-- /.body -->
 
-  <nav class="actions">
-    <button ng-click="ReviewCtrl.go('/payment')" ng-disabled="ReviewCtrl.user.isPaymentCompleted" class="btn btn-default action-back" data-direction="back">Back</button>
-    <button ng-click="ReviewCtrl.save()" ng-disabled="ReviewCtrl.user.isPaymentCompleted" class="btn btn-success btn-block action-next" data-direction="next"><i class="fa fa-lock"></i>{{ReviewCtrl.buttonText}}</button>
+  <nav class="actions" ng-if="!ReviewCtrl.user.isPaymentCompleted">
+
+    <button ng-click="ReviewCtrl.go('/payment')" ng-disabled="ReviewCtrl.isDataSend" class="btn btn-default action-back" data-direction="back">Back</button>
+
+    <button ng-click="ReviewCtrl.save()" ng-disabled="ReviewCtrl.isDataSend" ng-class="{'btn-warning': ReviewCtrl.buttonText == false}" class="btn btn-success btn-block action-next" data-direction="next">
+      <span ng-if="ReviewCtrl.buttonText == null"><i class="fa fa-lock"></i> Complete Payment</span>
+      <span ng-if="ReviewCtrl.buttonText == true"><i class="fa fa-lock"></i> Completing Payment, please wait...</span>
+      <span ng-if="ReviewCtrl.buttonText == false"><i class="fa fa-lock"></i> Payment error, try later!</span>
+    </button>
+
+  </nav> <!-- /.actions -->
+
+  <nav class="actions" ng-if="ReviewCtrl.user.isPaymentCompleted">
+    <h4>We received your payment, thank you! <br> We will send you a link to your invoice shortly.</h4>
   </nav> <!-- /.actions -->
 
 </section> <!-- /.slide -->
