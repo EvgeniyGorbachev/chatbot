@@ -40,7 +40,22 @@ angular.module('myApp.payment', ['ngRoute'])
     vm.user.billing.city = vm.user.shipping.city;
     vm.user.billing.state = vm.user.shipping.state;
     vm.user.billing.zipCode = vm.user.shipping.zipCode;
-  }
+  };
+
+  vm.changeCheckedBillingAddres =function () {
+    vm.isCheckedBillingAddres = !vm.isCheckedBillingAddres;
+
+    if (vm.isCheckedBillingAddres) {
+      vm.user.billing.firstName = '';
+      vm.user.billing.lastName = '';
+      vm.user.billing.email = '';
+      vm.user.billing.addressFirst = '';
+      vm.user.billing.addressSecond = '';
+      vm.user.billing.city = '';
+      vm.user.billing.state = '';
+      vm.user.billing.zipCode = '';
+    }
+  };
 
   vm.states = {
     "AL": "Alabama",

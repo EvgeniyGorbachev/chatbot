@@ -32,7 +32,7 @@
 
         <div class="well well-white">
           <label class="sc-switch sc-switch-warning toggle-billing" data-toggle="collapse" data-target="#new-billing-address">
-            <input ng-click="PaymentCtrl.isCheckedBillingAddres = !PaymentCtrl.isCheckedBillingAddres" name="billingaddress" id="billingaddress" type="checkbox" class="sc-switch-input ng-pristine ng-untouched ng-valid ng-not-empty"  checked="checked">
+            <input ng-click="PaymentCtrl.changeCheckedBillingAddres()" name="billingaddress" id="billingaddress" type="checkbox" class="sc-switch-input ng-pristine ng-untouched ng-valid ng-not-empty"  checked="checked">
             <span  class="sc-switch-label" data-on="Yes" data-off="No"></span>
             <span class="sc-switch-handle"></span>
           </label>
@@ -40,7 +40,18 @@
           <label for="billingaddress" class="text-normal" data-toggle="collapse" data-target="#new-billing-address">Use My Shipping Address</label>
         </div>
 
-        <p ng-if="!PaymentCtrl.form.$valid && PaymentCtrl.isFormSend" class="bg-danger">Required all fields!</p>
+        <p ng-if="!PaymentCtrl.form.$valid && PaymentCtrl.isFormSend" class="bg-danger">Please fill out all the highlighted fields</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.email.$error.email" class="bg-danger">Email: not valid email</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.zipCode.$error.maxlength" class="bg-danger">Zip code: max. length - 10</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.firstName.$error.maxlength" class="bg-danger">First Name: max. length - 15</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.lastName.$error.maxlength" class="bg-danger">Last Name: max. length - 15</p>
+
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.addressFirst.$error.maxlength" class="bg-danger">Address 1: max. length - 50</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.addressSecond.$error.maxlength" class="bg-danger">Address 2: max. length - 50</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.city.$error.maxlength" class="bg-danger">City: max. length - 30</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.card.$error.pattern" class="bg-danger">Card Number: The number must be a length of 12 to 22 digits</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.expDate.$error.pattern" class="bg-danger">Exp. Date: Only digits, the number must be a length of 4 digits, like 0117 - mmyy</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.cvv.$error.pattern" class="bg-danger">CVC: The number must be a length 3 digits</p>
 
         <div class="collapse" id="new-billing-address">
 
@@ -49,8 +60,9 @@
           <fieldset class="fieldset-mobile">
             <div class="form-group">
               <label for="fname">First Name</label>
-              <div class="form-field">
+              <div class="form-field" ng-class="{'error': PaymentCtrl.isFormSend && PaymentCtrl.form.firstName.$invalid}">
                 <input type="text" id="fname" name="firstName" class="form-control"
+                       ng-maxlength="15"
                        ng-required=!PaymentCtrl.isCheckedBillingAddres
                        ng-model="PaymentCtrl.user.billing.firstName">
               </div> <!-- /.form-field -->
@@ -58,8 +70,9 @@
 
             <div class="form-group">
               <label for="lname">Last Name</label>
-              <div class="form-field">
+              <div class="form-field" ng-class="{'error': PaymentCtrl.isFormSend && PaymentCtrl.form.lastName.$invalid}">
                 <input type="text" id="lname" name="lastName" class="form-control"
+                       ng-maxlength="15"
                        ng-required=!PaymentCtrl.isCheckedBillingAddres
                        ng-model="PaymentCtrl.user.billing.lastName">
               </div> <!-- /.form-field -->
@@ -67,8 +80,8 @@
 
             <div class="form-group">
               <label for="email">Email</label>
-              <div class="form-field">
-                <input type="text" id="email" name="email" class="form-control"
+              <div class="form-field" ng-class="{'error': PaymentCtrl.isFormSend && PaymentCtrl.form.email.$invalid}">
+                <input type="email" id="email" name="email" class="form-control"
                        ng-required=!PaymentCtrl.isCheckedBillingAddres
                        ng-model="PaymentCtrl.user.billing.email">
               </div> <!-- /.form-field -->
@@ -78,8 +91,9 @@
           <fieldset class="fieldset-mobile">
             <div class="form-group">
               <label for="address1">Address 1</label>
-              <div class="form-field">
+              <div class="form-field" ng-class="{'error': PaymentCtrl.isFormSend && PaymentCtrl.form.addressFirst.$invalid}">
                 <input type="text" id="address1" name="addressFirst" class="form-control"
+                       ng-maxlength="50"
                        ng-required=!PaymentCtrl.isCheckedBillingAddres
                        ng-model="PaymentCtrl.user.billing.addressFirst">
               </div> <!-- /.form-field -->
@@ -87,8 +101,9 @@
 
             <div class="form-group">
               <label for="address2">Address 2</label>
-              <div class="form-field">
+              <div class="form-field" ng-class="{'error': PaymentCtrl.isFormSend && PaymentCtrl.form.addressSecond.$invalid}">
                 <input type="text" id="address2" name="addressSecond" class="form-control"
+                       ng-maxlength="50"
                        ng-required=!PaymentCtrl.isCheckedBillingAddres
                        ng-model="PaymentCtrl.user.billing.addressSecond">
               </div> <!-- /.form-field -->
@@ -96,8 +111,9 @@
 
             <div class="form-group">
               <label for="city">City</label>
-              <div class="form-field">
+              <div class="form-field" ng-class="{'error': PaymentCtrl.isFormSend && PaymentCtrl.form.city.$invalid}">
                 <input type="text" id="city" name="city" class="form-control"
+                       ng-maxlength="30"
                        ng-required=!PaymentCtrl.isCheckedBillingAddres
                        ng-model="PaymentCtrl.user.billing.city">
               </div> <!-- /.form-field -->
@@ -105,7 +121,7 @@
 
             <div class="form-group">
               <label for="state">State</label>
-              <div class="form-field">
+              <div class="form-field" ng-class="{'error': PaymentCtrl.isFormSend && PaymentCtrl.form.state.$invalid}">
 
                 <select id="state" name="state" class="form-control"
                         ng-required=!PaymentCtrl.isCheckedBillingAddres
@@ -118,8 +134,9 @@
 
             <div class="form-group">
               <label for="zipcode">Zip Code</label>
-              <div class="form-field">
-                <input type="text" id="zipcode" name="zipCode" class="form-control"
+              <div class="form-field" ng-class="{'error': PaymentCtrl.isFormSend && PaymentCtrl.form.zipCode.$invalid}">
+                <input type="number" id="zipcode" name="zipCode" class="form-control"
+                       ng-maxlength="10"
                        ng-required=!PaymentCtrl.isCheckedBillingAddres
                        ng-model="PaymentCtrl.user.billing.zipCode">
               </div> <!-- /.form-field -->
@@ -133,27 +150,30 @@
         <fieldset class="fieldset-mobile">
           <div class="form-group">
             <label for="number">Card Number</label>
-            <div class="form-field">
-              <input type="number" id="number" name="number" class="form-control"
+            <div class="form-field" ng-class="{'error': PaymentCtrl.isFormSend && PaymentCtrl.form.card.$invalid}">
+              <input type="number" id="number" name="card" class="form-control"
                      ng-required="true"
+                     ng-pattern="/^\d{12,22}$/"
                      ng-model="PaymentCtrl.user.billing.card.number">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
 
           <div class="form-group">
             <label for="cardexpiry">Exp. Date</label>
-            <div class="form-field">
-              <input type="text" id="cardexpiry" name="expDate" class="form-control"
+            <div class="form-field" ng-class="{'error': PaymentCtrl.isFormSend && PaymentCtrl.form.expDate.$invalid}">
+              <input type="number" id="cardexpiry" name="expDate" class="form-control"
                      ng-required="true"
+                     ng-pattern="/^\d{4}$/"
                      ng-model="PaymentCtrl.user.billing.card.expDate">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
 
           <div class="form-group">
             <label for="cardcvc">CVC</label>
-            <div class="form-field">
+            <div class="form-field" ng-class="{'error': PaymentCtrl.isFormSend && PaymentCtrl.form.cvv.$invalid}">
               <input type="number" id="cardcvc" name="cvv" class="form-control"
                      ng-required="true"
+                     ng-pattern="/^\d{3}$/"
                      ng-model="PaymentCtrl.user.billing.card.cvv">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
