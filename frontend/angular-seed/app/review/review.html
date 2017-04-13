@@ -71,14 +71,14 @@
 
     <button ng-click="ReviewCtrl.save()" ng-disabled="ReviewCtrl.isDataSend" ng-class="{'btn-warning': ReviewCtrl.buttonText == false}" class="btn btn-success btn-block action-next" data-direction="next">
       <span ng-if="ReviewCtrl.buttonText == null"><i class="fa fa-lock"></i> Complete Payment</span>
-      <span ng-if="ReviewCtrl.buttonText == true"><i class="fa fa-lock"></i> Completing Payment, please wait...</span>
+      <span ng-if="ReviewCtrl.buttonText == true"><i class="fa fa-lock"></i> Please wait...</span>
       <span ng-if="ReviewCtrl.buttonText == false"><i class="fa fa-lock"></i> Payment error, try later!</span>
     </button>
 
   </nav> <!-- /.actions -->
 
-  <nav class="actions" ng-if="ReviewCtrl.user.isPaymentCompleted">
-    <h4>We received your payment, thank you! <br> We will send you a link to your invoice shortly.</h4>
+  <nav class="actions bg-success-custom" ng-if="ReviewCtrl.user.isPaymentCompleted">
+    <h5>We received your payment, thank you! <br> We will send you a link to your invoice shortly.</h5>
   </nav> <!-- /.actions -->
 
 </section> <!-- /.slide -->

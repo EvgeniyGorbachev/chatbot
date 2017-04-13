@@ -34,3 +34,7 @@
   padding-top: 10px;
   padding-right: 6px;
 }
+
+nav.actions.bg-success-custom {
+  background-color: #dff0d8 !important;
+}
