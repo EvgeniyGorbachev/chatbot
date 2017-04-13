@@ -49,7 +49,7 @@
         <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.addressFirst.$error.maxlength" class="bg-danger">Address 1: max. length - 50</p>
         <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.addressSecond.$error.maxlength" class="bg-danger">Address 2: max. length - 50</p>
         <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.city.$error.maxlength" class="bg-danger">City: max. length - 30</p>
-        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.card.$error.pattern" class="bg-danger">Card Number: The number must be a length of 12 to 22 digits</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.card.$invalid" class="bg-danger">Card Number: not valid cc number</p>
         <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.expDate.$error.pattern" class="bg-danger">Exp. Date: Only digits, the number must be a length of 4 digits, like 0117 - mmyy</p>
         <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.cvv.$error.pattern" class="bg-danger">CVC: The number must be a length 3 digits</p>
 
@@ -152,17 +152,24 @@
           <div class="form-group">
             <label for="number">Card Number</label>
             <div class="form-field" ng-class="{'error': PaymentCtrl.isFormSend && PaymentCtrl.form.card.$invalid}">
-              <input type="number" id="number" name="card" class="form-control"
+              <input type="text" id="number" name="card" class="form-control"
+                     placeholder="4242424242424242"
                      ng-required="true"
-                     ng-pattern="/^\d{12,22}$/"
+                     cc-number cc-type="cardType"
                      ng-model="PaymentCtrl.user.billing.card.number">
             </div> <!-- /.form-field -->
+            <img ng-if="PaymentCtrl.form.card.$ccType == 'Visa'" class="card" src="../assets/img/visa_curved.png" alt="Logo">
+            <img ng-if="PaymentCtrl.form.card.$ccType == 'MasterCard'" class="card" src="../assets/img/mastercard_curved.png" alt="Logo">
+            <img ng-if="PaymentCtrl.form.card.$ccType == 'Maestro'" class="card" src="../assets/img/maestro_curved.png" alt="Logo">
+            <img ng-if="PaymentCtrl.form.card.$ccType == 'American Express'" class="card" src="../assets/img/american_express_straight.png" alt="Logo">
+            <img ng-if="PaymentCtrl.form.card.$ccType == 'Discover'" class="card" src="../assets/img/discover_straight.png" alt="Logo">
           </div> <!-- /.form-group -->
 
           <div class="form-group">
             <label for="cardexpiry">Exp. Date</label>
             <div class="form-field" ng-class="{'error': PaymentCtrl.isFormSend && PaymentCtrl.form.expDate.$invalid}">
               <input type="number" id="cardexpiry" name="expDate" class="form-control"
+                     placeholder="MMYY"
                      ng-required="true"
                      ng-pattern="/^\d{4}$/"
                      ng-model="PaymentCtrl.user.billing.card.expDate">
@@ -173,6 +180,7 @@
             <label for="cardcvc">CVC</label>
             <div class="form-field" ng-class="{'error': PaymentCtrl.isFormSend && PaymentCtrl.form.cvv.$invalid}">
               <input type="number" id="cardcvc" name="cvv" class="form-control"
+                     placeholder="486"
                      ng-required="true"
                      ng-pattern="/^\d{3}$/"
                      ng-model="PaymentCtrl.user.billing.card.cvv">

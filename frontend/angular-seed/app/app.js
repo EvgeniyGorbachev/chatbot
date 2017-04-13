@@ -8,7 +8,8 @@ angular.module('myApp', [
   'myApp.payment',
   'myApp.review',
   'myApp.invoice',
-  'myApp.version'
+  'myApp.version',
+  'credit-cards'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('');

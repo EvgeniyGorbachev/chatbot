@@ -10,7 +10,7 @@ angular.module('myApp.payment', ['ngRoute'])
   });
 }])
 
-.controller('PaymentCtrl', ['$location', 'userService', function($location, userService) {
+.controller('PaymentCtrl', ['$location', 'userService', '$scope', function($location, userService, $scope) {
   var vm = this;
   vm.user = userService.getUser();
   vm.isFormSend = false;
