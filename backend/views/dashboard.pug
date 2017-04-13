@@ -1,0 +1,1238 @@
+doctype html
+html
+    include header.pug
+    body
+        #wrapper
+            nav.navbar-default.navbar-static-side(role='navigation')
+                .sidebar-collapse
+                    ul#side-menu.nav
+                        li.nav-header
+                            .dropdown.profile-element
+                                span
+                                    img.img-circle(alt='image', src='/assets/img/profile_small.jpg')
+                                |
+                                a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                    span.clear
+                                        span.block.m-t-xs
+                                            strong.font-bold David Williams
+                                        |
+                                        span.text-muted.text-xs.block
+                                            | Art Director
+                                            b.caret
+                                ul.dropdown-menu.animated.fadeInRight.m-t-xs
+                                    li
+                                        a(href='profile.html') Profile
+                                    li
+                                        a(href='contacts.html') Contacts
+                                    li
+                                        a(href='mailbox.html') Mailbox
+                                    li.divider
+                                    li
+                                        a(href='login.html') Logout
+                            .logo-element  IN+
+                        li
+                            a(href='index.html')
+                                i.fa.fa-th-large
+                                |
+                                span.nav-label Dashboards
+                                span.fa.arrow
+                            ul.nav.nav-second-level
+                                li
+                                    a(href='index.html') Dashboard v.1
+                                li
+                                    a(href='dashboard_2.html') Dashboard v.2
+                                li
+                                    a(href='dashboard_3.html') Dashboard v.3
+                                li
+                                    a(href='dashboard_4_1.html') Dashboard v.4
+                        li
+                            a(href='layouts.html')
+                                i.fa.fa-diamond
+                                |
+                                span.nav-label Layouts
+                                |
+                                span.label.label-primary.pull-right NEW
+                        li
+                            a(href='#')
+                                i.fa.fa-bar-chart-o
+                                |
+                                span.nav-label Graphs
+                                span.fa.arrow
+                            ul.nav.nav-second-level
+                                li
+                                    a(href='graph_flot.html') Flot Charts
+                                li
+                                    a(href='graph_morris.html') Morris.js Charts
+                                li
+                                    a(href='graph_rickshaw.html') Rickshaw Charts
+                                li
+                                    a(href='graph_chartjs.html') Chart.js
+                                li
+                                    a(href='graph_peity.html') Peity Charts
+                                li
+                                    a(href='graph_sparkline.html') Sparkline Charts
+                        li
+                            a(href='mailbox.html')
+                                i.fa.fa-envelope
+                                |
+                                span.nav-label Mailbox
+                                |
+                                span.label.label-warning.pull-right 16/24
+                            ul.nav.nav-second-level
+                                li
+                                    a(href='mailbox.html') Inbox
+                                li
+                                    a(href='mail_detail.html') Email view
+                                li
+                                    a(href='mail_compose.html') Compose email
+                                li
+                                    a(href='email_template.html') Email templates
+                        li
+                            a(href='widgets.html')
+                                i.fa.fa-flask
+                                |
+                                span.nav-label Widgets
+                        li
+                            a(href='#')
+                                i.fa.fa-edit
+                                |
+                                span.nav-label Forms
+                                span.fa.arrow
+                            ul.nav.nav-second-level
+                                li
+                                    a(href='form_basic.html') Basic form
+                                li
+                                    a(href='form_advanced.html') Advanced Plugins
+                                li
+                                    a(href='form_wizard.html') Wizard
+                                li
+                                    a(href='form_file_upload.html') File Upload
+                                li
+                                    a(href='form_editors.html') Text Editor
+                        li
+                            a(href='#')
+                                i.fa.fa-desktop
+                                |
+                                span.nav-label App Views
+                                |
+                                span.pull-right.label.label-primary SPECIAL
+                            ul.nav.nav-second-level
+                                li
+                                    a(href='contacts.html') Contacts
+                                li
+                                    a(href='profile.html') Profile
+                                li
+                                    a(href='projects.html') Projects
+                                li
+                                    a(href='project_detail.html') Project detail
+                                li
+                                    a(href='file_manager.html') File manager
+                                li
+                                    a(href='calendar.html') Calendar
+                                li
+                                    a(href='faq.html') FAQ
+                                li
+                                    a(href='timeline.html') Timeline
+                                li
+                                    a(href='pin_board.html') Pin board
+                        li
+                            a(href='#')
+                                i.fa.fa-files-o
+                                |
+                                span.nav-label Other Pages
+                                span.fa.arrow
+                            ul.nav.nav-second-level
+                                li
+                                    a(href='search_results.html') Search results
+                                li
+                                    a(href='lockscreen.html') Lockscreen
+                                li
+                                    a(href='invoice.html') Invoice
+                                li
+                                    a(href='login.html') Login
+                                li
+                                    a(href='login_two_columns.html') Login v.2
+                                li
+                                    a(href='register.html') Register
+                                li
+                                    a(href='404.html') 404 Page
+                                li
+                                    a(href='500.html') 500 Page
+                                li
+                                    a(href='empty_page.html') Empty page
+                        li
+                            a(href='#')
+                                i.fa.fa-globe
+                                |
+                                span.nav-label Miscellaneous
+                                span.label.label-info.pull-right NEW
+                            ul.nav.nav-second-level
+                                li
+                                    a(href='toastr_notifications.html') Notification
+                                li
+                                    a(href='nestable_list.html') Nestable list
+                                li
+                                    a(href='timeline_2.html') Timeline v.2
+                                li
+                                    a(href='forum_main.html') Forum view
+                                li
+                                    a(href='google_maps.html') Google maps
+                                li
+                                    a(href='code_editor.html') Code editor
+                                li
+                                    a(href='modal_window.html') Modal window
+                                li
+                                    a(href='validation.html') Validation
+                                li
+                                    a(href='tree_view.html') Tree view
+                                li
+                                    a(href='chat_view.html') Chat view
+                        li
+                            a(href='#')
+                                i.fa.fa-flask
+                                |
+                                span.nav-label UI Elements
+                                span.fa.arrow
+                            ul.nav.nav-second-level
+                                li
+                                    a(href='typography.html') Typography
+                                li
+                                    a(href='icons.html') Icons
+                                li
+                                    a(href='draggable_panels.html') Draggable Panels
+                                li
+                                    a(href='buttons.html') Buttons
+                                li
+                                    a(href='video.html') Video
+                                li
+                                    a(href='tabs_panels.html') Tabs &amp; Panels
+                                li
+                                    a(href='notifications.html') Notifications &amp; Tooltips
+                                li
+                                    a(href='badges_labels.html') Badges, Labels, Progress
+                        li
+                            a(href='grid_options.html')
+                                i.fa.fa-laptop
+                                |
+                                span.nav-label Grid options
+                        li.active
+                            a(href='#')
+                                i.fa.fa-table
+                                |
+                                span.nav-label Tables
+                                span.fa.arrow
+                            ul.nav.nav-second-level
+                                li
+                                    a(href='table_basic.html') Static Tables
+                                li.active
+                                    a(href='table_data_tables.html') Data Tables
+                                li
+                                    a(href='jq_grid.html') jqGrid
+                        li
+                            a(href='#')
+                                i.fa.fa-picture-o
+                                |
+                                span.nav-label Gallery
+                                span.fa.arrow
+                            ul.nav.nav-second-level
+                                li
+                                    a(href='basic_gallery.html') Lightbox Gallery
+                                li
+                                    a(href='carousel.html') Bootstrap Carusela
+                        li
+                            a(href='#')
+                                i.fa.fa-sitemap
+                                |
+                                span.nav-label Menu Levels
+                                span.fa.arrow
+                            ul.nav.nav-second-level
+                                li
+                                    a(href='#')
+                                        | Third Level
+                                        span.fa.arrow
+                                    ul.nav.nav-third-level
+                                        li
+                                            a(href='#') Third Level Item
+                                        li
+                                            a(href='#') Third Level Item
+                                        li
+                                            a(href='#') Third Level Item
+                                li
+                                    a(href='#') Second Level Item
+                                li
+                                    a(href='#') Second Level Item
+                                li
+                                    a(href='#') Second Level Item
+                        li
+                            a(href='css_animation.html')
+                                i.fa.fa-magic
+                                |
+                                span.nav-label CSS Animations
+                                |
+                                span.label.label-info.pull-right 62
+                        li.landing_link
+                            a(target='_blank', href='Landing_page/index.html')
+                                i.fa.fa-star
+                                |
+                                span.nav-label Landing Page
+                                |
+                                span.label.label-warning.pull-right NEW
+                        li.special_link
+                            a(href='package.html')
+                                i.fa.fa-database
+                                |
+                                span.nav-label Package
+            #page-wrapper.gray-bg
+                .row.border-bottom
+                    nav.navbar.navbar-static-top(role='navigation', style='margin-bottom: 0')
+                        .navbar-header
+                            a.navbar-minimalize.minimalize-styl-2.btn.btn-primary(href='#')
+                                i.fa.fa-bars
+                            form.navbar-form-custom(role='search', method='post', action='search_results.html')
+                                .form-group
+                                    input#top-search.form-control(type='text', placeholder='Search for something...', name='top-search')
+                        ul.nav.navbar-top-links.navbar-right
+                            li
+                                span.m-r-sm.text-muted.welcome-message Welcome to INSPINIA+ Admin Theme.
+                            li.dropdown
+                                a.dropdown-toggle.count-info(data-toggle='dropdown', href='#')
+                                    i.fa.fa-envelope
+                                    |
+                                    span.label.label-warning 16
+                                ul.dropdown-menu.dropdown-messages
+                                    li
+                                        .dropdown-messages-box
+                                            a.pull-left(href='profile.html')
+                                                img.img-circle(alt='image', src='/assets/img/a7.jpg')
+                                            .media-body
+                                                small.pull-right 46h ago
+                                                |
+                                                strong Mike Loreipsum
+                                                |  started following
+                                                strong Monica Smith
+                                                | .
+                                                br
+                                                |
+                                                small.text-muted 3 days ago at 7:58 pm - 10.06.2014
+                                    li.divider
+                                    li
+                                        .dropdown-messages-box
+                                            a.pull-left(href='profile.html')
+                                                img.img-circle(alt='image', src='/assets/img/a4.jpg')
+                                            .media-body
+                                                small.pull-right.text-navy 5h ago
+                                                |
+                                                strong Chris Johnatan Overtunk
+                                                |  started following
+                                                strong Monica Smith
+                                                | .
+                                                br
+                                                |
+                                                small.text-muted Yesterday 1:21 pm - 11.06.2014
+                                    li.divider
+                                    li
+                                        .dropdown-messages-box
+                                            a.pull-left(href='profile.html')
+                                                img.img-circle(alt='image', src='/assets/img/profile.jpg')
+                                            .media-body
+                                                small.pull-right 23h ago
+                                                |
+                                                strong Monica Smith
+                                                |  love
+                                                strong Kim Smith
+                                                | .
+                                                br
+                                                |
+                                                small.text-muted 2 days ago at 2:30 am - 11.06.2014
+                                    li.divider
+                                    li
+                                        .text-center.link-block
+                                            a(href='mailbox.html')
+                                                i.fa.fa-envelope
+                                                |
+                                                strong Read All Messages
+                            li.dropdown
+                                a.dropdown-toggle.count-info(data-toggle='dropdown', href='#')
+                                    i.fa.fa-bell
+                                    |
+                                    span.label.label-primary 8
+                                ul.dropdown-menu.dropdown-alerts
+                                    li
+                                        a(href='mailbox.html')
+                                            div
+                                                i.fa.fa-envelope.fa-fw
+                                                |  You have 16 messages
+                                                span.pull-right.text-muted.small 4 minutes ago
+                                    li.divider
+                                    li
+                                        a(href='profile.html')
+                                            div
+                                                i.fa.fa-twitter.fa-fw
+                                                |  3 New Followers
+                                                span.pull-right.text-muted.small 12 minutes ago
+                                    li.divider
+                                    li
+                                        a(href='grid_options.html')
+                                            div
+                                                i.fa.fa-upload.fa-fw
+                                                |  Server Rebooted
+                                                span.pull-right.text-muted.small 4 minutes ago
+                                    li.divider
+                                    li
+                                        .text-center.link-block
+                                            a(href='notifications.html')
+                                                strong See All Alerts
+                                                i.fa.fa-angle-right
+                            li
+                                a(href='login.html')
+                                    i.fa.fa-sign-out
+                                    |  Log out
+                .row.wrapper.border-bottom.white-bg.page-heading
+                    .col-lg-10
+                        h2 Data Tables
+                        ol.breadcrumb
+                            li
+                                a(href='index.html') Home
+                            li
+                                a Tables
+                            li.active
+                                strong Data Tables
+                    .col-lg-2
+                .wrapper.wrapper-content.animated.fadeInRight
+                    .row
+                        .col-lg-12
+                            .ibox.float-e-margins
+                                .ibox-title
+                                    h5 Basic Data Tables example with responsive plugin
+                                    .ibox-tools
+                                        a.collapse-link
+                                            i.fa.fa-chevron-up
+                                        a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                            i.fa.fa-wrench
+                                        ul.dropdown-menu.dropdown-user
+                                            li
+                                                a(href='#') Config option 1
+                                            li
+                                                a(href='#') Config option 2
+                                        a.close-link
+                                            i.fa.fa-times
+                                .ibox-content
+                                    table.table.table-striped.table-bordered.table-hover.dataTables-example
+                                        thead
+                                            tr
+                                                th Rendering engine
+                                                th Browser
+                                                th Platform(s)
+                                                th Engine version
+                                                th CSS grade
+                                        tbody
+                                            tr.gradeX
+                                                td Trident
+                                                td Internet Explorer 4.0
+                                                td Win 95+
+                                                td.center 4
+                                                td.center X
+                                            tr.gradeC
+                                                td Trident
+                                                td Internet Explorer 5.0
+                                                td Win 95+
+                                                td.center 5
+                                                td.center C
+                                            tr.gradeA
+                                                td Trident
+                                                td Internet Explorer 5.5
+                                                td Win 95+
+                                                td.center 5.5
+                                                td.center A
+                                            tr.gradeA
+                                                td Trident
+                                                td Internet Explorer 6
+                                                td Win 98+
+                                                td.center 6
+                                                td.center A
+                                            tr.gradeA
+                                                td Trident
+                                                td Internet Explorer 7
+                                                td Win XP SP2+
+                                                td.center 7
+                                                td.center A
+                                            tr.gradeA
+                                                td Trident
+                                                td AOL browser (AOL desktop)
+                                                td Win XP
+                                                td.center 6
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Firefox 1.0
+                                                td Win 98+ / OSX.2+
+                                                td.center 1.7
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Firefox 1.5
+                                                td Win 98+ / OSX.2+
+                                                td.center 1.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Firefox 2.0
+                                                td Win 98+ / OSX.2+
+                                                td.center 1.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Firefox 3.0
+                                                td Win 2k+ / OSX.3+
+                                                td.center 1.9
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Camino 1.0
+                                                td OSX.2+
+                                                td.center 1.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Camino 1.5
+                                                td OSX.3+
+                                                td.center 1.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Netscape 7.2
+                                                td Win 95+ / Mac OS 8.6-9.2
+                                                td.center 1.7
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Netscape Browser 8
+                                                td Win 98SE+
+                                                td.center 1.7
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Netscape Navigator 9
+                                                td Win 98+ / OSX.2+
+                                                td.center 1.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.0
+                                                td Win 95+ / OSX.1+
+                                                td.center 1
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.1
+                                                td Win 95+ / OSX.1+
+                                                td.center 1.1
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.2
+                                                td Win 95+ / OSX.1+
+                                                td.center 1.2
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.3
+                                                td Win 95+ / OSX.1+
+                                                td.center 1.3
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.4
+                                                td Win 95+ / OSX.1+
+                                                td.center 1.4
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.5
+                                                td Win 95+ / OSX.1+
+                                                td.center 1.5
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.6
+                                                td Win 95+ / OSX.1+
+                                                td.center 1.6
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.7
+                                                td Win 98+ / OSX.1+
+                                                td.center 1.7
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.8
+                                                td Win 98+ / OSX.1+
+                                                td.center 1.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Seamonkey 1.1
+                                                td Win 98+ / OSX.2+
+                                                td.center 1.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Epiphany 2.20
+                                                td Gnome
+                                                td.center 1.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Webkit
+                                                td Safari 1.2
+                                                td OSX.3
+                                                td.center 125.5
+                                                td.center A
+                                            tr.gradeA
+                                                td Webkit
+                                                td Safari 1.3
+                                                td OSX.3
+                                                td.center 312.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Webkit
+                                                td Safari 2.0
+                                                td OSX.4+
+                                                td.center 419.3
+                                                td.center A
+                                            tr.gradeA
+                                                td Webkit
+                                                td Safari 3.0
+                                                td OSX.4+
+                                                td.center 522.1
+                                                td.center A
+                                            tr.gradeA
+                                                td Webkit
+                                                td OmniWeb 5.5
+                                                td OSX.4+
+                                                td.center 420
+                                                td.center A
+                                            tr.gradeA
+                                                td Webkit
+                                                td iPod Touch / iPhone
+                                                td iPod
+                                                td.center 420.1
+                                                td.center A
+                                            tr.gradeA
+                                                td Webkit
+                                                td S60
+                                                td S60
+                                                td.center 413
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Opera 7.0
+                                                td Win 95+ / OSX.1+
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Opera 7.5
+                                                td Win 95+ / OSX.2+
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Opera 8.0
+                                                td Win 95+ / OSX.2+
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Opera 8.5
+                                                td Win 95+ / OSX.2+
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Opera 9.0
+                                                td Win 95+ / OSX.3+
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Opera 9.2
+                                                td Win 88+ / OSX.3+
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Opera 9.5
+                                                td Win 88+ / OSX.3+
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Opera for Wii
+                                                td Wii
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Nokia N800
+                                                td N800
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Nintendo DS browser
+                                                td Nintendo DS
+                                                td.center 8.5
+                                                td.center
+                                                    | C/A
+                                                    sup 1
+                                            tr.gradeC
+                                                td KHTML
+                                                td Konqureror 3.1
+                                                td KDE 3.1
+                                                td.center 3.1
+                                                td.center C
+                                            tr.gradeA
+                                                td KHTML
+                                                td Konqureror 3.3
+                                                td KDE 3.3
+                                                td.center 3.3
+                                                td.center A
+                                            tr.gradeA
+                                                td KHTML
+                                                td Konqureror 3.5
+                                                td KDE 3.5
+                                                td.center 3.5
+                                                td.center A
+                                            tr.gradeX
+                                                td Tasman
+                                                td Internet Explorer 4.5
+                                                td Mac OS 8-9
+                                                td.center -
+                                                td.center X
+                                            tr.gradeC
+                                                td Tasman
+                                                td Internet Explorer 5.1
+                                                td Mac OS 7.6-9
+                                                td.center 1
+                                                td.center C
+                                            tr.gradeC
+                                                td Tasman
+                                                td Internet Explorer 5.2
+                                                td Mac OS 8-X
+                                                td.center 1
+                                                td.center C
+                                            tr.gradeA
+                                                td Misc
+                                                td NetFront 3.1
+                                                td Embedded devices
+                                                td.center -
+                                                td.center C
+                                            tr.gradeA
+                                                td Misc
+                                                td NetFront 3.4
+                                                td Embedded devices
+                                                td.center -
+                                                td.center A
+                                            tr.gradeX
+                                                td Misc
+                                                td Dillo 0.8
+                                                td Embedded devices
+                                                td.center -
+                                                td.center X
+                                            tr.gradeX
+                                                td Misc
+                                                td Links
+                                                td Text only
+                                                td.center -
+                                                td.center X
+                                            tr.gradeX
+                                                td Misc
+                                                td Lynx
+                                                td Text only
+                                                td.center -
+                                                td.center X
+                                            tr.gradeC
+                                                td Misc
+                                                td IE Mobile
+                                                td Windows Mobile 6
+                                                td.center -
+                                                td.center C
+                                            tr.gradeC
+                                                td Misc
+                                                td PSP browser
+                                                td PSP
+                                                td.center -
+                                                td.center C
+                                            tr.gradeU
+                                                td Other browsers
+                                                td All others
+                                                td -
+                                                td.center -
+                                                td.center U
+                                        tfoot
+                                            tr
+                                                th Rendering engine
+                                                th Browser
+                                                th Platform(s)
+                                                th Engine version
+                                                th CSS grade
+                    .row
+                        .col-lg-12
+                            .ibox.float-e-margins
+                                .ibox-title
+                                    h5 Editable Table in- combination with jEditable
+                                    .ibox-tools
+                                        a.collapse-link
+                                            i.fa.fa-chevron-up
+                                        a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                            i.fa.fa-wrench
+                                        ul.dropdown-menu.dropdown-user
+                                            li
+                                                a(href='#') Config option 1
+                                            li
+                                                a(href='#') Config option 2
+                                        a.close-link
+                                            i.fa.fa-times
+                                .ibox-content
+                                    div
+                                        a.btn.btn-primary(onclick='fnClickAddRow();', href='javascript:void(0);') Add a new row
+                                    table#editable.table.table-striped.table-bordered.table-hover
+                                        thead
+                                            tr
+                                                th Rendering engine
+                                                th Browser
+                                                th Platform(s)
+                                                th Engine version
+                                                th CSS grade
+                                        tbody
+                                            tr.gradeX
+                                                td Trident
+                                                td Internet Explorer 4.0
+                                                td Win 95+
+                                                td.center 4
+                                                td.center X
+                                            tr.gradeC
+                                                td Trident
+                                                td Internet Explorer 5.0
+                                                td Win 95+
+                                                td.center 5
+                                                td.center C
+                                            tr.gradeA
+                                                td Trident
+                                                td Internet Explorer 5.5
+                                                td Win 95+
+                                                td.center 5.5
+                                                td.center A
+                                            tr.gradeA
+                                                td Trident
+                                                td Internet Explorer 6
+                                                td Win 98+
+                                                td.center 6
+                                                td.center A
+                                            tr.gradeA
+                                                td Trident
+                                                td Internet Explorer 7
+                                                td Win XP SP2+
+                                                td.center 7
+                                                td.center A
+                                            tr.gradeA
+                                                td Trident
+                                                td AOL browser (AOL desktop)
+                                                td Win XP
+                                                td.center 6
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Firefox 1.0
+                                                td Win 98+ / OSX.2+
+                                                td.center 1.7
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Firefox 1.5
+                                                td Win 98+ / OSX.2+
+                                                td.center 1.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Firefox 2.0
+                                                td Win 98+ / OSX.2+
+                                                td.center 1.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Firefox 3.0
+                                                td Win 2k+ / OSX.3+
+                                                td.center 1.9
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Camino 1.0
+                                                td OSX.2+
+                                                td.center 1.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Camino 1.5
+                                                td OSX.3+
+                                                td.center 1.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Netscape 7.2
+                                                td Win 95+ / Mac OS 8.6-9.2
+                                                td.center 1.7
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Netscape Browser 8
+                                                td Win 98SE+
+                                                td.center 1.7
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Netscape Navigator 9
+                                                td Win 98+ / OSX.2+
+                                                td.center 1.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.0
+                                                td Win 95+ / OSX.1+
+                                                td.center 1
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.1
+                                                td Win 95+ / OSX.1+
+                                                td.center 1.1
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.2
+                                                td Win 95+ / OSX.1+
+                                                td.center 1.2
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.3
+                                                td Win 95+ / OSX.1+
+                                                td.center 1.3
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.4
+                                                td Win 95+ / OSX.1+
+                                                td.center 1.4
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.5
+                                                td Win 95+ / OSX.1+
+                                                td.center 1.5
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.6
+                                                td Win 95+ / OSX.1+
+                                                td.center 1.6
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.7
+                                                td Win 98+ / OSX.1+
+                                                td.center 1.7
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Mozilla 1.8
+                                                td Win 98+ / OSX.1+
+                                                td.center 1.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Seamonkey 1.1
+                                                td Win 98+ / OSX.2+
+                                                td.center 1.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Gecko
+                                                td Epiphany 2.20
+                                                td Gnome
+                                                td.center 1.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Webkit
+                                                td Safari 1.2
+                                                td OSX.3
+                                                td.center 125.5
+                                                td.center A
+                                            tr.gradeA
+                                                td Webkit
+                                                td Safari 1.3
+                                                td OSX.3
+                                                td.center 312.8
+                                                td.center A
+                                            tr.gradeA
+                                                td Webkit
+                                                td Safari 2.0
+                                                td OSX.4+
+                                                td.center 419.3
+                                                td.center A
+                                            tr.gradeA
+                                                td Webkit
+                                                td Safari 3.0
+                                                td OSX.4+
+                                                td.center 522.1
+                                                td.center A
+                                            tr.gradeA
+                                                td Webkit
+                                                td OmniWeb 5.5
+                                                td OSX.4+
+                                                td.center 420
+                                                td.center A
+                                            tr.gradeA
+                                                td Webkit
+                                                td iPod Touch / iPhone
+                                                td iPod
+                                                td.center 420.1
+                                                td.center A
+                                            tr.gradeA
+                                                td Webkit
+                                                td S60
+                                                td S60
+                                                td.center 413
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Opera 7.0
+                                                td Win 95+ / OSX.1+
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Opera 7.5
+                                                td Win 95+ / OSX.2+
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Opera 8.0
+                                                td Win 95+ / OSX.2+
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Opera 8.5
+                                                td Win 95+ / OSX.2+
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Opera 9.0
+                                                td Win 95+ / OSX.3+
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Opera 9.2
+                                                td Win 88+ / OSX.3+
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Opera 9.5
+                                                td Win 88+ / OSX.3+
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Opera for Wii
+                                                td Wii
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Nokia N800
+                                                td N800
+                                                td.center -
+                                                td.center A
+                                            tr.gradeA
+                                                td Presto
+                                                td Nintendo DS browser
+                                                td Nintendo DS
+                                                td.center 8.5
+                                                td.center
+                                                    | C/A
+                                                    sup 1
+                                            tr.gradeC
+                                                td KHTML
+                                                td Konqureror 3.1
+                                                td KDE 3.1
+                                                td.center 3.1
+                                                td.center C
+                                            tr.gradeA
+                                                td KHTML
+                                                td Konqureror 3.3
+                                                td KDE 3.3
+                                                td.center 3.3
+                                                td.center A
+                                            tr.gradeA
+                                                td KHTML
+                                                td Konqureror 3.5
+                                                td KDE 3.5
+                                                td.center 3.5
+                                                td.center A
+                                            tr.gradeX
+                                                td Tasman
+                                                td Internet Explorer 4.5
+                                                td Mac OS 8-9
+                                                td.center -
+                                                td.center X
+                                            tr.gradeC
+                                                td Tasman
+                                                td Internet Explorer 5.1
+                                                td Mac OS 7.6-9
+                                                td.center 1
+                                                td.center C
+                                            tr.gradeC
+                                                td Tasman
+                                                td Internet Explorer 5.2
+                                                td Mac OS 8-X
+                                                td.center 1
+                                                td.center C
+                                            tr.gradeA
+                                                td Misc
+                                                td NetFront 3.1
+                                                td Embedded devices
+                                                td.center -
+                                                td.center C
+                                            tr.gradeA
+                                                td Misc
+                                                td NetFront 3.4
+                                                td Embedded devices
+                                                td.center -
+                                                td.center A
+                                            tr.gradeX
+                                                td Misc
+                                                td Dillo 0.8
+                                                td Embedded devices
+                                                td.center -
+                                                td.center X
+                                            tr.gradeX
+                                                td Misc
+                                                td Links
+                                                td Text only
+                                                td.center -
+                                                td.center X
+                                            tr.gradeX
+                                                td Misc
+                                                td Lynx
+                                                td Text only
+                                                td.center -
+                                                td.center X
+                                            tr.gradeC
+                                                td Misc
+                                                td IE Mobile
+                                                td Windows Mobile 6
+                                                td.center -
+                                                td.center C
+                                            tr.gradeC
+                                                td Misc
+                                                td PSP browser
+                                                td PSP
+                                                td.center -
+                                                td.center C
+                                            tr.gradeU
+                                                td Other browsers
+                                                td All others
+                                                td -
+                                                td.center -
+                                                td.center U
+                                        tfoot
+                                            tr
+                                                th Rendering engine
+                                                th Browser
+                                                th Platform(s)
+                                                th Engine version
+                                                th CSS grade
+                .footer
+                    .pull-right
+                        | 10GB of
+                        strong 250GB
+                        |  Free.
+                    div
+                        strong Copyright
+                        |  Example Company &copy; 2014-2015
+        script(src='/assets/js/jquery-2.1.1.min.js')
+        script(src='/assets/js/bootstrap.min.js')
+        script(src='/assets/js/plugins/metisMenu/jquery.metisMenu.js')
+        script(src='/assets/js/plugins/slimscroll/jquery.slimscroll.min.js')
+        script(src='/assets/js/plugins/jeditable/jquery.jeditable.js')
+        script(src='/assets/js/plugins/dataTables/jquery.dataTables.js')
+        script(src='/assets/js/plugins/dataTables/dataTables.bootstrap.js')
+        script(src='/assets/js/plugins/dataTables/dataTables.responsive.js')
+        script(src='/assets/js/plugins/dataTables/dataTables.tableTools.min.js')
+        script(src='/assets/js/inspinia.js')
+        script(src='/assets/js/plugins/pace/pace.min.js')
+        script.
+          $(document).ready(function() {
+            $('.dataTables-example').dataTable({
+              responsive: true,
+              "dom": 'T<"clear">lfrtip',
+              "tableTools": {
+                "sSwfPath": "/assets/js/plugins/dataTables/swf/copy_csv_xls_pdf.swf"
+              }
+            });
+              /* Init DataTables */
+            var oTable = $('#editable').dataTable();
+              /* Apply the jEditable handlers to the table */
+            oTable.$('td').editable( '../example_ajax.php', {
+              "callback": function( sValue, y ) {
+                var aPos = oTable.fnGetPosition( this );
+                oTable.fnUpdate( sValue, aPos[0], aPos[1] );
+              },
+              "submitdata": function ( value, settings ) {
+                return {
+                  "row_id": this.parentNode.getAttribute('id'),
+                  "column": oTable.fnGetPosition( this )[2]
+                };
+              },
+              "width": "90%",
+              "height": "100%"
+            } );
+          });
+          function fnClickAddRow() {
+            $('#editable').dataTable().fnAddData( [
+              "Custom row",
+              "New row",
+              "New row",
+              "New row",
+              "New row" ] );
+          }
+        style.
+            body.DTTT_Print {
+                background: #fff;
+            }
+            .DTTT_Print #page-wrapper {
+                margin: 0;
+                background:#fff;
+            }
+            button.DTTT_button, div.DTTT_button, a.DTTT_button {
+                border: 1px solid #e7eaec;
+                background: #fff;
+                color: #676a6c;
+                box-shadow: none;
+                padding: 6px 8px;
+            }
+            button.DTTT_button:hover, div.DTTT_button:hover, a.DTTT_button:hover {
+                border: 1px solid #d2d2d2;
+                background: #fff;
+                color: #676a6c;
+                box-shadow: none;
+                padding: 6px 8px;
+            }
+            .dataTables_filter label {
+                margin-right: 5px;
+            }

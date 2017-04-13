@@ -9,11 +9,20 @@ var hash = require('object-hash')
 
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
-
+app.set('view engine', 'pug')
+app.use("/assets", express.static(__dirname + '/assets'));
 app.use(cors())
 
 app.get('/api', function (req, res) {
   res.json({msg: 'Chatbot payment REST API'})
+})
+
+app.get('/login', function (req, res) {
+  res.render('login', { title: 'Hey', message: 'Hello there!' })
+})
+
+app.get('/dashboard', function (req, res) {
+  res.render('dashboard', { title: 'Hey', message: 'Hello there!' })
 })
 
 app.post('/api/user', function (req, res) {
