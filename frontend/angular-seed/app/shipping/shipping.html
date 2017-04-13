@@ -17,7 +17,7 @@
         <h5 class="text-uppercase text-semibold">Shipping Information</h5>
         <p ng-if="!ShippingCtrl.form.$valid && ShippingCtrl.isFormSend" class="bg-danger">Please fill out all the highlighted fields</p>
         <p ng-if="ShippingCtrl.isFormSend && ShippingCtrl.form.email.$error.pattern" class="bg-danger">Email: not valid email</p>
-        <p ng-if="ShippingCtrl.isFormSend && ShippingCtrl.form.zipCode.$error.maxlength" class="bg-danger">Zip code: max. length - 10</p>
+        <p ng-if="ShippingCtrl.isFormSend && ShippingCtrl.form.zipCode.$error.pattern" class="bg-danger">Zip code: not valid zip code</p>
         <p ng-if="ShippingCtrl.isFormSend && ShippingCtrl.form.firstName.$error.maxlength" class="bg-danger">First Name: max. length - 15</p>
         <p ng-if="ShippingCtrl.isFormSend && ShippingCtrl.form.lastName.$error.maxlength" class="bg-danger">Last Name: max. length - 15</p>
 
@@ -105,7 +105,7 @@
             <div class="form-field" ng-class="{'error': ShippingCtrl.isFormSend && ShippingCtrl.form.zipCode.$invalid}">
               <input type="number" id="zipcode" name="zipCode" class="form-control"
                      ng-required="true"
-                     ng-maxlength="10"
+                     ng-pattern='/(^\d{5}$)|(^\d{5}-\d{4}$)/'
                      ng-model="ShippingCtrl.user.shipping.zipCode">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
