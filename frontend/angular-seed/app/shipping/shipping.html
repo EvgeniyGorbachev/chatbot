@@ -16,7 +16,7 @@
 
         <h5 class="text-uppercase text-semibold">Shipping Information</h5>
         <p ng-if="!ShippingCtrl.form.$valid && ShippingCtrl.isFormSend" class="bg-danger">Please fill out all the highlighted fields</p>
-        <p ng-if="ShippingCtrl.isFormSend && ShippingCtrl.form.email.$error.email" class="bg-danger">Email: not valid email</p>
+        <p ng-if="ShippingCtrl.isFormSend && ShippingCtrl.form.email.$error.pattern" class="bg-danger">Email: not valid email</p>
         <p ng-if="ShippingCtrl.isFormSend && ShippingCtrl.form.zipCode.$error.maxlength" class="bg-danger">Zip code: max. length - 10</p>
         <p ng-if="ShippingCtrl.isFormSend && ShippingCtrl.form.firstName.$error.maxlength" class="bg-danger">First Name: max. length - 15</p>
         <p ng-if="ShippingCtrl.isFormSend && ShippingCtrl.form.lastName.$error.maxlength" class="bg-danger">Last Name: max. length - 15</p>
@@ -49,8 +49,9 @@
           <div class="form-group">
             <label for="email">Email</label>
             <div class="form-field" ng-class="{'error': ShippingCtrl.isFormSend && ShippingCtrl.form.email.$invalid}">
-              <input type="email" id="email" name="email" class="form-control"
+              <input type="text" id="email" name="email" class="form-control"
                      ng-required="true"
+                     ng-pattern='/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/'
                      ng-model="ShippingCtrl.user.shipping.email">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->

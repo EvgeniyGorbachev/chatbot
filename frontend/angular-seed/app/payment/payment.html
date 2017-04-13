@@ -41,7 +41,7 @@
         </div>
 
         <p ng-if="!PaymentCtrl.form.$valid && PaymentCtrl.isFormSend" class="bg-danger">Please fill out all the highlighted fields</p>
-        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.email.$error.email" class="bg-danger">Email: not valid email</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.email.$error.pattern" class="bg-danger">Email: not valid email</p>
         <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.zipCode.$error.maxlength" class="bg-danger">Zip code: max. length - 10</p>
         <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.firstName.$error.maxlength" class="bg-danger">First Name: max. length - 15</p>
         <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.lastName.$error.maxlength" class="bg-danger">Last Name: max. length - 15</p>
@@ -81,7 +81,8 @@
             <div class="form-group">
               <label for="email">Email</label>
               <div class="form-field" ng-class="{'error': PaymentCtrl.isFormSend && PaymentCtrl.form.email.$invalid}">
-                <input type="email" id="email" name="email" class="form-control"
+                <input type="text" id="email" name="email" class="form-control"
+                       ng-pattern='/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/'
                        ng-required=!PaymentCtrl.isCheckedBillingAddres
                        ng-model="PaymentCtrl.user.billing.email">
               </div> <!-- /.form-field -->
