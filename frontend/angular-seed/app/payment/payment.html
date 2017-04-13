@@ -40,18 +40,18 @@
           <label for="billingaddress" class="text-normal" data-toggle="collapse" data-target="#new-billing-address">Use My Shipping Address</label>
         </div>
 
-        <p ng-if="!PaymentCtrl.form.$valid && PaymentCtrl.isFormSend" class="bg-danger">Please fill out all the highlighted fields</p>
-        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.email.$error.pattern" class="bg-danger">Email: not valid email</p>
-        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.zipCode.$error.pattern" class="bg-danger">Zip code: not valid zip code</p>
-        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.firstName.$error.maxlength" class="bg-danger">First Name: max. length - 15</p>
-        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.lastName.$error.maxlength" class="bg-danger">Last Name: max. length - 15</p>
+        <p ng-if="!PaymentCtrl.form.$valid && PaymentCtrl.isFormSend" class="text-danger">Please fill out all the highlighted fields</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.email.$error.pattern" class="text-danger">Email: not valid email</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.zipCode.$error.pattern" class="text-danger">Zip code: not valid zip code</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.firstName.$error.maxlength" class="text-danger">First Name: max. length - 15</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.lastName.$error.maxlength" class="text-danger">Last Name: max. length - 15</p>
 
-        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.addressFirst.$error.maxlength" class="bg-danger">Address 1: max. length - 50</p>
-        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.addressSecond.$error.maxlength" class="bg-danger">Address 2: max. length - 50</p>
-        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.city.$error.maxlength" class="bg-danger">City: max. length - 30</p>
-        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.card.$invalid" class="bg-danger">Card Number: not valid cc number</p>
-        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.expDate.$error.pattern" class="bg-danger">Exp. Date: Only digits, the number must be a length of 4 digits, like 0117 - mmyy</p>
-        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.cvv.$error.pattern" class="bg-danger">CVC: The number must be a length 3 digits</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.addressFirst.$error.maxlength" class="text-danger">Address 1: max. length - 50</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.addressSecond.$error.maxlength" class="text-danger">Address 2: max. length - 50</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.city.$error.maxlength" class="text-danger">City: max. length - 30</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.card.$invalid" class="text-danger">Card Number: not valid cc number</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.expDate.$error.pattern" class="text-danger">Exp. Date: Only digits, the number must be a length of 4 digits, like 0117 - mmyy</p>
+        <p ng-if="PaymentCtrl.isFormSend && PaymentCtrl.form.cvv.$error.pattern" class="text-danger">CVC: The number must be a length 3 digits</p>
 
         <div class="collapse" id="new-billing-address">
 
