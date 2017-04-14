@@ -5,11 +5,11 @@ html
         .middle-box.text-center.loginscreen.animated.fadeInDown
                 div
                     h3 Welcome to Chatbot payment
-                    form.m-t(role='form', action='index.html')
+                    form.m-t(role='form', action='/login' method='post')
                         .form-group
-                            input.form-control(type='text', placeholder='Username', required='')
+                            input.form-control(type='text', placeholder='Username', required='' name='username')
                         .form-group
-                            input.form-control(type='password', placeholder='Password', required='')
+                            input.form-control(type='password', placeholder='Password', required='' name='password')
                         |
                         button.btn.btn-primary.block.full-width.m-b(type='submit') Login
                         |

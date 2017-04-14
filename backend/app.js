@@ -3,25 +3,62 @@ var express = require('express')
 var app = express()
 var cors = require('cors')
 var bodyParser = require('body-parser')
-var request = require('request');
+var request = require('request')
 var db = require('./models/index.js')
 var hash = require('object-hash')
+var passport = require('passport')
+var Strategy = require('passport-local').Strategy
 
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
 app.set('view engine', 'pug')
-app.use("/assets", express.static(__dirname + '/assets'));
+app.use("/assets", express.static(__dirname + '/assets'))
 app.use(cors())
 
-app.get('/api', function (req, res) {
-  res.json({msg: 'Chatbot payment REST API'})
+app.use(require('morgan')('combined'))
+app.use(require('cookie-parser')())
+app.use(require('body-parser').urlencoded({ extended: true }))
+app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }))
+
+var user = {id: '1', username: process.env.LOGIN_USERNAME, password: process.env.LOGIN_PASSWORD}
+
+passport.use(new Strategy(
+  function(username, password, cb) {
+    if (user.username != username) { return cb(null, false) }
+    if (user.password != password) { return cb(null, false) }
+    return cb(null, user)
+  }))
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user.id)
 })
+
+passport.deserializeUser(function(id, cb) {
+    if (user.id != id) { return cb('err') }
+    cb(null, user)
+})
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.get('/login', function (req, res) {
   res.render('login', { title: 'Hey', message: 'Hello there!' })
 })
 
-app.get('/dashboard', function (req, res) {
+app.post('/login',
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/dashboard')
+  })
+
+app.get('/logout', function(req, res){
+  req.logout()
+  res.redirect('/login')
+})
+
+app.get('/dashboard',
+  require('connect-ensure-login').ensureLoggedIn(),
+  function (req, res) {
 
   db.Users.all().then(function(users) {
     db.Conversations.all().then(function(conversations) {
@@ -29,6 +66,10 @@ app.get('/dashboard', function (req, res) {
     })
   })
 
+})
+
+app.get('/api', function (req, res) {
+  res.json({msg: 'Chatbot payment REST API'})
 })
 
 app.post('/api/user', function (req, res) {
@@ -45,7 +86,7 @@ app.post('/api/user', function (req, res) {
     billing: billing
   }
 
-  user.invoiceId = hash(user);
+  user.invoiceId = hash(user)
 
   db.Users.create(user).then(function(model) {
 
@@ -63,12 +104,12 @@ app.post('/api/user', function (req, res) {
       form: {'To': req.body.phone, 'orderCompleted': 'true', 'invoiceId': user.invoiceId, 'SmsStatus': 'delivered'},
     }
 
-    console.log("REQUEST options", options);
+    console.log("REQUEST options", options)
 
 // Start the request
     request(options, function (error, response, body) {
-      console.log("RESPONSE");
-      console.log(error, response, body);
+      console.log("RESPONSE")
+      console.log(error, response, body)
       if (!error && response.statusCode == 200) {
         // Print out the response body
         console.log(body)
@@ -78,18 +119,12 @@ app.post('/api/user', function (req, res) {
     })
 
   }).catch(db.Sequelize.ValidationError, function(err) {
-    console.log(err);
+    console.log(err)
     res.json({msg: 'Invalid json on shipping and billing'})
   }).catch(function(err) {
     res.status(500).json({msg: 'An error has occurred'})
   })
 
-})
-
-app.get('/api/user', function (req, res) {
-  // db.Users.all().then(function(users) {
-  //   res.json(users)
-  // })
 })
 
 app.get('/api/invoice/:id', function (req, res) {
@@ -111,7 +146,7 @@ app.get('/api/invoice/:id', function (req, res) {
 })
 
 app.use(function(req, res, next) {
-  res.status(404).send({msg: 'Chatbot payment REST API: wrong path!'})
+  res.redirect('/login')
 })
 
 app.listen(8181, function () {
