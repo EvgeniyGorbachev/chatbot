@@ -22,7 +22,13 @@ app.get('/login', function (req, res) {
 })
 
 app.get('/dashboard', function (req, res) {
-  res.render('dashboard', { title: 'Hey', message: 'Hello there!' })
+
+  db.Users.all().then(function(users) {
+    db.Conversations.all().then(function(conversations) {
+      res.render('dashboard', { paymentList: users, conversations: conversations })
+    })
+  })
+
 })
 
 app.post('/api/user', function (req, res) {
