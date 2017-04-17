@@ -1,0 +1,182 @@
+doctype html
+html(ng-app='campaignsApp')
+    include header.pug
+    body(ng-controller='CampaignListController as campaignCtr')
+        #wrapper
+            nav.navbar-default.navbar-static-side(role='navigation')
+                .sidebar-collapse
+                    ul#side-menu.nav
+                        li.nav-header
+                            .dropdown.profile-element
+                                span
+                                    img.img-circle(alt='image', src='/assets/img/profile_small.jpg')
+                                |
+                                a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                    span.clear
+                                        span.block.m-t-xs
+                                            strong.font-bold David Williams
+                                        |
+                                        span.text-muted.text-xs.block
+                                            | Manager
+                                            b.caret
+                                ul.dropdown-menu.animated.fadeInRight.m-t-xs
+                                    li
+                                        a(href='profile.html') Profile
+                                    li
+                                        a(href='contacts.html') Contacts
+                                    li
+                                        a(href='mailbox.html') Mailbox
+                                    li.divider
+                                    li
+                                        a(href='login.html') Logout
+                            .logo-element  IN+
+                        li
+                            a(href='/dashboard')
+                                i.fa.fa-flask
+                                |
+                                span.nav-label Dashboard
+                        li
+                            a(href='/dashboard/campaigns')
+                                i.fa.fa-flask
+                                |
+                                span.nav-label Campaigns
+            #page-wrapper.gray-bg
+                .row.border-bottom
+                    nav.navbar.navbar-static-top(role='navigation', style='margin-bottom: 0')
+                        .navbar-header
+                            a.navbar-minimalize.minimalize-styl-2.btn.btn-primary(href='#')
+                                i.fa.fa-bars
+                            form.navbar-form-custom(role='search', method='post', action='search_results.html')
+                        ul.nav.navbar-top-links.navbar-right
+                            li
+                                a(href='/logout')
+                                    i.fa.fa-sign-out
+                                    |  Log out
+                .row.wrapper.border-bottom.white-bg.page-heading
+                    .col-lg-10
+                        h2 Campaigns
+                        ol.breadcrumb
+                            li
+                                a(href='/dashboard') Home
+                            li
+                                a Chatbot
+                            li.active
+                                strong Campaigns
+                    .col-lg-2
+                .wrapper.wrapper-content.animated.fadeInRight
+                    .row
+                        .col-lg-12
+                            .ibox.float-e-margins
+                                .ibox-title
+                                    h5 Add new campaign
+                                    .ibox-tools
+                                        a.collapse-link
+                                            i.fa.fa-chevron-up
+                                        a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                            i.fa.fa-wrench
+                                        ul.dropdown-menu.dropdown-user
+                                            li
+                                                a(href='#') Config option 1
+                                            li
+                                                a(href='#') Config option 2
+                                        a.close-link
+                                            i.fa.fa-times
+                                .ibox-content
+                                    form.form-horizontal#main(method='get')
+                                        .form-group
+                                            label.col-sm-2.control-label Name
+                                            .col-sm-10
+                                                input.form-control(type='text')
+                                        .form-group
+                                            label.col-sm-2.control-label Phone number
+                                            .col-sm-10
+                                                .row
+                                                    .col-md-3
+                                                        input.form-control(type='text', placeholder='+12345678')
+                                        #base
+                                            #unit
+                                                .hr-line-dashed
+                                                .form-group
+                                                    label.col-sm-2.control-label Question
+                                                    .col-sm-10
+                                                        input.form-control(type='text')
+                                                .form-group
+                                                    label.col-sm-2.control-label Delay
+                                                    .col-sm-10
+                                                        .row
+                                                            .col-md-2
+                                                                input.form-control(type='text', placeholder='2')
+                                                .form-group
+                                                    label.col-sm-2.control-label Answer
+                                                    .col-sm-10
+                                                        input.form-control(type='text')
+                                                .hr-line-dashed
+
+                                        .form-group
+                                            .col-sm-4.col-sm-offset-2
+                                                button.btn.btn-w-m.btn-success#save(type='submit') Save
+                                                |
+                                                button.btn.btn-primary#add(type='submit') + Add
+
+
+
+                .footer
+                    div
+                        strong Copyright
+                        |  Singlecomm &copy; 2017
+        script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js')
+        script(src='/assets/js/controllers/campaigns.js')
+        script(src='/assets/js/jquery-2.1.1.min.js')
+        script(src='/assets/js/bootstrap.min.js')
+        script(src='/assets/js/plugins/metisMenu/jquery.metisMenu.js')
+        script(src='/assets/js/plugins/slimscroll/jquery.slimscroll.min.js')
+        script(src='/assets/js/plugins/jeditable/jquery.jeditable.js')
+        script(src='/assets/js/plugins/dataTables/jquery.dataTables.js')
+        script(src='/assets/js/plugins/dataTables/dataTables.bootstrap.js')
+        script(src='/assets/js/plugins/dataTables/dataTables.responsive.js')
+        script(src='/assets/js/plugins/dataTables/dataTables.tableTools.min.js')
+        script(src='/assets/js/inspinia.js')
+        script(src='/assets/js/plugins/pace/pace.min.js')
+        script.
+          $(document).ready(function() {
+
+            $('#save').on('click', function (e) {
+              e.preventDefault();
+              console.log('Вы нажали на элемент "save"');
+            });
+
+            $('#add').on('click', function (e) {
+              e.preventDefault();
+
+              var unit = $('#unit').clone();
+              $("#base").append(unit);
+
+              console.log('Вы нажали на элемент "add"');
+            });
+
+          });
+        style.
+            body.DTTT_Print {
+                background: #fff;
+            }
+            .DTTT_Print #page-wrapper {
+                margin: 0;
+                background:#fff;
+            }
+            button.DTTT_button, div.DTTT_button, a.DTTT_button {
+                border: 1px solid #e7eaec;
+                background: #fff;
+                color: #676a6c;
+                box-shadow: none;
+                padding: 6px 8px;
+            }
+            button.DTTT_button:hover, div.DTTT_button:hover, a.DTTT_button:hover {
+                border: 1px solid #d2d2d2;
+                background: #fff;
+                color: #676a6c;
+                box-shadow: none;
+                padding: 6px 8px;
+            }
+            .dataTables_filter label {
+                margin-right: 5px;
+            }

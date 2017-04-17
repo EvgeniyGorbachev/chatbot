@@ -68,6 +68,14 @@ app.get('/dashboard',
 
 })
 
+app.get('/dashboard/campaigns',
+  require('connect-ensure-login').ensureLoggedIn(),
+  function (req, res) {
+
+    res.render('campaigns', { })
+
+})
+
 app.get('/api', function (req, res) {
   res.json({msg: 'Chatbot payment REST API'})
 })
