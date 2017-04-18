@@ -3,43 +3,7 @@ html(ng-app='campaignsApp')
     include header.pug
     body(ng-controller='CampaignListController as campaignCtr')
         #wrapper
-            nav.navbar-default.navbar-static-side(role='navigation')
-                .sidebar-collapse
-                    ul#side-menu.nav
-                        li.nav-header
-                            .dropdown.profile-element
-                                span
-                                    img.img-circle(alt='image', src='/assets/img/profile_small.jpg')
-                                |
-                                a.dropdown-toggle(data-toggle='dropdown', href='#')
-                                    span.clear
-                                        span.block.m-t-xs
-                                            strong.font-bold David Williams
-                                        |
-                                        span.text-muted.text-xs.block
-                                            | Manager
-                                            b.caret
-                                ul.dropdown-menu.animated.fadeInRight.m-t-xs
-                                    li
-                                        a(href='profile.html') Profile
-                                    li
-                                        a(href='contacts.html') Contacts
-                                    li
-                                        a(href='mailbox.html') Mailbox
-                                    li.divider
-                                    li
-                                        a(href='login.html') Logout
-                            .logo-element  IN+
-                        li
-                            a(href='/dashboard')
-                                i.fa.fa-flask
-                                |
-                                span.nav-label Dashboard
-                        li
-                            a(href='/dashboard/campaigns')
-                                i.fa.fa-flask
-                                |
-                                span.nav-label Campaigns
+            include navigation.pug
             #page-wrapper.gray-bg
                 .row.border-bottom
                     nav.navbar.navbar-static-top(role='navigation', style='margin-bottom: 0')
@@ -117,66 +81,4 @@ html(ng-app='campaignsApp')
                                                 button.btn.btn-w-m.btn-success#save(type='submit') Save
                                                 |
                                                 button.btn.btn-primary#add(type='submit') + Add
-
-
-
-                .footer
-                    div
-                        strong Copyright
-                        |  Singlecomm &copy; 2017
-        script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js')
-        script(src='/assets/js/controllers/campaigns.js')
-        script(src='/assets/js/jquery-2.1.1.min.js')
-        script(src='/assets/js/bootstrap.min.js')
-        script(src='/assets/js/plugins/metisMenu/jquery.metisMenu.js')
-        script(src='/assets/js/plugins/slimscroll/jquery.slimscroll.min.js')
-        script(src='/assets/js/plugins/jeditable/jquery.jeditable.js')
-        script(src='/assets/js/plugins/dataTables/jquery.dataTables.js')
-        script(src='/assets/js/plugins/dataTables/dataTables.bootstrap.js')
-        script(src='/assets/js/plugins/dataTables/dataTables.responsive.js')
-        script(src='/assets/js/plugins/dataTables/dataTables.tableTools.min.js')
-        script(src='/assets/js/inspinia.js')
-        script(src='/assets/js/plugins/pace/pace.min.js')
-        script.
-          $(document).ready(function() {
-
-            $('#save').on('click', function (e) {
-              e.preventDefault();
-              console.log('Вы нажали на элемент "save"');
-            });
-
-            $('#add').on('click', function (e) {
-              e.preventDefault();
-
-              var unit = $('#unit').clone();
-              $("#base").append(unit);
-
-              console.log('Вы нажали на элемент "add"');
-            });
-
-          });
-        style.
-            body.DTTT_Print {
-                background: #fff;
-            }
-            .DTTT_Print #page-wrapper {
-                margin: 0;
-                background:#fff;
-            }
-            button.DTTT_button, div.DTTT_button, a.DTTT_button {
-                border: 1px solid #e7eaec;
-                background: #fff;
-                color: #676a6c;
-                box-shadow: none;
-                padding: 6px 8px;
-            }
-            button.DTTT_button:hover, div.DTTT_button:hover, a.DTTT_button:hover {
-                border: 1px solid #d2d2d2;
-                background: #fff;
-                color: #676a6c;
-                box-shadow: none;
-                padding: 6px 8px;
-            }
-            .dataTables_filter label {
-                margin-right: 5px;
-            }
+                include footer.pug

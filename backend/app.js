@@ -69,7 +69,7 @@ app.get('/dashboard',
 })
 
 app.get('/dashboard/campaigns',
-  require('connect-ensure-login').ensureLoggedIn(),
+  // require('connect-ensure-login').ensureLoggedIn(),
   function (req, res) {
 
     res.render('campaigns', { })
