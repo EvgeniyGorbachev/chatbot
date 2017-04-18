@@ -31,6 +31,13 @@ html(ng-app='campaignsApp')
                     .row
                         .col-lg-12
                             .ibox.float-e-margins
+                                if id
+                                    .alert.alert-success.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  Created successfully
+                                        |
+                                        b ID #{id}
+                                        | .
                                 .ibox-title
                                     h5 Add new campaign
                                     .ibox-tools
@@ -46,39 +53,54 @@ html(ng-app='campaignsApp')
                                         a.close-link
                                             i.fa.fa-times
                                 .ibox-content
-                                    form.form-horizontal#main(method='get')
+                                    form.form-horizontal#main(method='post', action='/dashboard/campaigns')
                                         .form-group
                                             label.col-sm-2.control-label Name
                                             .col-sm-10
-                                                input.form-control(type='text')
+                                                input.form-control(type='text' name='name')
+                                                input.form-control(type='hidden', name='data', id='data')
+
+                                        .form-group
+                                            label.col-sm-2.control-label Channel
+                                            .col-sm-2
+                                                select.form-control.m-b(name='channel')
+                                                    option(value='sms') SMS
+                                                    option(value='facebook') Facebook
+                                                    option(value='telegram') Telegram
+                                                    option(value='slack') Slack
                                         .form-group
                                             label.col-sm-2.control-label Phone number
                                             .col-sm-10
                                                 .row
                                                     .col-md-3
-                                                        input.form-control(type='text', placeholder='+12345678')
+                                                        input.form-control(type='text', name='phone' placeholder='+12345678')
+
+                                        .form-group
+                                            label.col-sm-2.control-label Start/End date
+                                            .col-sm-10
+                                                #datepicker.input-daterange.input-group
+                                                    input.input-sm.form-control.datapicker(type='text', name='startDate', value='')
+                                                    |
+                                                    span.input-group-addon to
+                                                    |
+                                                    input.input-sm.form-control.datapicker(type='text', name='endDate', value='')
+
+                                        .form-group
+                                            label.col-sm-2.control-label Opened at
+                                            .col-sm-10
+                                                .checkbox
+                                                    label
+                                                        input(type='checkbox', value='', name='isOpened')
                                         #base
-                                            #unit
-                                                .hr-line-dashed
-                                                .form-group
-                                                    label.col-sm-2.control-label Question
-                                                    .col-sm-10
-                                                        input.form-control(type='text')
-                                                .form-group
-                                                    label.col-sm-2.control-label Delay
-                                                    .col-sm-10
-                                                        .row
-                                                            .col-md-2
-                                                                input.form-control(type='text', placeholder='2')
-                                                .form-group
-                                                    label.col-sm-2.control-label Answer
-                                                    .col-sm-10
-                                                        input.form-control(type='text')
-                                                .hr-line-dashed
+                                            .hr-line-dashed
 
                                         .form-group
                                             .col-sm-4.col-sm-offset-2
-                                                button.btn.btn-w-m.btn-success#save(type='submit') Save
+                                                button.btn.btn-w-m.btn-success#save(ng-click='campaignCtr.submit()') Save
                                                 |
-                                                button.btn.btn-primary#add(type='submit') + Add
+                                                |
+                                                button.btn.btn-primary(ng-click='campaignCtr.addStep()') + Add
+                                                |
+                                                |
+                                                button.btn.btn-w-m.btn-danger(ng-click='campaignCtr.deleteStep()', ng-disabled='campaignCtr.step == 1') Delete
                 include footer.pug
