@@ -4,31 +4,37 @@ module.exports = {
     campaignTableName: 'campaign',
     up: function (queryInterface, Sequelize) {
         return queryInterface.createTable(this.campaignTableName, {
-            uid: {
+            id: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             },
-            phone: {
-                type: Sequelize.STRING,
-                allowNull: false,
-                unique: true
-            },
             name: {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
+            channel: {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
+            phone: {
                 type: Sequelize.STRING,
                 allowNull: false
             },
             phrases: {
                 type: Sequelize.JSONB
             },
-            defaultNextStep: {
-                type: Sequelize.INTEGER
+            startDate: {
+                type: Sequelize.DATE
             },
-            delay: {
-                type: Sequelize.INTEGER
+            endDate: {
+                type: Sequelize.DATE
             },
-            initiator: {
-                type: Sequelize.ENUM('user', 'callback')
+            createdAt: {
+                type: Sequelize.DATE
+            },
+            updatedAt: {
+                type: Sequelize.DATE
             }
         });
     },

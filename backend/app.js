@@ -79,9 +79,19 @@ app.get('/dashboard/campaigns',
 app.post('/dashboard/campaigns',
   // require('connect-ensure-login').ensureLoggedIn(),
   function (req, res) {
+  let campaign = JSON.parse(req.body.jsonData)
 
-    res.render('campaigns', {id: 4325})
+      // campaign.startDate = (new Date(campaign.startDate).getTime()/1000)
+      // campaign.endDate = (new Date(campaign.endDate).getTime()/1000)
+    campaign.startDate = (new Date('04/05/2017').getTime()/1000)
+      campaign.endDate = (new Date('04/05/2017').getTime()/1000)
 
+    db.Campaigns.create(campaign).then(function(data) {
+      res.render('campaigns', {id: data.id})
+    }).catch(function(err) {
+      console.log(err)
+      res.render('campaigns', {err: 'Saved wrong'})
+    })
 })
 
 app.get('/api', function (req, res) {

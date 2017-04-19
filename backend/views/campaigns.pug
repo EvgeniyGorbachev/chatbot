@@ -39,6 +39,11 @@ html(ng-app='campaignsApp')
                                         b ID #{id}
                                         | .
 
+                                if err
+                                    .alert.alert-danger.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  Error
+
                                 .alert.alert-danger(ng-if="!campaignCtr.form.$valid && campaignCtr.isFormSend")
                                     | Please fill out all the highlighted steps.
 
@@ -64,10 +69,10 @@ html(ng-app='campaignsApp')
                                                 input.form-control(type='text' name='name', ng-required='true', ng-model='campaignCtr.data.name', ng-maxlength='50')
                                                 input.form-control(type='hidden', name='jsonData', id='data', ng-model='campaignCtr.jsonData')
 
-                                        .form-group
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.channel.$invalid}")
                                             label.col-sm-2.control-label Channel
                                             .col-sm-2
-                                                select.form-control.m-b(name='channel')
+                                                select.form-control.m-b(name='channel', ng-model='campaignCtr.data.channel', ng-required='true')
                                                     option(value='sms') SMS
                                                     option(value='facebook') Facebook
                                                     option(value='telegram') Telegram
@@ -83,11 +88,11 @@ html(ng-app='campaignsApp')
                                             label.col-sm-2.control-label Start/End date
                                             .col-sm-10
                                                 #datepicker.input-daterange.input-group
-                                                    input.input-sm.form-control.datapicker(type='text', name='startDate', value='', ng-model='campaignCtr.data.startDate')
+                                                    input.input-sm.form-control.datapicker(type='text', datapicker name='startDate', value='', ng-model='campaignCtr.data.startDate')
                                                     |
                                                     span.input-group-addon to
                                                     |
-                                                    input.input-sm.form-control.datapicker(type='text', name='endDate', value='', ng-model='campaignCtr.data.endDate')
+                                                    input.input-sm.form-control.datapicker(type='text', datapicker name='endDate', value='', ng-model='campaignCtr.data.endDate')
 
                                         #repeat(ng-repeat='step in campaignCtr.steps')
                                             .hr-line-dashed

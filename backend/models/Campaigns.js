@@ -2,31 +2,37 @@ var Sequelize = require("sequelize");
 
 module.exports = function (sequelize, DataTypes) {
     return sequelize.define('Campaigns', {
-        uid: {
+        id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        phone: {
-            type: Sequelize.STRING,
-            allowNull: false,
-            unique: true
-        },
         name: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        channel: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        phone: {
             type: Sequelize.STRING,
             allowNull: false
         },
         phrases: {
             type: Sequelize.JSONB
         },
-        defaultNextStep: {
-            type: Sequelize.INTEGER
+        startDate: {
+            type: Sequelize.DATE
         },
-        delay: {
-            type: Sequelize.INTEGER
+        endDate: {
+            type: Sequelize.DATE
         },
-        initiator: {
-            type: Sequelize.ENUM('user', 'callback')
+        createdAt: {
+            type: Sequelize.DATE
+        },
+        updatedAt: {
+            type: Sequelize.DATE
         }
     }, {
         individualHooks: true,

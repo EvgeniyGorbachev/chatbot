@@ -13,7 +13,7 @@ angular.module('campaignsApp', [])
       "phone": '',
       "startDate": '',
       "endDate": '',
-      "steps": ''
+      "phrases": ''
     };
 
     vm.baseElement = angular.element(document.querySelector('#base'));
@@ -78,7 +78,7 @@ angular.module('campaignsApp', [])
       if (!vm.form.$valid) {
         return false;
       }
-      vm.data.steps = vm.flowStorage;
+      vm.data.phrases = vm.flowStorage;
 
       $('#data').val(JSON.stringify(vm.data));
       $('form').submit();
