@@ -69,7 +69,7 @@ app.get('/logout', function (req, res)
 })
 
 app.get('/dashboard/:id*?',
-//     require('connect-ensure-login').ensureLoggedIn(),
+    require('connect-ensure-login').ensureLoggedIn(),
     function (req, res)
     {
         let id = req.params.id || false
@@ -87,7 +87,7 @@ app.get('/dashboard/:id*?',
     })
 
 app.post('/campaigns',
-    // require('connect-ensure-login').ensureLoggedIn(),
+    require('connect-ensure-login').ensureLoggedIn(),
     function (req, res)
     {
       console.log(3333333,req.body.jsonData)
@@ -109,7 +109,7 @@ app.post('/campaigns',
     })
 
 app.get('/campaigns',
-    // require('connect-ensure-login').ensureLoggedIn(),
+    require('connect-ensure-login').ensureLoggedIn(),
     function (req, res)
     {
         db.Campaigns.all().then(function (campaigns)
@@ -121,7 +121,7 @@ app.get('/campaigns',
 
     })
 app.get('/campaigns/:id',
-  // require('connect-ensure-login').ensureLoggedIn(),
+    require('connect-ensure-login').ensureLoggedIn(),
   function (req, res) {
     let id = req.params.id
 
@@ -134,7 +134,7 @@ app.get('/campaigns/:id',
 })
 
 app.post('/campaigns/:id',
-  // require('connect-ensure-login').ensureLoggedIn(),
+    require('connect-ensure-login').ensureLoggedIn(),
   function (req, res) {
   let campaign = JSON.parse(req.body.jsonData)
 
@@ -173,7 +173,7 @@ app.post('/campaigns/:id',
 })
 
 app.get('/campaigns/delete/:id',
-    // require('connect-ensure-login').ensureLoggedIn(),
+    require('connect-ensure-login').ensureLoggedIn(),
     function (req, res)
     {
         let id = req.params.id
