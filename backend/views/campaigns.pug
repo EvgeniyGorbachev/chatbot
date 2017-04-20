@@ -69,7 +69,7 @@ html(ng-app='campaignsApp')
                                         a.btn.btn-info.btn-rounded.pull-right(href="/campaigns/new") Add
                                     form.form-horizontal#main(method='post', action='/campaigns', role='form', novalidate)
                                         input.form-control(type='hidden', name='jsonData', id='data', ng-model='dashboardCtr.jsonData')
-                                        table.table.table-striped.table-bordered.table-hover.dataTables-example
+                                        table.table.table-striped.table-bordered.table-hover.dataTables-example(data-order='[[ 0, "DESC" ]]' )
                                             thead
                                                 tr
                                                     th uid

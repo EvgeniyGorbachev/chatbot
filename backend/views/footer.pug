@@ -24,8 +24,9 @@ script(src='/assets/js/plugins/switchery/switchery.js')
 script.
   $(document).ready(function() {
     $('.dataTables-example').dataTable({
-      responsive: true,
-      "dom": 'T<"clear">lfrtip',
+        "order"   : [[0, "desc"]],
+      responsive  : true,
+      "dom"       : 'T<"clear">lfrtip',
       "tableTools": {
         "sSwfPath": "/assets/js/plugins/dataTables/swf/copy_csv_xls_pdf.swf"
       }
