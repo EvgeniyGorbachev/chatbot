@@ -31,14 +31,6 @@ html(ng-app='campaignsApp')
                     .row
                         .col-lg-12
                             .ibox.float-e-margins
-                                if id
-                                    .alert.alert-success.alert-dismissable
-                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
-                                        |  Created successfully
-                                        |
-                                        b ID #{id}
-                                        | .
-
                                 if err
                                     .alert.alert-danger.alert-dismissable
                                         button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
@@ -62,7 +54,7 @@ html(ng-app='campaignsApp')
                                         a.close-link
                                             i.fa.fa-times
                                 .ibox-content
-                                    form.form-horizontal#main(method='post', action='/dashboard/campaigns', role='form', name='campaignCtr.form', novalidate)
+                                    form.form-horizontal#main(method='post', action='/campaigns', role='form', name='campaignCtr.form', novalidate)
                                         .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.name.$invalid}")
                                             label.col-sm-2.control-label Name
                                             .col-sm-10

@@ -56,19 +56,37 @@ app.get('/logout', function(req, res){
   res.redirect('/login')
 })
 
-app.get('/dashboard',
-  require('connect-ensure-login').ensureLoggedIn(),
+app.get('/dashboard/:id*?',
+  // require('connect-ensure-login').ensureLoggedIn(),
   function (req, res) {
-
+  let id = req.params.id || false
   db.Users.all().then(function(users) {
     db.Conversations.all().then(function(conversations) {
-      res.render('dashboard', { paymentList: users, conversations: conversations })
+      db.Campaigns.all().then(function(campaigns) {
+        res.render('dashboard', { paymentList: users, conversations: conversations, campaignList: campaigns, id: id })
+      })
     })
   })
-
 })
 
-app.get('/dashboard/campaigns',
+app.post('/dashboard',
+  // require('connect-ensure-login').ensureLoggedIn(),
+  function (req, res) {
+    let campaign = JSON.parse(req.body.jsonData)
+    let bool = campaign.isActive ? 1: 0
+    db.Campaigns.findOne({ where: {id: campaign.id} }).then(function(campaign) {
+      campaign.update({
+        isActive: bool
+      }).then(function() {
+        res.redirect('/dashboard')
+      }).catch(function(err) {
+        console.log(err)
+      })
+    })
+
+  })
+
+app.get('/campaigns',
   // require('connect-ensure-login').ensureLoggedIn(),
   function (req, res) {
 
@@ -76,7 +94,7 @@ app.get('/dashboard/campaigns',
 
 })
 
-app.post('/dashboard/campaigns',
+app.post('/campaigns',
   // require('connect-ensure-login').ensureLoggedIn(),
   function (req, res) {
   let campaign = JSON.parse(req.body.jsonData)
@@ -85,7 +103,7 @@ app.post('/dashboard/campaigns',
     campaign.endDate = (new Date(campaign.endDate))
 
     db.Campaigns.create(campaign).then(function(data) {
-      res.render('campaigns', {id: data.id})
+      res.redirect('/dashboard');
     }).catch(function(err) {
       console.log(err)
       res.render('campaigns', {err: 'Saved wrong'})

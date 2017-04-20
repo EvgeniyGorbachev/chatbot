@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('campaignsApp', [])
-  .controller('CampaignListController', function($compile, $scope) {
+  .controller('CampaignListController', function() {
     let vm = this;
     vm.step = 0;
     vm.isFormSend = false;

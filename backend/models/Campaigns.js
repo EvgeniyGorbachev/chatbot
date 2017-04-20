@@ -1,4 +1,5 @@
-var Sequelize = require("sequelize");
+let Sequelize = require("sequelize")
+let moment = require('moment')
 
 module.exports = function (sequelize, DataTypes) {
     return sequelize.define('Campaigns', {
@@ -23,16 +24,31 @@ module.exports = function (sequelize, DataTypes) {
             type: Sequelize.JSONB
         },
         startDate: {
-            type: Sequelize.DATE
+            type: Sequelize.DATE,
+            get      : function()  {
+                return moment(this.getDataValue('startDate')).format("MM/DD/YYYY");
+            }
         },
         endDate: {
-            type: Sequelize.DATE
+            type: Sequelize.DATE,
+            get      : function()  {
+                return moment(this.getDataValue('endDate')).format("MM/DD/YYYY");
+            }
         },
         createdAt: {
-            type: Sequelize.DATE
+            type: Sequelize.DATE,
+            get      : function()  {
+                return moment(this.getDataValue('createdAt')).format("MM/DD/YYYY");
+            }
         },
         updatedAt: {
-            type: Sequelize.DATE
+            type: Sequelize.DATE,
+            get      : function()  {
+                return moment(this.getDataValue('updatedAt')).format("MM/DD/YYYY");
+            }
+        },
+        isActive: {
+            type: Sequelize.BOOLEAN
         }
     }, {
         individualHooks: true,
