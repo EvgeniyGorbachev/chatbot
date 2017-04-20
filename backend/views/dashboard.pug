@@ -32,67 +32,6 @@ html(ng-app='campaignsApp')
                         .col-lg-12
                             .ibox.float-e-margins
                                 .ibox-title
-                                    h5 Campaigns
-                                    .ibox-tools
-                                        a.collapse-link
-                                            i.fa.fa-chevron-up
-                                        a.dropdown-toggle(data-toggle='dropdown', href='#')
-                                            i.fa.fa-wrench
-                                        ul.dropdown-menu.dropdown-user
-                                            li
-                                                a(href='#') Config option 1
-                                            li
-                                                a(href='#') Config option 2
-                                        a.close-link
-                                            i.fa.fa-times
-                                .ibox-content
-                                    if id
-                                        .alert.alert-success.alert-dismissable
-                                            button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
-                                            |  Created successfully
-                                            |
-                                            b ID #{id}
-                                            | .
-
-                                    form.form-horizontal#main(method='post', action='/dashboard', role='form', novalidate)
-                                        input.form-control(type='hidden', name='jsonData', id='data')
-                                        table.table.table-striped.table-bordered.table-hover.dataTables-example
-                                            thead
-                                                tr
-                                                    th uid
-                                                    th Active
-                                                    th Name
-                                                    th Channel
-                                                    th Phone
-                                                    th Start
-                                                    th End
-                                                    th Cteated at
-                                            tbody
-                                                each item in campaignList
-                                                    tr.gradeA
-                                                        td= item.id
-                                                        td.text-center
-                                                            input(type='checkbox', ng-checked=""+item.isActive+"" name="item.id" ng-model="dashboardCtr.isActive["+item.id+"]" ng-click="dashboardCtr.change("+item.id+")")
-                                                        td= item.name
-                                                        td= item.channel
-                                                        td= item.phone
-                                                        td= item.startDate
-                                                        td= item.endDate
-                                                        td= item.createdAt
-                                            tfoot
-                                                tr
-                                                    th uid
-                                                    th Active
-                                                    th Name
-                                                    th Channel
-                                                    th Phone
-                                                    th Start
-                                                    th End
-                                                    th Cteated at
-                    .row
-                        .col-lg-12
-                            .ibox.float-e-margins
-                                .ibox-title
                                     h5 Chatbot payments
                                     .ibox-tools
                                         a.collapse-link
