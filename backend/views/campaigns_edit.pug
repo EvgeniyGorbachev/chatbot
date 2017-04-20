@@ -81,15 +81,15 @@ html(ng-app='campaignsApp')
                                                     .col-md-3
                                                         input.form-control(type='text', name='phone' placeholder='+12345678900' ng-required='true', ng-model='campaignCtr.data.phone', ng-pattern='/^\\+\\d{11}$/')
 
-                                        .form-group
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && (campaignCtr.form.startDate.$invalid||campaignCtr.form.endDate.$invalid)}")
                                             label.col-sm-2.control-label Start/End date
                                             .col-sm-10
                                                 #datepicker.input-daterange.input-group
-                                                    input.input-sm.form-control.datapicker(type='text', datepicker-input name='startDate', value='', ng-model='campaignCtr.data.startDate')
+                                                    input.input-sm.form-control.datapicker(type='text', datepicker-input name='startDate', value='', ng-model='campaignCtr.data.startDate', ng-required="true" )
                                                     |
                                                     span.input-group-addon to
                                                     |
-                                                    input.input-sm.form-control.datapicker(type='text', datepicker-input name='endDate', value='', ng-model='campaignCtr.data.endDate')
+                                                    input.input-sm.form-control.datapicker(type='text', datepicker-input name='endDate', value='', ng-model='campaignCtr.data.endDate', ng-required="true" )
 
                                         #repeat(ng-repeat='step in campaignCtr.steps')
                                             .hr-line-dashed

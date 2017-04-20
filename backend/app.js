@@ -167,13 +167,7 @@ app.post('/campaigns/:id',
           res.redirect('/campaigns/' + data.id);
       }).catch(function(err) {
         console.log(err)
-          db.Campaigns.all().then(function (campaigns)
-          {
-              res.render('campaigns', {
-                  campaignList: campaigns,
-                  err         : 'Saved wrong'
-              })
-          })
+          res.render('campaigns_edit', {err: 'Saved wrong'})
       })
     }
 })
