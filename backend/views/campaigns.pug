@@ -53,7 +53,8 @@ html(ng-app='campaignsApp')
                                             |
                                             b ID #{id}
                                             | .
-
+                                    .row
+                                        a.btn.btn-info.btn-rounded.pull-right(href="/campaigns/new") Add
                                     form.form-horizontal#main(method='post', action='/campaigns', role='form', novalidate)
                                         table.table.table-striped.table-bordered.table-hover.dataTables-example
                                             thead
@@ -66,6 +67,7 @@ html(ng-app='campaignsApp')
                                                     th Start
                                                     th End
                                                     th Cteated at
+                                                    th
                                             tbody
                                                 each item in campaignList
                                                     tr.gradeA
@@ -78,6 +80,11 @@ html(ng-app='campaignsApp')
                                                         td= item.startDate
                                                         td= item.endDate
                                                         td= item.createdAt
+                                                        td
+                                                            a.btn.btn-warning.btn-rounded(href="/campaigns/" + item.id + "") Update
+                                                            |
+                                                            |
+                                                            a.btn.btn-danger.btn-rounded(href="/campaigns/delete/" + item.id + "") Delete
                                             tfoot
                                                 tr
                                                     th uid
@@ -88,4 +95,5 @@ html(ng-app='campaignsApp')
                                                     th Start
                                                     th End
                                                     th Cteated at
+                                                    th
                 include footer.pug
