@@ -147,11 +147,11 @@ html(ng-app='campaignsApp')
                                         //BUTTONS
                                         .form-group
                                             .col-sm-4.col-sm-offset-2
-                                                button.btn.btn-w-m.btn-success#save(ng-click='campaignCtr.submit()') Save
+                                                a.btn.btn-w-m.btn-success#save(ng-click='campaignCtr.submit($event)') Save
                                                 |
                                                 |
-                                                button.btn.btn-primary(ng-click='campaignCtr.addStep()') + Add
+                                                a.btn.btn-primary(ng-click='campaignCtr.addStep($event)') + Add
                                                 |
                                                 |
-                                                button.btn.btn-w-m.btn-danger(ng-click='campaignCtr.deleteStep()', ng-disabled='campaignCtr.step == 1') Delete
+                                                a.btn.btn-w-m.btn-danger(ng-click='campaignCtr.deleteStep($event)', ng-disabled='campaignCtr.step == 1') Delete
                 include footer.pug

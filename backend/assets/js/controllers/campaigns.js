@@ -52,15 +52,19 @@ angular.module('campaignsApp.campaign', [])
     //init first step
     addStep();
 
-    function addStep () {
-      event.preventDefault();
+      function addStep(event)
+      {
+          if (event) {
+              event.preventDefault();
+          }
       incrementStep();
       saveToStorage(vm.step);
 
       vm.steps.push({"id": vm.step});
     }
 
-    function deleteStep (){
+      function deleteStep(event)
+      {
       event.preventDefault();
       vm.steps.splice(-1,1)
 
@@ -92,7 +96,8 @@ angular.module('campaignsApp.campaign', [])
                           };
     }
 
-    function submit () {
+      function submit(event)
+      {
       event.preventDefault();
       vm.isFormSend = true;
 
