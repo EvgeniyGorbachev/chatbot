@@ -1,7 +1,7 @@
 doctype html
 html(ng-app='campaignsApp')
     include header.pug
-    body(ng-controller='CampaignListController as campaignCtr')
+    body(ng-controller='DashboardListController as dashboardCtr')
         #wrapper
             include navigation.pug
             #page-wrapper.gray-bg
@@ -56,6 +56,7 @@ html(ng-app='campaignsApp')
                                     .row
                                         a.btn.btn-info.btn-rounded.pull-right(href="/campaigns/new") Add
                                     form.form-horizontal#main(method='post', action='/campaigns', role='form', novalidate)
+                                        input.form-control(type='hidden', name='jsonData', id='data', ng-model='dashboardCtr.jsonData')
                                         table.table.table-striped.table-bordered.table-hover.dataTables-example
                                             thead
                                                 tr

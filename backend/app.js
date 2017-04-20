@@ -86,10 +86,11 @@ app.get('/dashboard/:id*?',
         })
     })
 
-app.post('/dashboard',
+app.post('/campaigns',
     // require('connect-ensure-login').ensureLoggedIn(),
     function (req, res)
     {
+      console.log(3333333,req.body.jsonData)
         let campaign = JSON.parse(req.body.jsonData)
         let bool     = campaign.isActive ? 1 : 0
         db.Campaigns.findOne({where: {id: campaign.id}}).then(function (campaign)
@@ -98,7 +99,7 @@ app.post('/dashboard',
                 isActive: bool
             }).then(function ()
             {
-                res.redirect('/dashboard')
+                res.redirect('/campaigns')
             }).catch(function (err)
             {
                 console.log(err)
