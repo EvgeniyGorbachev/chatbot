@@ -69,7 +69,7 @@ app.get('/logout', function (req, res)
 })
 
 app.get('/dashboard/:id*?',
-    // require('connect-ensure-login').ensureLoggedIn(),
+//     require('connect-ensure-login').ensureLoggedIn(),
     function (req, res)
     {
         let id = req.params.id || false
@@ -171,6 +171,26 @@ app.post('/campaigns/:id',
       })
     }
 })
+
+app.get('/campaigns/delete/:id',
+    // require('connect-ensure-login').ensureLoggedIn(),
+    function (req, res)
+    {
+        let id = req.params.id
+
+
+        db.Campaigns.findOne({where: {id: id}}).then(function (campaign)
+        {
+            campaign.destroy().then(function ()
+            {
+                res.redirect('/campaigns');
+            });
+
+        }).catch(function (err)
+        {
+            res.redirect('/campaigns');
+        })
+    })
 
 app.get('/api', function (req, res)
 {
