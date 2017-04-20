@@ -31,6 +31,18 @@ html(ng-app='campaignsApp')
                     .row
                         .col-lg-12
                             .ibox.float-e-margins
+                                if updated
+                                    .alert.alert-success.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  Campaign was updated
+                                if created
+                                    .alert.alert-success.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  Campaign was created
+                                if err
+                                    .alert.alert-danger.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  Error
                                 .ibox-title
                                     h5 Campaigns
                                     .ibox-tools

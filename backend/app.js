@@ -112,10 +112,13 @@ app.get('/campaigns',
     require('connect-ensure-login').ensureLoggedIn(),
     function (req, res)
     {
-        db.Campaigns.all().then(function (campaigns)
+        db.Campaigns.all({order: 'id DESC'}).then(function (campaigns)
         {
             res.render('campaigns', {
-                campaignList: campaigns
+                campaignList: campaigns,
+                updated     : req.query.updated,
+                created     : req.query.created,
+                err         : req.query.err
             })
         })
 
@@ -146,7 +149,7 @@ app.post('/campaigns/:id',
       db.Campaigns.findOne({ where: {id: campaign.id} }).then(function(item) {
         item.update(campaign).then(function() {
             let data = JSON.stringify(campaign)
-            res.render('campaigns_edit', {updated: 'Updated successful', campaign: data})
+            res.redirect('/campaigns?updated=true');
         }).catch(function(err) {
           console.log(err)
             res.render('campaigns_edit', {err: 'Update wrong'})
@@ -164,7 +167,7 @@ app.post('/campaigns/:id',
     //if create
     } else {
       db.Campaigns.create(campaign).then(function(data) {
-          res.redirect('/campaigns/' + data.id);
+          res.redirect('/campaigns?created=true');
       }).catch(function(err) {
         console.log(err)
           res.render('campaigns_edit', {err: 'Saved wrong'})
