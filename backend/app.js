@@ -77,14 +77,10 @@ app.get('/dashboard/:id*?',
         {
             db.Conversations.all().then(function (conversations)
             {
-                db.Campaigns.all().then(function (campaigns)
-                {
-                    res.render('dashboard', {
-                        paymentList  : users,
-                        conversations: conversations,
-                        campaignList : campaigns,
-                        id           : id
-                    })
+                res.render('dashboard', {
+                    paymentList  : users,
+                    conversations: conversations,
+                    id           : id
                 })
             })
         })
