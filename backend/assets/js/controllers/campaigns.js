@@ -19,7 +19,6 @@ angular.module('campaignsApp', [])
     vm.baseElement = angular.element(document.querySelector('#base'));
     vm.mainElement = angular.element(document.querySelector('#main'));
 
-    $('#datepicker').datepicker({});
     $(".datapicker").bind("keydown", function (event) {
       event.preventDefault();
     });
@@ -89,4 +88,40 @@ angular.module('campaignsApp', [])
         delete vm.flowStorage[step];
       }
     }
-  })
+  }).directive('datepickerInput', function() {
+  return {
+    require: 'ngModel',
+    link: function (scope, element, attrs, ngModel) {
+      //set datepicker
+      $(element).datepicker({
+        dateFormat: 'dd/mm/yy',
+        minDate: 0,
+        closeText: "Close",
+        constrainInput: true
+      });
+
+      scope.$watch(function () {
+        return ngModel.$modelValue;
+      }, function (date) {
+        $(element).datepicker( "destroy" );
+
+        //set datepicker again after each time when we chose date, because second click on input, doesn`t open datepicker again
+        $(element).datepicker({
+          dateFormat: 'dd/mm/yy',
+          setDate: date,
+          minDate: 0,
+          closeText: "Close",
+          constrainInput: true
+        });
+
+        $(element).datepicker().on('changeDate', function(value){
+          // var dateStrToSend = value.date.getFullYear() + '/' + (value.date.getMonth() + 1) +  '/' + value.date.getDate();
+          scope.$apply(function () {
+            ngModel.$setViewValue(value.date);
+          });
+          $(".datepicker").hide();
+        });
+      });
+    }
+  }
+});

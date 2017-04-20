@@ -88,11 +88,11 @@ html(ng-app='campaignsApp')
                                             label.col-sm-2.control-label Start/End date
                                             .col-sm-10
                                                 #datepicker.input-daterange.input-group
-                                                    input.input-sm.form-control.datapicker(type='text', datapicker name='startDate', value='', ng-model='campaignCtr.data.startDate')
+                                                    input.input-sm.form-control.datapicker(type='text', datepicker-input name='startDate', value='', ng-model='campaignCtr.data.startDate')
                                                     |
                                                     span.input-group-addon to
                                                     |
-                                                    input.input-sm.form-control.datapicker(type='text', datapicker name='endDate', value='', ng-model='campaignCtr.data.endDate')
+                                                    input.input-sm.form-control.datapicker(type='text', datepicker-input name='endDate', value='', ng-model='campaignCtr.data.endDate')
 
                                         #repeat(ng-repeat='step in campaignCtr.steps')
                                             .hr-line-dashed

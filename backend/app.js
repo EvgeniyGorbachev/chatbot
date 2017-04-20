@@ -81,10 +81,8 @@ app.post('/dashboard/campaigns',
   function (req, res) {
   let campaign = JSON.parse(req.body.jsonData)
 
-      // campaign.startDate = (new Date(campaign.startDate).getTime()/1000)
-      // campaign.endDate = (new Date(campaign.endDate).getTime()/1000)
-    campaign.startDate = (new Date('04/05/2017').getTime()/1000)
-      campaign.endDate = (new Date('04/05/2017').getTime()/1000)
+    campaign.startDate = (new Date(campaign.startDate))
+    campaign.endDate = (new Date(campaign.endDate))
 
     db.Campaigns.create(campaign).then(function(data) {
       res.render('campaigns', {id: data.id})
