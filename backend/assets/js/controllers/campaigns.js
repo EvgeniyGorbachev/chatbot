@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('campaignsApp', [])
+angular.module('campaignsApp.campaign', [])
   .controller('CampaignListController', function() {
     let vm = this;
     vm.step = 0;

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('campaignsApp', [])
+angular.module('campaignsApp.dashboard', [])
   .controller('DashboardListController', function() {
 
     let vm = this;
