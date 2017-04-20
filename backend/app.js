@@ -103,7 +103,7 @@ app.post('/campaigns',
     campaign.endDate = (new Date(campaign.endDate))
 
     db.Campaigns.create(campaign).then(function(data) {
-      res.redirect('/dashboard');
+      res.redirect('/dashboard/' + data.id);
     }).catch(function(err) {
       console.log(err)
       res.render('campaigns', {err: 'Saved wrong'})
