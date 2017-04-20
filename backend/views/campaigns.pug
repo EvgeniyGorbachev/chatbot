@@ -31,6 +31,11 @@ html(ng-app='campaignsApp')
                     .row
                         .col-lg-12
                             .ibox.float-e-margins
+                                if updated
+                                    .alert.alert-success.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  #{updated}
+
                                 if err
                                     .alert.alert-danger.alert-dismissable
                                         button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
@@ -54,6 +59,7 @@ html(ng-app='campaignsApp')
                                         a.close-link
                                             i.fa.fa-times
                                 .ibox-content
+                                    input.form-control(type='hidden', name='campaign', ng-init="campaignCtr.campaign.object = "+campaign+"" id='campaign', ng-model='campaignCtr.campaign.object')
                                     form.form-horizontal#main(method='post', action='/campaigns', role='form', name='campaignCtr.form', novalidate)
                                         .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.name.$invalid}")
                                             label.col-sm-2.control-label Name

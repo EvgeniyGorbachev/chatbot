@@ -1,12 +1,16 @@
 'use strict';
 
 angular.module('campaignsApp.campaign', [])
-  .controller('CampaignListController', function() {
+  .controller('CampaignListController', function($scope) {
     let vm = this;
     vm.step = 0;
     vm.isFormSend = false;
+
     vm.steps = [];
     vm.flowStorage = {};
+    vm.campaign = {
+      "object": ''
+    };
     vm.data = {
       "name": '',
       "channel": '',
@@ -15,6 +19,24 @@ angular.module('campaignsApp.campaign', [])
       "endDate": '',
       "phrases": ''
     };
+
+    //when edit campaign
+    $scope.$watch('campaign.object', function() {
+      vm.data = vm.campaign.object;
+
+      if (vm.campaign.object) {
+
+        vm.steps = [];
+        vm.flowStorage = {};
+
+        for (var property in vm.campaign.object.phrases) {
+          if (vm.campaign.object.phrases.hasOwnProperty(property)) {
+            vm.steps.push({"id": property});
+            vm.flowStorage[property] = vm.campaign.object.phrases[property];
+          }
+        }
+      }
+    });
 
     vm.baseElement = angular.element(document.querySelector('#base'));
     vm.mainElement = angular.element(document.querySelector('#main'));
@@ -124,4 +146,4 @@ angular.module('campaignsApp.campaign', [])
       });
     }
   }
-});
+})

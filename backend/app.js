@@ -89,9 +89,21 @@ app.post('/dashboard',
 app.get('/campaigns',
   // require('connect-ensure-login').ensureLoggedIn(),
   function (req, res) {
-
     res.render('campaigns', { })
+})
 
+app.get('/campaigns/:id',
+  // require('connect-ensure-login').ensureLoggedIn(),
+  function (req, res) {
+    let id = req.params.id
+
+    db.Campaigns.findOne({ where: {id: id} }).then(function(campaign) {
+      let data = JSON.stringify(campaign)
+      res.render('campaigns', { campaign:data })
+    }).catch(function(err) {
+      console.log(err)
+      res.redirect('/dashboard')
+    })
 })
 
 app.post('/campaigns',
@@ -102,12 +114,28 @@ app.post('/campaigns',
     campaign.startDate = (new Date(campaign.startDate))
     campaign.endDate = (new Date(campaign.endDate))
 
-    db.Campaigns.create(campaign).then(function(data) {
-      res.redirect('/dashboard/' + data.id);
-    }).catch(function(err) {
-      console.log(err)
-      res.render('campaigns', {err: 'Saved wrong'})
-    })
+    //if update
+    if (campaign.id) {
+      db.Campaigns.findOne({ where: {id: campaign.id} }).then(function(item) {
+        item.update(campaign).then(function() {
+          res.render('campaigns', {updated: 'Updated successful'})
+        }).catch(function(err) {
+          console.log(err)
+          res.render('campaigns', {err: 'Update wrong'})
+        })
+      }).catch(function(err) {
+        console.log(err)
+        res.render('campaigns', {err: 'Campaign not found'})
+      })
+    //if create
+    } else {
+      db.Campaigns.create(campaign).then(function(data) {
+        res.redirect('/dashboard/' + data.id);
+      }).catch(function(err) {
+        console.log(err)
+        res.render('campaigns', {err: 'Saved wrong'})
+      })
+    }
 })
 
 app.get('/api', function (req, res) {
