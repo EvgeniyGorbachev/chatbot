@@ -128,8 +128,7 @@ app.get('/campaigns/:id',
       let data = JSON.stringify(campaign)
         res.render('campaigns_edit', {campaign: data})
     }).catch(function(err) {
-      console.log(err)
-        res.redirect('/campaigns_edit')
+        res.render('campaigns_edit')
     })
 })
 
