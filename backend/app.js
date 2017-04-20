@@ -126,14 +126,14 @@ app.get('/campaigns/:id',
 
     db.Campaigns.findOne({ where: {id: id} }).then(function(campaign) {
       let data = JSON.stringify(campaign)
-      res.render('campaigns', { campaign:data })
+        res.render('campaigns_edit', {campaign: data})
     }).catch(function(err) {
       console.log(err)
-      res.redirect('/dashboard')
+        res.redirect('/campaigns_edit')
     })
 })
 
-app.post('/campaigns',
+app.post('/campaigns/:id',
   // require('connect-ensure-login').ensureLoggedIn(),
   function (req, res) {
   let campaign = JSON.parse(req.body.jsonData)
@@ -145,19 +145,26 @@ app.post('/campaigns',
     if (campaign.id) {
       db.Campaigns.findOne({ where: {id: campaign.id} }).then(function(item) {
         item.update(campaign).then(function() {
-          res.render('campaigns', {updated: 'Updated successful'})
+            let data = JSON.stringify(campaign)
+            res.render('campaigns_edit', {updated: 'Updated successful', campaign: data})
         }).catch(function(err) {
           console.log(err)
-          res.render('campaigns', {err: 'Update wrong'})
+            res.render('campaigns_edit', {err: 'Update wrong'})
         })
       }).catch(function(err) {
         console.log(err)
-        res.render('campaigns', {err: 'Campaign not found'})
+          db.Campaigns.all().then(function (campaigns)
+          {
+              res.render('campaigns', {
+                  campaignList: campaigns,
+                  err         : 'Campaign not found'
+              })
+          })
       })
     //if create
     } else {
       db.Campaigns.create(campaign).then(function(data) {
-        res.redirect('/dashboard/' + data.id);
+          res.redirect('/campaigns/' + data.id);
       }).catch(function(err) {
         console.log(err)
         res.render('campaigns', {err: 'Saved wrong'})
