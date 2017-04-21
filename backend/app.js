@@ -207,12 +207,13 @@ app.post('/api/user', function (req, res)
     var billing  = JSON.stringify(req.body.billing)
 
     var user = {
-        userName : req.body.shipping.firstName + " " + req.body.shipping.lastName,
-        invoiceId: '',
-        email    : req.body.shipping.email,
-        phone    : req.body.phone,
-        shipping : shipping,
-        billing  : billing
+        userName    : req.body.shipping.firstName + " " + req.body.shipping.lastName,
+        invoiceId   : '',
+        email       : req.body.shipping.email,
+        phone       : req.body.phone,
+        campaign_id : req.body.campaign_id,
+        shipping    : shipping,
+        billing     : billing
     }
 
     user.invoiceId = hash(user)

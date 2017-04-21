@@ -7,6 +7,11 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true // Automatically gets converted to SERIAL for postgres
     },
+    campaign_id: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      notEmpty: true
+    },
     userName: {
       type: Sequelize.STRING,
       allowNull: false,
