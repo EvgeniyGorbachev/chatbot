@@ -118,7 +118,7 @@ html(ng-app='campaignsApp')
                                                 label.col-sm-2.control-label Response
                                                 .col-sm-2
                                                     select.form-control.m-b(name='response-{{step.id}}', ng-required="true", ng-model="campaignCtr.flowStorage[step.id].response")
-                                                        option(value="name" selected='') Name
+                                                        option(value="username" selected='') Name
                                                         option(value="text") Text
                                                         option(value="no") No
                                                         option(value="email") Email
@@ -132,7 +132,7 @@ html(ng-app='campaignsApp')
                                                     |
                                                     span(ng-show="campaignCtr.isFormSend && campaignCtr.form['step-{{step.id}}'].$invalid") (max. 3 digits)
                                                 .col-sm-2
-                                                    input.form-control(type='number', name='step-{{step.id}}', ng-required="campaignCtr.flowStorage[step.id].response != 'boolean'" ng-maxlength="3", ng-model="campaignCtr.flowStorage[step.id].nextStep.default")
+                                                    input.form-control(type='number', name='step-{{step.id}}', ng-required="campaignCtr.flowStorage[step.id].response != 'boolean'" ng-pattern='/^[1-9]{1,3}\d*$/', ng-model="campaignCtr.flowStorage[step.id].nextStep.default")
 
                                             //NEXT STEP IF YES
                                             .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['step-yes-{{step.id}}'].$invalid}" ng-show="campaignCtr.flowStorage[step.id].response == 'boolean'")
@@ -141,7 +141,7 @@ html(ng-app='campaignsApp')
                                                     |
                                                     span(ng-show="campaignCtr.isFormSend && campaignCtr.form['step-yes-{{step.id}}'].$invalid") (max. 3 digits)
                                                 .col-sm-2
-                                                    input.form-control(type='number', name='step-yes-{{step.id}}', ng-required="campaignCtr.flowStorage[step.id].response == 'boolean'" ng-maxlength="3", ng-model="campaignCtr.flowStorage[step.id].nextStep.ifYes")
+                                                    input.form-control(type='number', name='step-yes-{{step.id}}', ng-required="campaignCtr.flowStorage[step.id].response == 'boolean'" ng-pattern='/^[1-9]{1,3}\d*$/', ng-model="campaignCtr.flowStorage[step.id].nextStep.ifYes")
 
                                             //NEXT STEP IF NO
                                             .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['step-no-{{step.id}}'].$invalid}" ng-show="campaignCtr.flowStorage[step.id].response == 'boolean'")
@@ -150,7 +150,7 @@ html(ng-app='campaignsApp')
                                                     |
                                                     span(ng-show="campaignCtr.isFormSend && campaignCtr.form['step-no-{{step.id}}'].$invalid") (max. 3 digits)
                                                 .col-sm-2
-                                                    input.form-control(type='number', name='step-no-{{step.id}}', ng-required="campaignCtr.flowStorage[step.id].response == 'boolean'" ng-maxlength="3", ng-model="campaignCtr.flowStorage[step.id].nextStep.ifNo")
+                                                    input.form-control(type='number', name='step-no-{{step.id}}', ng-required="campaignCtr.flowStorage[step.id].response == 'boolean'" ng-pattern='/^[1-9]{1,3}\d*$/', ng-model="campaignCtr.flowStorage[step.id].nextStep.ifNo")
 
                                             //INITIATOR
                                             .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['initiator-{{step.id}}'].$invalid}")
@@ -167,7 +167,7 @@ html(ng-app='campaignsApp')
                                                     |
                                                     span(ng-show="campaignCtr.isFormSend && campaignCtr.form['delay-{{step.id}}'].$invalid") (max. 3 digits)
                                                 .col-sm-2
-                                                    input.form-control(type='number', name='delay-{{step.id}}', ng-required="true" ng-maxlength="3", ng-model="campaignCtr.flowStorage[step.id].delay")
+                                                    input.form-control(type='number', name='delay-{{step.id}}', ng-required="true" ng-pattern='/^[1-9]{1,3}\d*$/', ng-model="campaignCtr.flowStorage[step.id].delay")
 
                                         //BUTTONS
                                         .form-group
