@@ -129,6 +129,7 @@ app.get('/campaigns',
             res.render('campaigns', {
                 campaignList: campaigns,
                 updated     : req.query.updated,
+                deleted     : req.query.deleted,
                 created     : req.query.created,
                 err         : req.query.err
             })
@@ -198,7 +199,7 @@ app.get('/campaigns/delete/:id',
         {
             campaign.destroy().then(function ()
             {
-                res.redirect('/campaigns');
+                res.redirect('/campaigns?deleted=true');
             });
 
         }).catch(function (err)

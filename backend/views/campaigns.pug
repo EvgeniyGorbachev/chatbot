@@ -39,6 +39,10 @@ html(ng-app='campaignsApp')
                                     .alert.alert-success.alert-dismissable
                                         button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
                                         |  Campaign was created
+                                if deleted
+                                    .alert.alert-success.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  Campaign was deleted
                                 if err
                                     .alert.alert-danger.alert-dismissable
                                         button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
