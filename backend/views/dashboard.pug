@@ -18,12 +18,12 @@ html(ng-app='campaignsApp')
                                     |  Log out
                 .row.wrapper.border-bottom.white-bg.page-heading
                     .col-lg-10
-                        h2 Chatbots payment statistics
+                        h2 Campaign statistics
                         ol.breadcrumb
                             li
                                 a(href='/dashboard') Home
                             li
-                                a Chatbot
+                                a Campaign
                             li.active
                                 strong Statistics
                     .col-lg-2
@@ -31,8 +31,27 @@ html(ng-app='campaignsApp')
                     .row
                         .col-lg-12
                             .ibox.float-e-margins
+                                .ibox-content
+                                    h2  #{campaign.name}
+                                        |
+                                        |
+                                        |
+                                        if campaign.isActive
+                                            span.label.label-info Acitve
+                                        if !campaign.isActive
+                                            span.label.label-danger Inactive
+                                    .alert.alert-warning
+                                        p  <strong>Time interval:</strong> #{campaign.startDate} - #{campaign.endDate}
+                                        p  <strong>Resource:</strong> #{campaign.channel} (#{campaign.phone})
+                                        p  <strong>Created at:</strong> #{campaign.createdAt}
+                                        p  <strong>Last update:</strong> #{campaign.createdAt}
+
+                    .row
+                        .col-lg-12
+                            .ibox.float-e-margins
                                 .ibox-title
                                     h5 Chatbot payments
+                                    span.label.label-info #{paymentsCount}
                                     .ibox-tools
                                         a.collapse-link
                                             i.fa.fa-chevron-up
@@ -57,7 +76,7 @@ html(ng-app='campaignsApp')
                                                 th Billin info
                                                 th Cteated at
                                         tbody
-                                            each item in paymentList
+                                            each item in payments
                                                 tr.gradeA
                                                     td= item.uid
                                                     td= item.userName
@@ -80,6 +99,7 @@ html(ng-app='campaignsApp')
                             .ibox.float-e-margins
                                 .ibox-title
                                     h5 Chatbot sessions
+                                    span.label.label-info #{conversationsCount}
                                     .ibox-tools
                                         a.collapse-link
                                             i.fa.fa-chevron-up

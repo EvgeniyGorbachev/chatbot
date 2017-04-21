@@ -59,7 +59,7 @@ app.post('/login',
     passport.authenticate('local', {failureRedirect: '/login'}),
     function (req, res)
     {
-        res.redirect('/dashboard')
+        res.redirect('/campaigns')
     })
 
 app.get('/logout', function (req, res)
@@ -68,20 +68,33 @@ app.get('/logout', function (req, res)
     res.redirect('/login')
 })
 
-app.get('/dashboard/:id*?',
+app.get('/dashboard/:id',
     // require('connect-ensure-login').ensureLoggedIn(),
     function (req, res)
     {
         let id = req.params.id || false
-        db.Users.all().then(function (users)
+        db.Users.findAll({ where: {campaign_id: id} }).then(function (users)
         {
-            db.Conversations.all().then(function (conversations)
+            db.Conversations.findAll({ where: {campaign_id: id} }).then(function (conversations)
             {
-                res.render('dashboard', {
-                    paymentList  : users,
+
+              db.Campaigns.findOne({where: {id: id}}).then(function (campaign)
+              {
+                if (campaign != null) {
+                  res.render('dashboard', {
+                    payments  : users,
                     conversations: conversations,
-                    id           : id
-                })
+                    conversationsCount: conversations.length,
+                    paymentsCount: users.length,
+                    campaign     : campaign
+                  })
+                } else {
+                  res.redirect('/campaigns')
+                }
+
+              }).catch(function(err) {
+                res.redirect('/campaigns')
+              })
             })
         })
     })
@@ -90,7 +103,6 @@ app.post('/campaigns',
     // require('connect-ensure-login').ensureLoggedIn(),
     function (req, res)
     {
-      console.log(3333333,req.body.jsonData)
         let campaign = JSON.parse(req.body.jsonData)
         let bool     = campaign.isActive ? 1 : 0
         db.Campaigns.findOne({where: {id: campaign.id}}).then(function (campaign)

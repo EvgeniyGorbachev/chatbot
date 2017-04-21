@@ -87,7 +87,8 @@ html(ng-app='campaignsApp')
                                                         td= item.id
                                                         td.text-center
                                                             input(type='checkbox', ng-checked="" + item.isActive + "" name="item.id" ng-model="dashboardCtr.isActive[" + item.id + "]" ng-click="dashboardCtr.change(" + item.id + ")")
-                                                        td= item.name
+                                                        td
+                                                            a(href="/dashboard/" + item.id + "") #{item.name}
                                                         td= item.channel
                                                         td= item.phone
                                                         td= item.startDate
