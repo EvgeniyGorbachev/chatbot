@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('campaignsApp.campaign', [])
-  .controller('CampaignListController', function($scope) {
+angular.module('campaignsApp.campaignEdit', [])
+  .controller('CampaignEditListController', function($scope) {
     let vm = this;
     vm.step = 0;
     vm.isFormSend = false;
@@ -9,7 +9,7 @@ angular.module('campaignsApp.campaign', [])
     vm.steps = [];
     vm.flowStorage = {};
     vm.campaign = {
-      "object": ''
+      "object": null
     };
     vm.data = {
       "name": '',
@@ -31,11 +31,18 @@ angular.module('campaignsApp.campaign', [])
 
         for (var property in vm.campaign.object.phrases) {
           if (vm.campaign.object.phrases.hasOwnProperty(property)) {
+            incrementStep();
             vm.steps.push({"id": property});
             vm.flowStorage[property] = vm.campaign.object.phrases[property];
           }
         }
       }
+
+      //init first step when create new campaign
+      if (!vm.campaign.object) {
+        addStep();
+      }
+
     });
 
     vm.baseElement = angular.element(document.querySelector('#base'));
@@ -48,9 +55,6 @@ angular.module('campaignsApp.campaign', [])
     vm.addStep = addStep;
     vm.deleteStep = deleteStep;
     vm.submit = submit;
-
-    //init first step
-    addStep();
 
       function addStep(event)
       {

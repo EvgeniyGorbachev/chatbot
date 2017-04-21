@@ -1,7 +1,7 @@
 doctype html
 html(ng-app='campaignsApp')
     include header.pug
-    body(ng-controller='CampaignListController as campaignCtr')
+    body(ng-controller='CampaignEditListController as campaignCtr')
         #wrapper
             include navigation.pug
             #page-wrapper.gray-bg
@@ -60,12 +60,17 @@ html(ng-app='campaignsApp')
                                 .ibox-content
                                     input.form-control(type='hidden', name='campaign', ng-init="campaignCtr.campaign.object = " + campaign + "" id='campaign', ng-model='campaignCtr.campaign.object')
                                     form.form-horizontal#main(method='post', action="", role='form', name='campaignCtr.form', novalidate)
+                                        //Name
                                         .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.name.$invalid}")
                                             label.col-sm-2.control-label Name
+                                                |
+                                                |
+                                                span(ng-show="campaignCtr.isFormSend && campaignCtr.form.name.$invalid") (max. 50 characters)
                                             .col-sm-10
                                                 input.form-control(type='text' name='name', ng-required='true', ng-model='campaignCtr.data.name', ng-maxlength='50')
                                                 input.form-control(type='hidden', name='jsonData', id='data', ng-model='campaignCtr.jsonData')
 
+                                        //Channel
                                         .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.channel.$invalid}")
                                             label.col-sm-2.control-label Channel
                                             .col-sm-2
@@ -74,15 +79,19 @@ html(ng-app='campaignsApp')
                                                     option(value='facebook') Facebook
                                                     option(value='telegram') Telegram
                                                     option(value='slack') Slack
+                                        //Phone number
                                         .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone.$invalid}")
                                             label.col-sm-2.control-label Phone number
+                                                |
+                                                |
+                                                span(ng-show="campaignCtr.isFormSend && campaignCtr.form.phone.$invalid") (format +12345678900)
                                             .col-sm-10
                                                 .row
                                                     .col-md-3
                                                         input.form-control(type='text', name='phone' placeholder='+12345678900' ng-required='true', ng-model='campaignCtr.data.phone', ng-pattern='/^\\+\\d{11}$/')
-
+                                        //Start/End date
                                         .form-group(ng-class="{'has-error': campaignCtr.isFormSend && (campaignCtr.form.startDate.$invalid||campaignCtr.form.endDate.$invalid)}")
-                                            label.col-sm-2.control-label Start/End date
+                                            label.col-sm-2.control-label Start / End date
                                             .col-sm-10
                                                 #datepicker.input-daterange.input-group
                                                     input.input-sm.form-control.datapicker(type='text', datepicker-input name='startDate', value='', ng-model='campaignCtr.data.startDate', ng-required="true" )
@@ -98,8 +107,11 @@ html(ng-app='campaignsApp')
                                             //QUESTION
                                             .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['question-{{step.id}}'].$invalid}")
                                                 label.col-sm-2.control-label Question
+                                                    |
+                                                    |
+                                                    span(ng-show="campaignCtr.isFormSend && campaignCtr.form['question-{{step.id}}'].$invalid") (max. 500 characters)
                                                 .col-sm-10
-                                                    input.form-control(type='text', name='question-{{step.id}}', ng-required="true" ng-maxlength="150", ng-model="campaignCtr.flowStorage[step.id].text")
+                                                    input.form-control(type='text', name='question-{{step.id}}', ng-required="true" ng-maxlength="500", ng-model="campaignCtr.flowStorage[step.id].text")
 
                                             //RESPONSE
                                             .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['response-{{step.id}}'].$invalid}")
@@ -108,6 +120,7 @@ html(ng-app='campaignsApp')
                                                     select.form-control.m-b(name='response-{{step.id}}', ng-required="true", ng-model="campaignCtr.flowStorage[step.id].response")
                                                         option(value="name" selected='') Name
                                                         option(value="text") Text
+                                                        option(value="no") No
                                                         option(value="email") Email
                                                         option(value="address") Address
                                                         option(value="boolean") Boolean
@@ -115,20 +128,29 @@ html(ng-app='campaignsApp')
                                             //NEXT STEP
                                             .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['step-{{step.id}}'].$invalid}" ng-show="campaignCtr.flowStorage[step.id].response != 'boolean'")
                                                 label.col-sm-2.control-label Next step
+                                                    |
+                                                    |
+                                                    span(ng-show="campaignCtr.isFormSend && campaignCtr.form['step-{{step.id}}'].$invalid") (max. 3 digits)
                                                 .col-sm-2
-                                                    input.form-control(type='number', name='step-{{step.id}}', ng-required="campaignCtr.flowStorage[step.id].response != 'boolean'" ng-maxlength="5", ng-model="campaignCtr.flowStorage[step.id].nextStep.default")
+                                                    input.form-control(type='number', name='step-{{step.id}}', ng-required="campaignCtr.flowStorage[step.id].response != 'boolean'" ng-maxlength="3", ng-model="campaignCtr.flowStorage[step.id].nextStep.default")
 
                                             //NEXT STEP IF YES
                                             .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['step-yes-{{step.id}}'].$invalid}" ng-show="campaignCtr.flowStorage[step.id].response == 'boolean'")
                                                 label.col-sm-2.control-label Next step, If Yes
+                                                    |
+                                                    |
+                                                    span(ng-show="campaignCtr.isFormSend && campaignCtr.form['step-yes-{{step.id}}'].$invalid") (max. 3 digits)
                                                 .col-sm-2
-                                                    input.form-control(type='number', name='step-yes-{{step.id}}', ng-required="campaignCtr.flowStorage[step.id].response == 'boolean'" ng-maxlength="5", ng-model="campaignCtr.flowStorage[step.id].nextStep.ifYes")
+                                                    input.form-control(type='number', name='step-yes-{{step.id}}', ng-required="campaignCtr.flowStorage[step.id].response == 'boolean'" ng-maxlength="3", ng-model="campaignCtr.flowStorage[step.id].nextStep.ifYes")
 
                                             //NEXT STEP IF NO
                                             .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['step-no-{{step.id}}'].$invalid}" ng-show="campaignCtr.flowStorage[step.id].response == 'boolean'")
                                                 label.col-sm-2.control-label Next step, If No
+                                                    |
+                                                    |
+                                                    span(ng-show="campaignCtr.isFormSend && campaignCtr.form['step-no-{{step.id}}'].$invalid") (max. 3 digits)
                                                 .col-sm-2
-                                                    input.form-control(type='number', name='step-no-{{step.id}}', ng-required="campaignCtr.flowStorage[step.id].response == 'boolean'" ng-maxlength="5", ng-model="campaignCtr.flowStorage[step.id].nextStep.ifNo")
+                                                    input.form-control(type='number', name='step-no-{{step.id}}', ng-required="campaignCtr.flowStorage[step.id].response == 'boolean'" ng-maxlength="3", ng-model="campaignCtr.flowStorage[step.id].nextStep.ifNo")
 
                                             //INITIATOR
                                             .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['initiator-{{step.id}}'].$invalid}")
@@ -140,9 +162,12 @@ html(ng-app='campaignsApp')
 
                                             //DELAY
                                             .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['delay-{{step.id}}'].$invalid}")
-                                                label.col-sm-2.control-label Delay
+                                                label.col-sm-2.control-label Delay, sec.
+                                                    |
+                                                    |
+                                                    span(ng-show="campaignCtr.isFormSend && campaignCtr.form['delay-{{step.id}}'].$invalid") (max. 3 digits)
                                                 .col-sm-2
-                                                    input.form-control(type='number', name='delay-{{step.id}}', ng-required="true" ng-maxlength="150", ng-model="campaignCtr.flowStorage[step.id].delay")
+                                                    input.form-control(type='number', name='delay-{{step.id}}', ng-required="true" ng-maxlength="3", ng-model="campaignCtr.flowStorage[step.id].delay")
 
                                         //BUTTONS
                                         .form-group

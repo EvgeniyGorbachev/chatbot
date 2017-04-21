@@ -2,5 +2,5 @@
 
 angular.module('campaignsApp', [
   'campaignsApp.dashboard',
-  'campaignsApp.campaign'
+  'campaignsApp.campaignEdit'
 ])
