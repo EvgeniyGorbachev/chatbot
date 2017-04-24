@@ -16,22 +16,20 @@ angular.module('myApp.payment', ['ngRoute'])
   vm.isFormSend = false;
   vm.isCheckedBillingAddres = true;
 
-  vm.go = function ( path ) {
+  saveShippingAsBilling();
 
+  vm.go = function ( path ) {
     vm.isFormSend = true;
+
     if (!vm.form.$valid && path == '/review') {
       return false;
-    }
-
-    if (vm.isCheckedBillingAddres) {
-      vm.saveShippingAsBilling();
     }
 
     userService.saveUser(vm.user);
     $location.path( path );
   };
 
-  vm.saveShippingAsBilling =function () {
+  function saveShippingAsBilling () {
     vm.user.billing.firstName = vm.user.shipping.firstName;
     vm.user.billing.lastName = vm.user.shipping.lastName;
     vm.user.billing.email = vm.user.shipping.email;
@@ -42,18 +40,24 @@ angular.module('myApp.payment', ['ngRoute'])
     vm.user.billing.zipCode = vm.user.shipping.zipCode;
   };
 
-  vm.changeCheckedBillingAddres =function () {
+  function notSaveShippingAsBilling () {
+    vm.user.billing.firstName = '';
+    vm.user.billing.lastName = '';
+    vm.user.billing.email = '';
+    vm.user.billing.addressFirst = '';
+    vm.user.billing.addressSecond = '';
+    vm.user.billing.city = '';
+    vm.user.billing.state = '';
+    vm.user.billing.zipCode = '';
+  };
+
+  vm.changeCheckedBillingAddress =function () {
     vm.isCheckedBillingAddres = !vm.isCheckedBillingAddres;
 
     if (vm.isCheckedBillingAddres) {
-      vm.user.billing.firstName = '';
-      vm.user.billing.lastName = '';
-      vm.user.billing.email = '';
-      vm.user.billing.addressFirst = '';
-      vm.user.billing.addressSecond = '';
-      vm.user.billing.city = '';
-      vm.user.billing.state = '';
-      vm.user.billing.zipCode = '';
+      saveShippingAsBilling();
+    } else {
+      notSaveShippingAsBilling();
     }
   };
 

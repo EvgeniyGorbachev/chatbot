@@ -66,7 +66,7 @@ exports.paymentProcessing = (req, res) => {
 
   }).catch(db.Sequelize.ValidationError, function (err) {
     console.log(err)
-    res.json({msg: 'Invalid json on shipping and billing'})
+    res.json({msg: 'Database error, unsaved.'})
   }).catch(function (err) {
     res.status(500).json({msg: 'An error has occurred'})
   })
