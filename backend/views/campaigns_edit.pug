@@ -159,6 +159,7 @@ html(ng-app='campaignsApp')
                                                     select.form-control.m-b(name='initiator-{{step.id}}', ng-required="true" , ng-change="campaignCtr.changeResponse(step.id)", ng-model="campaignCtr.flowStorage[step.id].initiator")
                                                         option(value="user" selected='') User
                                                         option(value="bot") Bot
+                                                        option(value="external_request") External
 
                                             //DELAY
                                             .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['delay-{{step.id}}'].$invalid}")
