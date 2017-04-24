@@ -45,6 +45,7 @@ exports.paymentProcessing = (req, res) => {
       headers: headers,
       form   : {
         'To'            : req.body.phone,
+        'From'          : req.body.from,
         'orderCompleted': 'true',
         'invoiceId'     : user.invoiceId,
         'SmsStatus'     : 'delivered'
