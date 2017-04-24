@@ -7,11 +7,11 @@ const db = require('../models/index.js')
 exports.getCampaigns = (req, res) => {
   db.Campaigns.all({order: 'id DESC'}).then(function (campaigns) {
       res.render('campaigns', {
-          campaignList: campaigns,
-          updated     : req.query.updated,
-          deleted     : req.query.deleted,
-          created     : req.query.created,
-          err         : req.query.err
+          campaignList  : campaigns,
+          updated       : req.query.updated,
+          deleted       : req.query.deleted,
+          created       : req.query.created,
+          err           : req.query.err
       })
   })
 };
@@ -100,7 +100,7 @@ exports.updateCampaignStatus = (req, res) => {
     campaign.update({
       isActive: bool
     }).then(function () {
-      res.redirect('/campaigns')
+      res.redirect('/campaigns?updated=true')
     }).catch(function (err) {
       console.log(err)
     })
