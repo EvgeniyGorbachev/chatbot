@@ -1,5 +1,6 @@
-const db   = require('../models/index.js')
-const hash = require('object-hash')
+const db      = require('../models/index.js')
+const hash    = require('object-hash')
+const request = require('request')
 
 /**
  * GET /api
@@ -68,6 +69,7 @@ exports.paymentProcessing = (req, res) => {
     console.log(err)
     res.json({msg: 'Database error, unsaved.'})
   }).catch(function (err) {
+    console.log("error", err)
     res.status(500).json({msg: 'An error has occurred'})
   })
 };
