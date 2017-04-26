@@ -44,11 +44,12 @@ exports.paymentProcessing = (req, res) => {
       method : 'POST',
       headers: headers,
       body: JSON.stringify({
-        'To'            : req.body.phone,
-        'From'          : req.body.from,
+        'trigger'       : 'delivery:success',
+        'app'           : {'_id': req.body.appId},
+        'appUser'       : {'_id': req.body.appUserId},
         'orderCompleted': 'true',
         'invoiceId'     : user.invoiceId,
-        'SmsStatus'     : 'success'
+
       }),
     }
 

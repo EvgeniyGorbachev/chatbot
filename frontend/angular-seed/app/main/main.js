@@ -26,7 +26,8 @@ angular.module('myApp.main', ['ngRoute'])
   var nameArr = userName.split(' ');
 
   vm.user.campaign_id = userData.campaign_id;
-  vm.user.from = userData.from;
+  vm.user.appUserId = userData.appUserId;
+  vm.user.appId = userData.appId;
   vm.user.phone = userData.phone;
   vm.user.billing.email = userData.email;
   vm.user.shipping.email = userData.email;
