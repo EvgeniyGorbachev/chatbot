@@ -116,7 +116,7 @@ exports.updateCampaignById = (req, res) => {
           type: 'twilio',
           accountSid: process.env.TWILIO_ACCOUNT_SID,
           authToken: process.env.TWILIO_AUTH_TOKEN,
-          phoneNumberSid: process.env.TWILIO_PHONE_NUMBER_SID
+          phoneNumberSid: campaign.twilio_phone_number_sid
         }).then((response) => {
 
           // Initializing Smooch Core with as an app scoped key

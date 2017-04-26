@@ -92,6 +92,13 @@ html(ng-app='campaignsApp')
                                                 .row
                                                     .col-md-3
                                                         input.form-control(type='text', name='phone' placeholder='+12345678900' ng-required='true', ng-model='campaignCtr.data.phone', ng-pattern='/^\\+\\d{11}$/')
+                                        //Phone number twilio sid
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}")
+                                            label.col-sm-2.control-label Twilio phone number sid
+                                            .col-sm-10
+                                                .row
+                                                    .col-md-3
+                                                        input.form-control(type='text', name='phone_sid' placeholder='PNc91815148445g9b8963ab398b499b0540' ng-required='true', ng-model='campaignCtr.data.twilio_phone_number_sid')
                                         //Start/End date
                                         .form-group(ng-class="{'has-error': campaignCtr.isFormSend && (campaignCtr.form.startDate.$invalid||campaignCtr.form.endDate.$invalid)}")
                                             label.col-sm-2.control-label Start / End date

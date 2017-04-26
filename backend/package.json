@@ -36,6 +36,7 @@
     "request": "^2.81.0",
     "sequelize": "^3.23.6",
     "sequelize-cli": "^2.5.1",
-    "smooch-core": "^3.5.0"
+    "smooch-core": "^3.5.0",
+    "twilio": "^2.11.1"
   }
 }

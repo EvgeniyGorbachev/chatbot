@@ -61,6 +61,9 @@ module.exports = function (sequelize, DataTypes) {
         },
         smooch_app_secret: {
             type: Sequelize.STRING
+        },
+        twilio_phone_number_sid: {
+            type: Sequelize.STRING
         }
     }, {
         individualHooks: true,
