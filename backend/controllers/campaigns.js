@@ -1,4 +1,6 @@
 const db = require('../models/index.js')
+const SmoochCore =  require('smooch-core')
+const request = require('request')
 
 /**
  * GET /campaigns
@@ -63,8 +65,79 @@ exports.updateCampaignById = (req, res) => {
     })
     //if create
   } else {
-    db.Campaigns.create(campaign).then(function(data) {
-      res.redirect('/campaigns?created=true');
+
+    // Initializing Smooch Core with an account scoped key
+    let smooch = new SmoochCore({
+      keyId: process.env.SMOOCH_ACC_KEY,
+      secret: process.env.SMOOCH_ACC_SECRET,
+      scope: 'account'
+    });
+
+    // Create Smooch app
+    smooch.apps.create({
+      name: campaign.name
+    }).then((response) => {
+
+      campaign.smooch_app_token = response.app['appToken']
+      campaign.smooch_app_id = response.app['_id']
+
+
+      // Set the headers
+      let headers = {
+        'authorization'  : smooch.authHeaders.Authorization,
+        'Content-Type': 'application/json'
+      }
+
+      // Configure the request Smooch API: HACK, because this don`t work:
+      // smooch.apps.keys.create('59009f0befc9e41201a33ca9', {
+      //   name: 'key',
+      // }).then((response) => {
+      //   console.log(response)
+      // }).catch((err) => {
+      //   console.log(err)
+      // });
+      let options = {
+        url    : process.env.SMOOCH_API_URL + '/apps/' + campaign.smooch_app_id + '/keys',
+        method : 'POST',
+        headers: headers,
+        form   : {"name": "key1"},
+      }
+
+
+      // Start the request to get smooch app key and secret
+      request(options, function (error, response, body) {
+
+        let smoochData = JSON.parse(body)
+        campaign.smooch_app_key_id = smoochData.key['_id']
+        campaign.smooch_app_secret = smoochData.key.secret
+
+        // Smooch add twilio integration
+        smooch.integrations.create(campaign.smooch_app_id, {
+          type: 'twilio',
+          accountSid: process.env.TWILIO_ACCOUNT_SID,
+          authToken: process.env.TWILIO_AUTH_TOKEN,
+          phoneNumberSid: process.env.TWILIO_PHONE_NUMBER_SID
+        }).then((response) => {
+
+          // Initializing Smooch Core with as an app scoped key
+          let smoochApp = new SmoochCore({
+            keyId: campaign.smooch_app_key_id,
+            secret: campaign.smooch_app_secret,
+            scope: 'app'
+          });
+
+          // Smooch add webhook
+          smoochApp.webhooks.create({
+            target: process.env.CONFIRM_ORDER_CALLBACK,
+            triggers: '*'
+          }).then((response) => {
+            // Save campaign
+            db.Campaigns.create(campaign).then(function(data) {
+              res.redirect('/campaigns?created=true');
+            })
+          });
+        })
+      })
     }).catch(function(err) {
       console.log(err)
       res.render('campaigns_edit', {err: 'Saved wrong'})

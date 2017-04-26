@@ -5,7 +5,7 @@ require('dotenv').config()
 
 // let token = jwt.sign({scope: 'account'}, SECRET, {header: {kid: KEY_ID}});
 
-let APP_TOKEN = 'drfzc4jghvnj9kica9sfwfbgy';
+let APP_TOKEN = '7bq6xywnz8h8gvbfxfyrvxlgy';
 // Initializing Smooch Core with an app scoped token
 let smoochApp = new SmoochCore({
   appToken: APP_TOKEN
@@ -13,11 +13,23 @@ let smoochApp = new SmoochCore({
 
 
 // Initializing Smooch Core with an account scoped key
+// let smooch = new SmoochCore({
+//   keyId: 'app_5900775907f297390007cbdd',
+//   secret: '2QjybI1GExoAA4Qr5MQICw5Q',
+//   scope: 'app'
+// });
+
+
+// Initializing Smooch Core with an account scoped key
 let smooch = new SmoochCore({
-  keyId: process.env.TWILIO_ACC_KEY,
-  secret: process.env.TWILIO_ACC_SECRET,
+  keyId: process.env.SMOOCH_ACC_KEY,
+  secret: process.env.SMOOCH_ACC_SECRET,
   scope: 'account'
 });
+
+//get barear
+console.log(smooch.authHeaders.Authorization)
+
 
 // var smooch = new SmoochCore({
 //   jwt: token
@@ -25,13 +37,22 @@ let smooch = new SmoochCore({
 
 //create app
 // smooch.apps.create({
-//   name: 'test2'
+//   name: 'test5'
 // }).then((response) => {
-//   // async code
+//   // console.log(111111, response.appToken)
+//   console.log(111111, response.app['appToken'])
+//   console.log(111111, response.app['_id'])
 // });
 
-//get barear
-// console.log(smooch)
+//create app key
+// smooch.apps.keys.create('59009f0befc9e41201a33ca9', {
+//   name: 'key',
+// }).then((response) => {
+//   console.log(response)
+// }).catch((err) => {
+//   console.log(err)
+// });
+
 
 
 // app list
@@ -66,7 +87,7 @@ let smooch = new SmoochCore({
 // });
 
 //get user
-// smoochApp.appUsers.get('f90b6f7a5c7c5f1daec0277a').then((response) => {
+// smoochApp.appUsers.get('b6c1efdff3764c97afa38043').then((response) => {
 //   console.log(response)
 // });
 
