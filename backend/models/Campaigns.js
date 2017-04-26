@@ -53,6 +53,9 @@ module.exports = function (sequelize, DataTypes) {
         smooch_app_token: {
             type: Sequelize.STRING
         },
+        smooch_app_id: {
+            type: Sequelize.STRING
+        },
         smooch_app_key_id: {
             type: Sequelize.STRING
         },
