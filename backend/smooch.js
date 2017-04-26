@@ -1,7 +1,27 @@
+require('dotenv').config()
+
 let jwt = require('jsonwebtoken');
 let SmoochCore =  require('smooch-core');
 
-require('dotenv').config()
+// var client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+
+// client.availablePhoneNumbers("US").local.list({
+//   number: "+12035804010"
+// }, function(err, data) {
+//   var number = data.availablePhoneNumbers[0];
+// console.log(22222, data)
+// console.log(number)
+//   // client.incomingPhoneNumbers.create({
+//   //   phoneNumber: number.phone_number
+//   // }, function(err, purchasedNumber) {
+//   //   console.log(purchasedNumber.sid);
+//   // });
+// });
+
+// client.accounts(process.env.TWILIO_ACCOUNT_SID).get(function(err, account) {
+//   console.log(account);
+// });
+
 
 // let token = jwt.sign({scope: 'account'}, SECRET, {header: {kid: KEY_ID}});
 
@@ -28,7 +48,7 @@ let smooch = new SmoochCore({
 });
 
 //get barear
-console.log(smooch.authHeaders.Authorization)
+// console.log(smooch.authHeaders.Authorization)
 
 
 // var smooch = new SmoochCore({
