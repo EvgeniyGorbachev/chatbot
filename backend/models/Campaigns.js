@@ -49,6 +49,15 @@ module.exports = function (sequelize, DataTypes) {
         },
         isActive: {
             type: Sequelize.BOOLEAN
+        },
+        smooch_app_token: {
+            type: Sequelize.STRING
+        },
+        smooch_app_key_id: {
+            type: Sequelize.STRING
+        },
+        smooch_app_secret: {
+            type: Sequelize.STRING
         }
     }, {
         individualHooks: true,
