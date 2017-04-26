@@ -43,13 +43,13 @@ exports.paymentProcessing = (req, res) => {
       url    : process.env.CONFIRM_ORDER_CALLBACK,
       method : 'POST',
       headers: headers,
-      form   : {
+      body: JSON.stringify({
         'To'            : req.body.phone,
         'From'          : req.body.from,
         'orderCompleted': 'true',
         'invoiceId'     : user.invoiceId,
-        'SmsStatus'     : 'delivered'
-      },
+        'SmsStatus'     : 'success'
+      }),
     }
 
     console.log("REQUEST options", options)
