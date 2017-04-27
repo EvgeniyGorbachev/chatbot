@@ -4,28 +4,24 @@ angular.module('campaignsApp.sessionEdit', [])
   .controller('SessionsListController', function() {
 
     let vm = this;
-    vm.change = change;
     vm.sendMessage = sendMessage;
-    vm.isActive = {};
-    vm.message = {};
+    vm.isFormSend = false;
 
-    function change(id) {
-      let bool = vm.isActive[id] || false;
-      $('#data').val(JSON.stringify({"id": id, "isActive": bool}));
-      $('form').submit();
-    }
+    vm.message = {
+      "text": '',
+      "user_id": '',
+      "campaign_id": '',
+      "direction": 1
+    };
 
     function sendMessage(event) {
       event.preventDefault();
       vm.isFormSend = true;
-      console.log(11111)
+      console.log(11111, vm.message)
       if (!vm.form.$valid) {
         return false;
       }
-      console.log(2222)
-      // vm.data.phrases = vm.flowStorage;
-      //
-      // $('#data').val(JSON.stringify(vm.data));
-      // $('form').submit();
+      $('#data').val(JSON.stringify(vm.message));
+      $('form').submit();
     }
   })

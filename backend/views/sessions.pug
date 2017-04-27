@@ -78,15 +78,18 @@ html(ng-app='campaignsApp')
                                                             |
                                                             small.text-muted Today 4:21 pm - 12.06.2014
                                     .chat-form
-                                        form(role='form')
-                                            .form-group
-                                                textarea.form-control(placeholder='Message')
+                                        form(method='post', action="", role='form', name='sessionsCtr.form', novalidate)
+                                            .form-group(ng-class="{'has-error': sessionsCtr.isFormSend &&  sessionsCtr.text.$invalid}")
+                                                input.form-control(type='hidden', name='userId', ng-init="sessionsCtr.message.user_id = '" + userId + "'", ng-model='sessionsCtr.message.user_id')
+                                                input.form-control(type='hidden', name='campaignId', ng-init="sessionsCtr.message.campaign_id = '" + campaignId + "'", ng-model='sessionsCtr.message.campaign_id')
+                                                input.form-control(type='hidden', name='jsonData', id='data', ng-model='sessionsCtr.jsonData')
+                                                textarea.form-control(placeholder='Message', name='text', ng-required="true", ng-model="sessionsCtr.message.text")
                                                 grammarly-btn
                                                     ._e725ae-textarea_btn._e725ae-not_focused(data-reactroot='', style='visibility: hidden; z-index: 2;')
                                                         ._e725ae-transform_wrap
                                                             ._e725ae-status(title='Protected by Grammarly') &nbsp;
                                             .text-right
-                                                button.btn.btn-sm.btn-primary.m-t-n-xs(type='submit')
+                                                button.btn.btn-sm.btn-primary.m-t-n-xs(type='submit', ng-click='sessionsCtr.sendMessage($event)')
                                                     strong Send message
 
 

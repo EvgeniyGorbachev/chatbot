@@ -59,7 +59,8 @@ app.get('/campaigns', require('connect-ensure-login').ensureLoggedIn(), campaing
 app.get('/campaigns/:id', require('connect-ensure-login').ensureLoggedIn(), campaingController.getCampaignById)
 app.post('/campaigns/:id', require('connect-ensure-login').ensureLoggedIn(), campaingController.updateCampaignById)
 app.get('/campaigns/delete/:id', require('connect-ensure-login').ensureLoggedIn(), campaingController.deleteCampaignById)
-app.get('/sessions/:userid/:campaignid', sessionsController.getSessionsById)
+app.get('/sessions/:userid/:campaignid', require('connect-ensure-login').ensureLoggedIn(), sessionsController.getSessionsById)
+app.post('/sessions/:userid/:campaignid', require('connect-ensure-login').ensureLoggedIn(), sessionsController.saveMessage)
 
 /**
  * API routes.
