@@ -100,8 +100,7 @@ angular.module('campaignsApp.campaignEdit', [])
                           };
     }
 
-      function submit(event)
-      {
+      function submit(event) {
       event.preventDefault();
       vm.isFormSend = true;
 

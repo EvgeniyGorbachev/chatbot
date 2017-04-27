@@ -119,6 +119,7 @@ html(ng-app='campaignsApp')
                                                 th Address
                                                 th Last phrase ID
                                                 th Answers
+                                                th
                                         tbody
                                             each item in conversations
                                                 tr.gradeA
@@ -129,6 +130,27 @@ html(ng-app='campaignsApp')
                                                     td= item.address
                                                     td= item.last_phrase_id
                                                     td= item.answers
+                                                    td
+                                                        button.btn.btn-primary(type='button', data-toggle='modal', data-target='#myModal4')  Send message
+                                                        #myModal4.modal.inmodal(tabindex='-1', role='dialog', aria-hidden='true')
+                                                            .modal-dialog
+                                                                .modal-content.animated.fadeIn
+                                                                    .modal-header
+                                                                        button.close(type='button', data-dismiss='modal')
+                                                                            span(aria-hidden='true') &times;
+                                                                            span.sr-only Close
+                                                                        h4.modal-title Chat with user
+                                                                    .modal-body
+                                                                        form.form-horizontal#main(method='post', action="", role='form', name='dashboardCtr.form', novalidate)
+                                                                            //Name
+                                                                            .form-group(ng-class="{'has-error': dashboardCtr.isFormSend && dashboardCtr.form.message.$invalid}")
+                                                                                label.col-sm-2.control-label Message:
+                                                                                .col-sm-10
+                                                                                    input.form-control(type='text' name='message', ng-required='true', ng-model='dashboardCtr.message.text', ng-maxlength='50')
+                                                                    .modal-footer
+                                                                        button.btn.btn-white(type='button', data-dismiss='modal') Close
+                                                                        |
+                                                                        button.btn.btn-primary(ng-click='dashboardCtr.sendMessage($event)') Send
                                         tfoot
                                             tr
                                                 th id
@@ -138,5 +160,6 @@ html(ng-app='campaignsApp')
                                                 th Address
                                                 th Last phrase ID
                                                 th Answers
+                                                th
 
                 include footer.pug
