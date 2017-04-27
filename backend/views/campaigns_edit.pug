@@ -39,6 +39,10 @@ html(ng-app='campaignsApp')
                                     .alert.alert-danger.alert-dismissable
                                         button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
                                         |  Error
+                                if errSmooch
+                                    .alert.alert-danger.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  #{errSmooch}
 
                                 .alert.alert-danger(ng-if="!campaignCtr.form.$valid && campaignCtr.isFormSend")
                                     | Please fill out all the highlighted steps.

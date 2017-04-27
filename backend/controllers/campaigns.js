@@ -107,6 +107,11 @@ exports.updateCampaignById = (req, res) => {
       // Start the request to get smooch app key and secret
       request(options, function (error, response, body) {
 
+        if (error) {
+          console.log(333333, response)
+          return res.render('campaigns_edit', {errSmooch: 'Smooch: Can not create key and secret for App'})
+        }
+
         let smoochData = JSON.parse(body)
         campaign.smooch_app_key_id = smoochData.key['_id']
         campaign.smooch_app_secret = smoochData.key.secret
@@ -134,13 +139,22 @@ exports.updateCampaignById = (req, res) => {
             // Save campaign
             db.Campaigns.create(campaign).then(function(data) {
               res.redirect('/campaigns?created=true');
+            }).catch(function(err) {
+              console.log(5555,  err)
+              return res.render('campaigns_edit', {err: 'Saved wrong'})
             })
-          });
+          }).catch(function(err) {
+            console.log(11111, err)
+            return res.render('campaigns_edit', {errSmooch: 'Smooch: Can not add Webhook'})
+          })
+        }).catch(function(err) {
+          console.log(22222, err)
+          return res.render('campaigns_edit', {errSmooch: 'Smooch: Can not create Twilion integration'})
         })
       })
     }).catch(function(err) {
-      console.log(err)
-      res.render('campaigns_edit', {err: 'Saved wrong'})
+      console.log(44444,  err)
+      return res.render('campaigns_edit', {errSmooch: 'Smooch: Can not create an App'})
     })
   }
 };
