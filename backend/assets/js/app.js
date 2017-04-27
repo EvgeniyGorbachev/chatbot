@@ -2,5 +2,6 @@
 
 angular.module('campaignsApp', [
   'campaignsApp.dashboard',
-  'campaignsApp.campaignEdit'
+  'campaignsApp.campaignEdit',
+  'campaignsApp.sessionEdit'
 ])

@@ -30,7 +30,6 @@ module.exports = function (sequelize, DataTypes)
         }
     }, {
         individualHooks: true,
-        underscored    : true,
         tableName      : 'conversation_history',
         validate       : {
             isJSON: function ()

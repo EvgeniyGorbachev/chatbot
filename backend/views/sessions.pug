@@ -1,0 +1,93 @@
+doctype html
+html(ng-app='campaignsApp')
+    include header.pug
+    body(ng-controller='SessionsListController as sessionsCtr')
+        #wrapper
+            include navigation.pug
+            #page-wrapper.gray-bg
+                .row.border-bottom
+                    nav.navbar.navbar-static-top(role='navigation', style='margin-bottom: 0')
+                        .navbar-header
+                            a.navbar-minimalize.minimalize-styl-2.btn.btn-primary(href='#')
+                                i.fa.fa-bars
+                            form.navbar-form-custom(role='search', method='post', action='search_results.html')
+                        ul.nav.navbar-top-links.navbar-right
+                            li
+                                a(href='/logout')
+                                    i.fa.fa-sign-out
+                                    |  Log out
+                .row.wrapper.border-bottom.white-bg.page-heading
+                    .col-lg-10
+                        h2  #{campaign.name}
+                            |
+                            |
+                            if campaign.isActive
+                                span.label.label-info Acitve
+                            if !campaign.isActive
+                                span.label.label-danger Inactive
+                        ol.breadcrumb
+                            li
+                                a(href='/dashboard') Home
+                            li
+                                a Campaign
+                            li.active
+                                strong Sessions
+                    .col-lg-2.text-center
+                .wrapper.wrapper-content.animated.fadeInRight
+                    .alert.alert-warning
+                        h2  <strong>Session ID:</strong> #{session.id}
+                        p  <strong>Username:</strong> #{session.username}
+                        p  <strong>Email:</strong> #{session.email}
+                        p  <strong>Address:</strong> #{session.address}
+                        h3  Campaign info:
+                        p  <strong>Time interval:</strong> #{campaign.startDate} - #{campaign.endDate}
+                        p  <strong>Resource:</strong> #{campaign.channel} (#{campaign.phone})
+                        p  <strong>Created at:</strong> #{campaign.createdAt}
+                        p  <strong>Last update:</strong> #{campaign.updatedAt}
+                        p
+                            a.btn.btn-warning.btn-rounded(href="/campaigns/" + campaign.id + "") Edit
+
+                    .row.m-t-lg
+                        .col-lg-12
+                            .ibox.float-e-margins
+                                .ibox-content
+                                    div
+                                        .chat-activity-list
+                                            each item in history
+                                                if item.direction == 1
+                                                    .chat-element
+                                                        a.pull-right(href='#')
+                                                            img.img-circle(alt='image', src='/assets/img/a2.jpg')
+                                                        .media-body.text-right
+                                                            small.pull-left.text-navy 1m ago
+                                                            |
+                                                            strong Bot
+                                                            p.m-b-xs=item.text
+                                                            |
+                                                            small.text-muted Today 4:21 pm - 12.06.2014
+
+                                                if item.direction == 0
+                                                    .chat-element.right
+                                                        a.pull-left(href='#')
+                                                            img.img-circle(alt='image', src='/assets/img/a2.jpg')
+                                                        .media-body
+                                                            small.pull-right.text-navy 1m ago
+                                                            |
+                                                            strong Customer
+                                                            p.m-b-xs=item.text
+                                                            |
+                                                            small.text-muted Today 4:21 pm - 12.06.2014
+                                    .chat-form
+                                        form(role='form')
+                                            .form-group
+                                                textarea.form-control(placeholder='Message')
+                                                grammarly-btn
+                                                    ._e725ae-textarea_btn._e725ae-not_focused(data-reactroot='', style='visibility: hidden; z-index: 2;')
+                                                        ._e725ae-transform_wrap
+                                                            ._e725ae-status(title='Protected by Grammarly') &nbsp;
+                                            .text-right
+                                                button.btn.btn-sm.btn-primary.m-t-n-xs(type='submit')
+                                                    strong Send message
+
+
+                include footer.pug

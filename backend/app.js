@@ -18,6 +18,7 @@ const campaingController = require('./controllers/campaigns')
 const dashboardController = require('./controllers/dashboard')
 const apiController = require('./controllers/api')
 const authController = require('./controllers/authentication')
+const sessionsController = require('./controllers/sessions')
 
 /**
  * API keys and Passport configuration.
@@ -52,12 +53,13 @@ app.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), 
 /**
  * Primary app routes.
  */
-app.get('/dashboard/:id', require('connect-ensure-login').ensureLoggedIn(), dashboardController.getDashboardById)
+app.get('/dashboard/:id', dashboardController.getDashboardById)
 app.post('/campaigns', require('connect-ensure-login').ensureLoggedIn(), campaingController.updateCampaignStatus)
 app.get('/campaigns', require('connect-ensure-login').ensureLoggedIn(), campaingController.getCampaigns)
 app.get('/campaigns/:id', require('connect-ensure-login').ensureLoggedIn(), campaingController.getCampaignById)
 app.post('/campaigns/:id', require('connect-ensure-login').ensureLoggedIn(), campaingController.updateCampaignById)
 app.get('/campaigns/delete/:id', require('connect-ensure-login').ensureLoggedIn(), campaingController.deleteCampaignById)
+app.get('/sessions/:userid/:campaignid', sessionsController.getSessionsById)
 
 /**
  * API routes.
