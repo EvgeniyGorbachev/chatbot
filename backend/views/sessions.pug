@@ -84,13 +84,3 @@ html(ng-app='campaignsApp')
 
 
                 include footer.pug
-
-                script.
-                    jQuery(document).ready(function ()
-                    {
-                        Smooch.init({
-                            appToken: '#{campaign.smooch_app_token}',
-                            jwt     : '#{jwt}',
-                            userId  : '{{sessionsCtr.currentUser.sender}}'
-                        });
-                    });

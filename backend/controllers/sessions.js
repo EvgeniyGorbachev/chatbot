@@ -12,8 +12,7 @@ exports.getSessionsById = (req, res) =>
     db.Campaigns.findOne({where: {id: campaignId}}).then(function (campaign)
     {
         res.render('sessions', {
-            campaign: campaign,
-            jwt     : jwt.sign({scope: 'app'}, campaign.smooch_app_secret)
+            campaign: campaign
         })
 
     }).catch(function (err)
