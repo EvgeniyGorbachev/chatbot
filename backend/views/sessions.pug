@@ -91,6 +91,6 @@ html(ng-app='campaignsApp')
                         Smooch.init({
                             appToken: '#{campaign.smooch_app_token}',
                             jwt     : '#{jwt}',
-                            userId  : '#{sessionsCtr.currentUser.sender}'
+                            userId  : '{{sessionsCtr.currentUser.sender}}'
                         });
                     });
