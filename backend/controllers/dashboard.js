@@ -1,4 +1,6 @@
 const db = require('../models/index.js');
+let jwt  = require('jsonwebtoken');
+
 
 /**
  * GET /dashboard/:id
@@ -11,11 +13,11 @@ exports.getDashboardById = (req, res) => {
       db.Campaigns.findOne({where: {id: id}}).then(function (campaign) {
         if (campaign != null) {
             res.render('dashboard', {
-            payments  : users,
-            conversations: conversations,
+            payments          : users,
+            conversations     : conversations,
             conversationsCount: conversations.length,
-            paymentsCount: users.length,
-            campaign     : campaign
+            paymentsCount     : users.length,
+                campaign      : campaign
           })
         } else {
           res.redirect('/campaigns')
