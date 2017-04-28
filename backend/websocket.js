@@ -28,7 +28,7 @@ wss.on('connection', function connection(ws) {
 
     // Get user conversation
     if (mes.target == 'getUserConversation') {
-      db.ConversationsHistory.findAll({where: {"campaign_id": mes.data.campaignId, "user_id": mes.data.userId}}).then(function (history) {
+      db.ConversationsHistory.findAll({where: {"campaign_id": mes.data.campaignId, "user_id": mes.data.userId}, order: [['id', 'ASC']]}).then(function (history) {
         let data = {
           "target": "userConversation",
           "data": history
@@ -48,17 +48,15 @@ wss.on('connection', function connection(ws) {
           scope : 'app'
         });
 
-        console.log(1111111, smooch)
-
         smooch.appUsers.sendMessage(mes.data.user_id, {
           type: 'text',
-          text: message.text,
+          text: mes.data.text,
           role: 'appMaker'
         }).then((response) => {
 
           db.ConversationsHistory.create(mes.data).then(function(data) {
 
-            db.ConversationsHistory.findAll({where: {"campaign_id": mes.data.campaign_id, "user_id": mes.data.user_id}}).then(function (history) {
+            db.ConversationsHistory.findAll({where: {"campaign_id": mes.data.campaign_id, "user_id": mes.data.user_id}, order: [['id', 'ASC']]}).then(function (history) {
               let data = {
                 "target": "userConversationUpdate",
                 "data": history
@@ -78,6 +76,7 @@ wss.on('connection', function connection(ws) {
 
         }).catch((err) => {
           console.log(22222, err)
+          console.log(55555555, smooch)
           let data = {
             "target": "err",
             "data": err
