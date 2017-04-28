@@ -57,13 +57,13 @@ app.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), 
 /**
  * Primary app routes.
  */
-app.get('/dashboard/:id', dashboardController.getDashboardById)
-app.post('/campaigns', campaingController.updateCampaignStatus)
-app.get('/campaigns', campaingController.getCampaigns)
-app.get('/campaigns/:id', campaingController.getCampaignById)
-app.post('/campaigns/:id',  campaingController.updateCampaignById)
-app.get('/campaigns/delete/:id',  campaingController.deleteCampaignById)
-app.get('/campaigns/:campaignid/sessions',  sessionsController.getSessionsById)
+app.get('/dashboard/:id', require('connect-ensure-login').ensureLoggedIn(), dashboardController.getDashboardById)
+app.post('/campaigns', require('connect-ensure-login').ensureLoggedIn(), campaingController.updateCampaignStatus)
+app.get('/campaigns', require('connect-ensure-login').ensureLoggedIn(), campaingController.getCampaigns)
+app.get('/campaigns/:id', require('connect-ensure-login').ensureLoggedIn(), campaingController.getCampaignById)
+app.post('/campaigns/:id',  require('connect-ensure-login').ensureLoggedIn(), campaingController.updateCampaignById)
+app.get('/campaigns/delete/:id',  require('connect-ensure-login').ensureLoggedIn(), campaingController.deleteCampaignById)
+app.get('/campaigns/:campaignid/sessions',  require('connect-ensure-login').ensureLoggedIn(), sessionsController.getSessionsById)
 
 /**
  * API routes.
