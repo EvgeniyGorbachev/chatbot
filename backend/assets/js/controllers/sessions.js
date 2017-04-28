@@ -11,6 +11,7 @@ angular.module('campaignsApp.sessionEdit', [])
 
     vm.websocketHost = location.hostname;
     vm.websocketPort = 8888;
+    vm.websocketIsError = false;
 
     vm.userList = [];
     vm.userConversation = [];
@@ -32,6 +33,7 @@ angular.module('campaignsApp.sessionEdit', [])
 
     socket.onmessage = function (message) {
       var res = JSON.parse(message.data);
+      vm.websocketIsError = false;
 
       console.log('get message: ', JSON.parse(message.data))
 
@@ -57,7 +59,9 @@ angular.module('campaignsApp.sessionEdit', [])
     };
 
     socket.onerror = function (error) {
-      console.log('WebSocket error: ' + error);
+      console.log('WebSocket error: ', error);
+      vm.websocketIsError = true;
+      $scope.$digest();
     };
 
     // Send request to find new messages

@@ -53,6 +53,7 @@ html(ng-app='campaignsApp')
                                         .col-md-9
                                             .chat-discussion
                                                 h2(ng-if='sessionsCtr.userConversation.length == 0') No conversation
+                                                h2.text-danger(ng-if='sessionsCtr.websocketIsError') Websocket error: Look in the console.
                                                 .chat-message(ng-repeat='conv in sessionsCtr.userConversation track by $index', ng-class="{'direct1': conv.direction == 1, 'direct0': conv.direction == 0}")
                                                     img.message-avatar(src='/assets/img/person-black.png', ng-if='conv.direction == 1')
                                                     img.message-avatar(src='/assets/img/person-white.png', ng-if='conv.direction == 0')
