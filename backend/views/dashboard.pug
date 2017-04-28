@@ -145,3 +145,9 @@ html(ng-app='campaignsApp')
                                                 th Edit
 
                 include footer.pug
+
+                script.
+                    jQuery(document).ready(function ()
+                    {
+                        Smooch.init({appToken: '#{campaign.smooch_app_id}'});
+                    });
