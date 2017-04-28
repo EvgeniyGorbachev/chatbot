@@ -1,4 +1,17 @@
 @import url("//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;lang=en");
+
+.chat-user  {
+  cursor: pointer;
+}
+
+.chat-user.current  {
+  background-color: lavender;
+}
+
+.chat-button  {
+  margin: 30px;
+}
+
 /*
  *
  *   INSPINIA - Responsive Admin Theme
@@ -4214,11 +4227,11 @@ dd.project-people {
   border-radius: 4px;
   margin-top: 1px;
 }
-.chat-discussion .chat-message:nth-child(2n+1) .message-avatar {
+.chat-discussion .chat-message.direct1 .message-avatar {
   float: left;
   margin-right: 10px;
 }
-.chat-discussion .chat-message:nth-child(2n) .message-avatar {
+.chat-discussion .chat-message.direct0 .message-avatar {
   float: right;
   margin-left: 10px;
 }
@@ -4231,17 +4244,17 @@ dd.project-people {
   position: relative;
   border-radius: 4px;
 }
-.chat-discussion .chat-message:nth-child(2n+1) .message-date {
+.chat-discussion .chat-message.direct1 .message-date {
   float: right;
 }
-.chat-discussion .chat-message:nth-child(2n) .message-date {
+.chat-discussion .chat-message.direct0 .message-date {
   float: left;
 }
-.chat-discussion .chat-message:nth-child(2n+1) .message {
+.chat-discussion .chat-message.direct1 .message {
   text-align: left;
   margin-left: 55px;
 }
-.chat-discussion .chat-message:nth-child(2n) .message {
+.chat-discussion .chat-message.direct0 .message {
   text-align: right;
   margin-right: 55px;
 }

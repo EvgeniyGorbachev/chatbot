@@ -35,10 +35,6 @@ html(ng-app='campaignsApp')
                     .col-lg-2.text-center
                 .wrapper.wrapper-content.animated.fadeInRight
                     .alert.alert-warning
-                        h2  <strong>Session ID:</strong> #{session.id}
-                        p  <strong>Username:</strong> #{session.username}
-                        p  <strong>Email:</strong> #{session.email}
-                        p  <strong>Address:</strong> #{session.address}
                         h3  Campaign info:
                         p  <strong>Time interval:</strong> #{campaign.startDate} - #{campaign.endDate}
                         p  <strong>Resource:</strong> #{campaign.channel} (#{campaign.phone})
@@ -46,51 +42,44 @@ html(ng-app='campaignsApp')
                         p  <strong>Last update:</strong> #{campaign.updatedAt}
                         p
                             a.btn.btn-warning.btn-rounded(href="/campaigns/" + campaign.id + "") Edit
-
-                    .row.m-t-lg
+                    .row
                         .col-lg-12
-                            .ibox.float-e-margins
+                            .ibox.chat-view
+                                .ibox-title
+                                    small.pull-right.text-muted Last message: Mon Jan 26 2015 - 18:39:23
+                                    |  Chat room panel
                                 .ibox-content
-                                    div
-                                        .chat-activity-list
-                                            each item in history
-                                                if item.direction == 1
-                                                    .chat-element
-                                                        a.pull-right(href='#')
-                                                            img.img-circle(alt='image', src='/assets/img/a2.jpg')
-                                                        .media-body.text-right
-                                                            small.pull-left.text-navy 1m ago
-                                                            |
-                                                            strong Bot
-                                                            p.m-b-xs=item.text
-                                                            |
-                                                            small.text-muted Today 4:21 pm - 12.06.2014
+                                    .row
+                                        .col-md-9
+                                            .chat-discussion
+                                                h2(ng-if='sessionsCtr.userConversation.length == 0') No conversation
+                                                .chat-message(ng-repeat='conv in sessionsCtr.userConversation track by $index', ng-class="{'direct1': conv.direction == 1, 'direct0': conv.direction == 0}")
+                                                    img.message-avatar(src='/assets/img/person-black.png', ng-if='conv.direction == 1')
+                                                    img.message-avatar(src='/assets/img/person-white.png', ng-if='conv.direction == 0')
+                                                    .message
+                                                        a.message-author(ng-if='conv.direction == 1') Chat bot
+                                                        a.message-author(ng-if='conv.direction == 0') {{ sessionsCtr.currentUser.username }}
+                                                        |
+                                                        span.message-date Mon Jan 26 2015 - 18:39:23
+                                                        |
+                                                        span.message-content
+                                                            | {{ conv.text }}
+                                        .col-md-3
+                                            .chat-users
+                                                .users-list
+                                                    .chat-user(ng-repeat='user in sessionsCtr.userList track by $index', ng-click='sessionsCtr.getConversation(user)', ng-class="{'current': user.id == sessionsCtr.currentUser.id}")
+                                                        img.chat-avatar(src='/assets/img/person-white.png', alt='')
+                                                        .chat-user-name
+                                                            a {{ user.username || 'no name' }}
+                                    .row
+                                        .col-lg-12
+                                            .chat-message-form
+                                                .form-group
+                                                    textarea.form-control.message-input(name='message', ng-model='sessionsCtr.messageText', placeholder='Enter message text',)
+                                                    a.btn.btn-w-m.btn-success.chat-button(ng-click='sessionsCtr.sendMessage()', ng-show='!sessionsCtr.isSend', ng-disabled='!sessionsCtr.currentUser.sender') Send
+                                                    a.btn.btn-w-m.btn-success.chat-button(ng-click='sessionsCtr.sendMessage()', disabled ng-show='sessionsCtr.isSend') Sending...
 
-                                                if item.direction == 0
-                                                    .chat-element.right
-                                                        a.pull-left(href='#')
-                                                            img.img-circle(alt='image', src='/assets/img/a2.jpg')
-                                                        .media-body
-                                                            small.pull-right.text-navy 1m ago
-                                                            |
-                                                            strong Customer
-                                                            p.m-b-xs=item.text
-                                                            |
-                                                            small.text-muted Today 4:21 pm - 12.06.2014
-                                    .chat-form
-                                        form(method='post', action="", role='form', name='sessionsCtr.form', novalidate)
-                                            .form-group(ng-class="{'has-error': sessionsCtr.isFormSend &&  sessionsCtr.text.$invalid}")
-                                                input.form-control(type='hidden', name='userId', ng-init="sessionsCtr.message.user_id = '" + userId + "'", ng-model='sessionsCtr.message.user_id')
-                                                input.form-control(type='hidden', name='campaignId', ng-init="sessionsCtr.message.campaign_id = '" + campaignId + "'", ng-model='sessionsCtr.message.campaign_id')
-                                                input.form-control(type='hidden', name='jsonData', id='data', ng-model='sessionsCtr.jsonData')
-                                                textarea.form-control(placeholder='Message', name='text', ng-required="true", ng-model="sessionsCtr.message.text")
-                                                grammarly-btn
-                                                    ._e725ae-textarea_btn._e725ae-not_focused(data-reactroot='', style='visibility: hidden; z-index: 2;')
-                                                        ._e725ae-transform_wrap
-                                                            ._e725ae-status(title='Protected by Grammarly') &nbsp;
-                                            .text-right
-                                                button.btn.btn-sm.btn-primary.m-t-n-xs(type='submit', ng-click='sessionsCtr.sendMessage($event)')
-                                                    strong Send message
+
 
 
                 include footer.pug

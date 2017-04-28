@@ -10,7 +10,6 @@ const passport   = require('passport')
  */
 require('dotenv').config()
 
-
 /**
  * Controllers (route handlers).
  */
@@ -19,6 +18,11 @@ const dashboardController = require('./controllers/dashboard')
 const apiController = require('./controllers/api')
 const authController = require('./controllers/authentication')
 const sessionsController = require('./controllers/sessions')
+
+/**
+ * WebSocket.
+ */
+require('./websocket')
 
 /**
  * API keys and Passport configuration.
@@ -54,13 +58,12 @@ app.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), 
  * Primary app routes.
  */
 app.get('/dashboard/:id', dashboardController.getDashboardById)
-app.post('/campaigns', require('connect-ensure-login').ensureLoggedIn(), campaingController.updateCampaignStatus)
-app.get('/campaigns', require('connect-ensure-login').ensureLoggedIn(), campaingController.getCampaigns)
-app.get('/campaigns/:id', require('connect-ensure-login').ensureLoggedIn(), campaingController.getCampaignById)
-app.post('/campaigns/:id', require('connect-ensure-login').ensureLoggedIn(), campaingController.updateCampaignById)
-app.get('/campaigns/delete/:id', require('connect-ensure-login').ensureLoggedIn(), campaingController.deleteCampaignById)
-app.get('/sessions/:userid/:campaignid', require('connect-ensure-login').ensureLoggedIn(), sessionsController.getSessionsById)
-app.post('/sessions/:userid/:campaignid', require('connect-ensure-login').ensureLoggedIn(), sessionsController.saveMessage)
+app.post('/campaigns', campaingController.updateCampaignStatus)
+app.get('/campaigns', campaingController.getCampaigns)
+app.get('/campaigns/:id', campaingController.getCampaignById)
+app.post('/campaigns/:id',  campaingController.updateCampaignById)
+app.get('/campaigns/delete/:id',  campaingController.deleteCampaignById)
+app.get('/campaigns/:campaignid/sessions',  sessionsController.getSessionsById)
 
 /**
  * API routes.
