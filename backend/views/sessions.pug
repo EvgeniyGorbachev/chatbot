@@ -46,8 +46,9 @@ html(ng-app='campaignsApp')
                         .col-lg-12
                             .ibox.chat-view
                                 .ibox-title
-                                    small.pull-right.text-muted Last message: Mon Jan 26 2015 - 18:39:23
+                                    small.pull-right.text-muted(ng-if='!sessionsCtr.websocketIsError') Last message: Mon Jan 26 2015 - 18:39:23
                                     |  Chat room panel
+                                    small.text-danger(ng-if='sessionsCtr.websocketIsError') Websocket error: Look in the console.
                                 .ibox-content
                                     .row
                                         .col-md-9

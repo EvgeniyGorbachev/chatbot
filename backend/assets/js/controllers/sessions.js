@@ -33,7 +33,6 @@ angular.module('campaignsApp.sessionEdit', [])
 
     socket.onmessage = function (message) {
       var res = JSON.parse(message.data);
-      vm.websocketIsError = false;
 
       console.log('get message: ', JSON.parse(message.data))
 
@@ -53,6 +52,7 @@ angular.module('campaignsApp.sessionEdit', [])
 
       if (res.target == 'err') {
         console.error('Err: ', res.data);
+        vm.websocketIsError = true;
       }
 
       $scope.$digest();
