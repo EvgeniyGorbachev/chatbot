@@ -1,4 +1,4 @@
-const db = require('../models/index.js')
+const db = require('../models/index.js');
 
 /**
  * GET /dashboard/:id
@@ -10,7 +10,7 @@ exports.getDashboardById = (req, res) => {
     db.Conversations.findAll({ where: {campaign_id: id} }).then(function (conversations) {
       db.Campaigns.findOne({where: {id: id}}).then(function (campaign) {
         if (campaign != null) {
-          res.render('dashboard', {
+            res.render('dashboard', {
             payments  : users,
             conversations: conversations,
             conversationsCount: conversations.length,
