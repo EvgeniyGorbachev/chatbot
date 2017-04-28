@@ -17,9 +17,7 @@ exports.getDashboardById = (req, res) => {
             conversations     : conversations,
             conversationsCount: conversations.length,
             paymentsCount     : users.length,
-                campaign      : campaign,
-                jwt           : jwt.sign({scope: 'app'}, campaign.smooch_app_secret,
-                    {header: {kid: campaign.smooch_app_id}})
+                campaign      : campaign
           })
         } else {
           res.redirect('/campaigns')
