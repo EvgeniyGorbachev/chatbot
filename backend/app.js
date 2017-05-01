@@ -64,6 +64,7 @@ app.get('/campaigns/:id', require('connect-ensure-login').ensureLoggedIn(), camp
 app.post('/campaigns/:id',  require('connect-ensure-login').ensureLoggedIn(), campaingController.updateCampaignById)
 app.get('/campaigns/delete/:id',  require('connect-ensure-login').ensureLoggedIn(), campaingController.deleteCampaignById)
 app.get('/campaigns/:campaignid/sessions',  require('connect-ensure-login').ensureLoggedIn(), sessionsController.getSessionsById)
+app.get('/chat/agent/:campaignid',  require('connect-ensure-login').ensureLoggedIn(), sessionsController.getSessionsById)
 
 /**
  * API routes.
