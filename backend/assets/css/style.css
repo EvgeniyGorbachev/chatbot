@@ -4176,7 +4176,7 @@ dd.project-people {
 }
 /* Chat view */
 .message-input {
-  height: 90px !important;
+  height: 90px;
 }
 .chat-avatar {
   white: 36px;
