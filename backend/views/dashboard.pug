@@ -35,6 +35,7 @@ html(ng-app='campaignsApp')
                     .col-lg-2.text-center
                 .wrapper.wrapper-content.animated.fadeInRight
                     .alert.alert-warning
+                        input(type='hidden',  id='smooch_app_token', value=''+campaign.smooch_app_token+'')
                         p  <strong>Time interval:</strong> #{campaign.startDate} - #{campaign.endDate}
                         p  <strong>Resource:</strong> #{campaign.channel} (#{campaign.phone})
                         p  <strong>Created at:</strong> #{campaign.createdAt}
@@ -149,13 +150,23 @@ html(ng-app='campaignsApp')
 
                 include footer.pug
 
-                script.
-                    jQuery(document).ready(function ()
-                    {
-                        Smooch.init({appToken: '#{campaign.smooch_app_token}'});
-                    });
+                script(src='/assets/js/smooch.js')
+
                 style.
                     /*Hide Smooch web messanger logo*/
                     .sk-logo {
                         display: none;
+                    }
+
+                    /*Set iFrame size*/
+                    .sk-msg {
+                        max-width: 230px !important;
+                    }
+
+                    .sk-message-item {
+                        max-width: 230px !important;
+                    }
+
+                    .sk-message-item a{
+                        color: blue;
                     }
