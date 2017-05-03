@@ -12,6 +12,11 @@
   margin: 30px;
 }
 
+#chat-iframe {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
 /*
  *
  *   INSPINIA - Responsive Admin Theme

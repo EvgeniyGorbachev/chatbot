@@ -36,20 +36,25 @@ function checkMessages(mes) {
       let youtubeId = getYoutubeId(text);
 
       if (youtubeId != 'error') {
-        iFrame += '<iframe width="200" height="200" src="//www.youtube.com/embed/' + youtubeId + '" frameborder="0" allowfullscreen></iframe>';
+        iFrame += '<iframe width="100%" height="auto" src="//www.youtube.com/embed/' + youtubeId + '" frameborder="0" allowfullscreen></iframe>';
       } else {
-        iFrame += '<iframe width="200" height="200" src="' + text + '" frameborder="0" allowfullscreen></iframe>';
+        iFrame += '<iframe width="100%" height="auto" src="' + text + '" frameborder="0" allowfullscreen></iframe>';
       }
 
       // If link too long, replace it
       if (text.length > 60) {
         textArray[index] = '<strong><a href="' + text + '" target="_blank">link</a></strong>';
       }
+
+      // Set 100% width for iFrame
+      messageJqueryObject.find('.sk-msg').attr('id', 'chat-iframe');
+      messageJqueryObject.find('.sk-message-item').attr('id', 'chat-iframe');
     }
   });
 
   html = textArray.join(" ");
   html += iFrame;
+
   // Add new messages html
   messageJqueryObject.find('.sk-message-item').html(html);
 }
