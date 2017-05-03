@@ -36,9 +36,9 @@ function checkMessages(mes) {
       let youtubeId = getYoutubeId(text);
 
       if (youtubeId != 'error') {
-        iFrame += '<iframe width="200" height="200" src="//www.youtube.com/embed/' + youtubeId + '" frameborder="0" allowfullscreen></iframe>';
+        iFrame += '<iframe width="350" height="200" src="//www.youtube.com/embed/' + youtubeId + '" frameborder="0" allowfullscreen></iframe>';
       } else {
-        iFrame += '<iframe width="200" height="200" src="' + text + '" frameborder="0" allowfullscreen></iframe>';
+        iFrame += '<iframe width="350" height="200" src="' + text + '" frameborder="0" allowfullscreen></iframe>';
       }
 
       // If link too long, replace it
