@@ -85,7 +85,7 @@ jQuery(document).ready(function () {
     }, 2000);
 
     // Watch if add new messages
-    $('.sk-messages').bind('DOMSubtreeModified', function(e) {
+    $(document).bind('DOMSubtreeModified', function(e) {
       if (e.target.innerHTML.length > 0) {
 
         let count = getAllMessages().length;
