@@ -32,52 +32,75 @@ function checkMessages(mes) {
   $.each(textArray, function(index, text) {
     // If valid link
     if (/^(ftp|http|https):\/\/[^ "]+$/.test(text)) {
-
       let youtubeId = getYoutubeId(text);
 
       if (youtubeId != 'error') {
-        iFrame += '<iframe width="200" height="200" src="//www.youtube.com/embed/' + youtubeId + '" frameborder="0" allowfullscreen></iframe>';
+        iFrame += '<iframe width="100%" height="auto" src="//www.youtube.com/embed/' + youtubeId + '" frameborder="0" allowfullscreen></iframe>';
       } else {
-        iFrame += '<iframe width="200" height="200" src="' + text + '" frameborder="0" allowfullscreen></iframe>';
+        iFrame += '<iframe width="100%" height="auto" src="' + text + '" frameborder="0" allowfullscreen></iframe>';
       }
 
-      // If link too long, replace it
-      if (text.length > 60) {
-        textArray[index] = '<strong><a href="' + text + '" target="_blank">link</a></strong>';
-      }
+      // Add link to tag <a>
+      // textArray[index] = '<strong><a href="' + text + '" target="_blank">link</a></strong>';
+
+      // Set 100% width for iFrame
+      messageJqueryObject.find('.sk-msg').attr('id', 'chat-iframe');
+      messageJqueryObject.find('.sk-message-item').attr('id', 'chat-iframe');
     }
   });
 
   html = textArray.join(" ");
   html += iFrame;
+
   // Add new messages html
   messageJqueryObject.find('.sk-message-item').html(html);
 }
 
 jQuery(document).ready(function () {
   let token = $('#smooch_app_token').val();
+  let mesCount = 0;
 
   // Init Smooch messenger
   Smooch.init({appToken: token}).then(function () {
 
-    // Listen new messages
-    $(document).on('click','.send', function() {
-      checkMessages(getLastMessages());
-    });
+    // Listen new messages (add by manager)
+    // $(document).on('click','.send', function() {
+    //   checkMessages(getLastMessages());
+    // });
+    //
+    // $(document).on('keyup','.message-input', function(e) {
+    //   if(e.keyCode == 13) {
+    //     checkMessages(getLastMessages());
+    //   }
+    // });
 
-    $(document).on('keyup','.message-input', function(e) {
-      if(e.keyCode == 13) {
-        checkMessages(getLastMessages());
-      }
-    });
-
+    // Init
     // Add delay for FireFox, hack
     setTimeout(function () {
+      mesCount = getAllMessages().length;
       // Check all old messages
       $.each(getAllMessages(), function(index, mes) {
         checkMessages(mes);
       });
     }, 2000);
+
+    // Watch if add new messages
+    $('.sk-messages').bind('DOMSubtreeModified', function(e) {
+      if (e.target.innerHTML.length > 0) {
+
+        let count = getAllMessages().length;
+
+        if (count != mesCount) {
+          console.log('add new message');
+          mesCount = count;
+
+          $.each(getAllMessages(), function(index, mes) {
+            checkMessages(mes);
+          });
+        }
+
+      }
+    });
 
   });
 
