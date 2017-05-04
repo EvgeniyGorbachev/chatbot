@@ -1,29 +1,32 @@
-var passport   = require('passport')
-var Strategy   = require('passport-local').Strategy
-var user = {id: '1', username: process.env.LOGIN_USERNAME, password: process.env.LOGIN_PASSWORD}
-
+const passport   = require('passport')
+const Strategy   = require('passport-local').Strategy
+const db = require('../models/index.js')
 
 passport.serializeUser(function (user, cb) {
   cb(null, user.id)
 })
 
 passport.deserializeUser(function (id, cb) {
-  if (user.id != id) {
+  db.Users.findById(id).then(function(user) {
+    cb(null, user)
+  }).catch(function(err) {
     return cb('err')
-  }
-  cb(null, user)
+  })
 })
 
 /**
  * Sign in using Username and Password.
  */
 passport.use(new Strategy(
-  function (username, password, cb) {
-    if (user.username != username) {
-      return cb(null, false)
-    }
-    if (user.password != password) {
-      return cb(null, false)
-    }
-    return cb(null, user)
-  }))
+  function(username, password, done) {
+    db.Users.findOne({ where: {username: username} , include: [{
+      model: db.Roles
+    }]}).then(function(user) {
+      if (!user) { return done(null, false); }
+      if (user.password != password) { return done(null, false); }
+      return done(null, user);
+    }).catch(function(err) {
+      return done(err)
+    })
+  }
+))
