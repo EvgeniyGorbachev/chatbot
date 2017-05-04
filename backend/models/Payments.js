@@ -1,7 +1,7 @@
 var Sequelize = require("sequelize")
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Users', {
+  return sequelize.define('Payments', {
     uid: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -49,7 +49,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     individualHooks: true,
-    tableName: 'Users',
+    tableName: 'Payments',
     validate: {
       isJSON: function() {
         // try {

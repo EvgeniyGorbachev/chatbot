@@ -8,7 +8,7 @@ let jwt  = require('jsonwebtoken');
  */
 exports.getDashboardById = (req, res) => {
   let id = req.params.id || false
-  db.Users.findAll({ where: {campaign_id: id} }).then(function (users) {
+  db.Payments.findAll({ where: {campaign_id: id} }).then(function (users) {
     db.Conversations.findAll({ where: {campaign_id: id} }).then(function (conversations) {
       db.Campaigns.findOne({where: {id: id}}).then(function (campaign) {
         if (campaign != null) {

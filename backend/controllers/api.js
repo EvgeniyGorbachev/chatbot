@@ -30,7 +30,7 @@ exports.paymentProcessing = (req, res) => {
 
   user.invoiceId = hash(user)
 
-  db.Users.create(user).then(function (model) {
+  db.Payments.create(user).then(function (model) {
 
     // Set the headers
     var headers = {
@@ -81,7 +81,7 @@ exports.paymentProcessing = (req, res) => {
  * Get invoice by id
  */
 exports.getInvoice = (req, res) => {
-  db.Users.findOne({where: {invoiceId: req.params.id}, plain: true}).then(function (user) {
+  db.Payments.findOne({where: {invoiceId: req.params.id}, plain: true}).then(function (user) {
 
     if (user != null) {
       user.billing  = JSON.parse(user.billing)
