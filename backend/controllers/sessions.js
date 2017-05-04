@@ -18,4 +18,24 @@ exports.getSessionsById = (req, res) =>
     {
         res.redirect('/campaigns')
     })
-};
+}
+
+/**
+ * GET /agent/:userid
+ * Get sessions by user id.
+ */
+exports.getSessionsByUserId = (req, res) =>
+{
+    let userId = req.params.userid || false
+    db.Users.findOne({where: {id: userId}}).then(function (user)
+    {
+        console.log(11111, user)
+        res.render('sessions', {
+          user: user
+        })
+
+    }).catch(function (err)
+    {
+        res.redirect('/campaigns')
+    })
+}

@@ -11,18 +11,24 @@ const wss = new WebSocket.Server({ port: 8888 });
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(message) {
     let mes = JSON.parse(message)
-    console.log('received: %s', message);
 
     // Get user list
-    if (mes.target == 'getCampaignUserList') {
-      db.Conversations.findAll({where: {"campaign_id": mes.data}}).then(function (conversations) {
+    if (mes.target == 'getUserList') {
+      let fieldName = ( mes.data.type == 'agent') ? "userId":"campaign_id";
+
+      let obj = {};
+      obj[fieldName] = mes.data.value;
+
+      db.Conversations.findAll({where: obj, include: [{
+        model: db.Campaigns
+      }]}).then(function (conversations) {
         let data = {
           "target": "userList",
           "data": conversations
         }
         ws.send(JSON.stringify(data));
       }).catch(function(err) {
-        console.log('errrrrrrrrrrrr1111: ', err)
+        console.log('err1: ', err)
       })
     }
 
@@ -75,8 +81,6 @@ wss.on('connection', function connection(ws) {
 
 
         }).catch((err) => {
-          console.log(22222, err)
-          console.log(55555555, smooch)
           let data = {
             "target": "err",
             "data": err

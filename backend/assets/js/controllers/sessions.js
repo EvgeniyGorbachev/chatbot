@@ -7,7 +7,8 @@ angular.module('campaignsApp.sessionEdit', [])
     vm.isSend = false;
     vm.getConversation = getConversation;
     vm.sendMessage = sendMessage;
-    vm.campaignId = location.pathname.split('/')[2];
+    vm.typeId = location.pathname.split('/')[2];
+    vm.type = (location.pathname.split('/')[1] == 'agent') ? 'agent': 'campaign';
 
     vm.websocketHost = location.hostname;
     vm.websocketPort = 8888;
@@ -25,10 +26,9 @@ angular.module('campaignsApp.sessionEdit', [])
     };
 
 
-
-    var socket = new WebSocket('ws://' + vm.websocketHost + ':' + vm.websocketPort);
+    let socket = new WebSocket('ws://' + vm.websocketHost + ':' + vm.websocketPort);
     socket.onopen = function () {
-      socket.send('{"target": "getCampaignUserList", "data": ' + vm.campaignId + '}');
+      socket.send('{"target": "getUserList", "data": {"type": "' + vm.type + '", "value":' + vm.typeId + '}}');
     };
 
     socket.onmessage = function (message) {
@@ -64,17 +64,17 @@ angular.module('campaignsApp.sessionEdit', [])
       $scope.$digest();
     };
 
-    // Send request to find new messages
+    // // Send request to find new messages
     setInterval(function () {
-      if (vm.currentUser.sender && vm.campaignId) {
-        socket.send('{"target": "getUserConversation", "data": {"userId": "' + vm.currentUser.sender + '", "campaignId":' + vm.campaignId + '}}');
+      if (vm.currentUser.sender && vm.typeId) {
+        socket.send('{"target": "getUserConversation", "data": {"userId": "' + vm.currentUser.sender + '", "typeId":' + vm.typeId + '}}');
       }
     }, 3000)
 
     // Send request to find new users
     setInterval(function () {
-      if (vm.campaignId) {
-        socket.send('{"target": "getCampaignUserList", "data": ' + vm.campaignId + '}');
+      if (vm.typeId) {
+        socket.send('{"target": "getUserList", "data": {"type": "' + vm.type + '", "value":' + vm.typeId + '}}');
       }
     }, 3000)
 
@@ -83,12 +83,12 @@ angular.module('campaignsApp.sessionEdit', [])
       vm.messageText = '';
 
       vm.currentUser = user;
-      socket.send('{"target": "getUserConversation", "data": {"userId": "' + vm.currentUser.sender + '", "campaignId":' + vm.campaignId + '}}');
+      socket.send('{"target": "getUserConversation", "data": {"userId": "' + vm.currentUser.sender + '", "typeId":' + vm.typeId + '}}');
     }
 
     function sendMessage() {
       vm.isSend = true;
-      socket.send('{"target": "sendMessage", "data": {"user_id": "' + vm.currentUser.sender + '", "campaign_id":' + vm.campaignId + ', "text": "'+ vm.messageText +'", "direction": 1}}');
+      socket.send('{"target": "sendMessage", "data": {"user_id": "' + vm.currentUser.sender + '", "campaign_id":' + vm.typeId + ', "text": "'+ vm.messageText +'", "direction": 1}}');
     }
 
   });

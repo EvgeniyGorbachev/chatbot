@@ -1,7 +1,7 @@
 var Sequelize = require("sequelize")
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Conversations', {
+  const Conversations = sequelize.define('Conversations', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -55,6 +55,11 @@ module.exports = function(sequelize, DataTypes) {
       type: Sequelize.DATE
     }
   }, {
+    classMethods:{
+      associate:function(models){
+        Conversations.belongsTo(models.Campaigns, { foreignKey: 'campaign_id'} )
+      }
+    },
     individualHooks: true,
     underscored: true,
     tableName: 'conversations',
@@ -73,4 +78,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   })
+  return Conversations
 }

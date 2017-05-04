@@ -17,31 +17,46 @@ html(ng-app='campaignsApp')
                                     i.fa.fa-sign-out
                                     |  Log out
                 .row.wrapper.border-bottom.white-bg.page-heading
-                    .col-lg-10
-                        h2  #{campaign.name}
-                            |
-                            |
-                            if campaign.isActive
-                                span.label.label-info Acitve
-                            if !campaign.isActive
-                                span.label.label-danger Inactive
+
+                    .col-lg-10(ng-if='sessionsCtr.type == "campaign"')
+                        if campaign
+                            h2  #{campaign.name}
+                                |
+                                |
+                                if campaign.isActive
+                                    span.label.label-info Acitve
+                                if !campaign.isActive
+                                    span.label.label-danger Inactive
+                            ol.breadcrumb
+                                li
+                                    a(href='/dashboard') Home
+                                li
+                                    a Campaign
+                                li.active
+                                    strong Sessions
+
+                    .col-lg-10(ng-if='sessionsCtr.type == "agent"')
+                        if user
+                            h2  Agent: #{user.username}
+
                         ol.breadcrumb
                             li
                                 a(href='/dashboard') Home
                             li
-                                a Campaign
+                                a Agent
                             li.active
                                 strong Sessions
                     .col-lg-2.text-center
                 .wrapper.wrapper-content.animated.fadeInRight
-                    .alert.alert-warning
-                        h3  Campaign info:
-                        p  <strong>Time interval:</strong> #{campaign.startDate} - #{campaign.endDate}
-                        p  <strong>Resource:</strong> #{campaign.channel} (#{campaign.phone})
-                        p  <strong>Created at:</strong> #{campaign.createdAt}
-                        p  <strong>Last update:</strong> #{campaign.updatedAt}
-                        p
-                            a.btn.btn-warning.btn-rounded(href="/campaigns/" + campaign.id + "") Edit
+                    .alert.alert-warning(ng-if='sessionsCtr.type == "campaign"')
+                        if campaign
+                            h3  Campaign info:
+                            p  <strong>Time interval:</strong> #{campaign.startDate} - #{campaign.endDate}
+                            p  <strong>Resource:</strong> #{campaign.channel} (#{campaign.phone})
+                            p  <strong>Created at:</strong> #{campaign.createdAt}
+                            p  <strong>Last update:</strong> #{campaign.updatedAt}
+                            p
+                                a.btn.btn-warning.btn-rounded(href="/campaigns/" + campaign.id + "") Edit
                     .row
                         .col-lg-12
                             .ibox.chat-view
@@ -72,7 +87,10 @@ html(ng-app='campaignsApp')
                                                     .chat-user(ng-repeat='user in sessionsCtr.userList track by $index', ng-click='sessionsCtr.getConversation(user)', ng-class="{'current': user.id == sessionsCtr.currentUser.id}")
                                                         img.chat-avatar(src='/assets/img/person-white.png', alt='')
                                                         .chat-user-name
-                                                            a {{ user.username || 'no name' }}
+                                                            a
+                                                                strong {{ user.username || 'no name' }}
+                                                            p Campaign: {{ user.Campaign.name}}
+                                                            p Type: {{ user.Campaign.channel}}
                                     .row
                                         .col-lg-12
                                             .chat-message-form
