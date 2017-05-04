@@ -43,6 +43,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       notEmpty: true
     },
+    userId: {
+      type: Sequelize.TEXT,
+      allowNull: true,
+      notEmpty: true
+    },
     created_at: {
       type: Sequelize.DATE
     },
