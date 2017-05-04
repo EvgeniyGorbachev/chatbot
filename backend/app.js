@@ -27,7 +27,7 @@ require('./websocket')
 /**
  * API keys and Passport configuration.
  */
-require('./config/passport')
+require('./config/passport')({'app': app})
 
 /**
  * Express configuration.

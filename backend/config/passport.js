@@ -2,31 +2,36 @@ const passport   = require('passport')
 const Strategy   = require('passport-local').Strategy
 const db = require('../models/index.js')
 
-passport.serializeUser(function (user, cb) {
-  cb(null, user.id)
-})
+module.exports = function(options) {
 
-passport.deserializeUser(function (id, cb) {
-  db.Users.findById(id).then(function(user) {
-    cb(null, user)
-  }).catch(function(err) {
-    return cb('err')
+  passport.serializeUser(function (user, cb) {
+    cb(null, user.id)
   })
-})
 
-/**
- * Sign in using Username and Password.
- */
-passport.use(new Strategy(
-  function(username, password, done) {
-    db.Users.findOne({ where: {username: username} , include: [{
-      model: db.Roles
-    }]}).then(function(user) {
-      if (!user) { return done(null, false); }
-      if (user.password != password) { return done(null, false); }
-      return done(null, user);
+  passport.deserializeUser(function (id, cb) {
+    db.Users.findById(id).then(function(user) {
+      cb(null, user)
     }).catch(function(err) {
-      return done(err)
+      return cb('err')
     })
-  }
-))
+  })
+
+  /**
+   * Sign in using Username and Password.
+   */
+  passport.use(new Strategy(
+    function(username, password, done) {
+      db.Users.findOne({ where: {username: username} , include: [{
+        model: db.Roles
+      }]}).then(function(user) {
+        if (!user) { return done(null, false) }
+        if (user.password != password) { return done(null, false) }
+        // Set user to app
+        options.app.locals.user = user
+        return done(null, user)
+      }).catch(function(err) {
+        return done(err)
+      })
+    }
+  ))
+}
