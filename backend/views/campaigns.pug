@@ -70,7 +70,7 @@ html(ng-app='campaignsApp')
                                             b ID #{id}
                                             | .
                                     .row
-                                        a.btn.btn-info.btn-rounded.pull-right(href="/campaigns/new") Add
+                                        a.btn.btn-info.btn-rounded.pull-right(href="/campaigns/new", ng-if='"admin" == "'+user.Role.name+'"') Add
                                     form.form-horizontal#main(method='post', action='/campaigns', role='form', novalidate)
                                         input.form-control(type='hidden', name='jsonData', id='data', ng-model='dashboardCtr.jsonData')
                                         table.table.table-striped.table-bordered.table-hover.dataTables-example(data-order='[[ 0, "DESC" ]]' )
