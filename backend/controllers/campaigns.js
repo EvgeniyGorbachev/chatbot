@@ -23,13 +23,16 @@ exports.getCampaigns = (req, res) => {
  * Get campaign by id.
  */
 exports.getCampaignById = (req, res) => {
+
+  if (req.app.locals.user.Role.name != 'admin') {res.redirect('/campaigns');}
+
   let id = req.params.id
 
   db.Campaigns.findOne({ where: {id: id} }).then(function(campaign) {
     let data = JSON.stringify(campaign)
     res.render('campaigns_edit', {campaign: data})
   }).catch(function(err) {
-    res.render('campaigns_edit')
+      res.render('campaigns_edit')
   })
 };
 

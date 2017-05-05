@@ -99,10 +99,10 @@ html(ng-app='campaignsApp')
                                                         td= item.endDate
                                                         td= item.createdAt
                                                         td
-                                                            a.btn.btn-warning.btn-rounded(href="/campaigns/" + item.id + "") Update
+                                                            a.btn.btn-warning.btn-rounded(href="/campaigns/" + item.id + "", ng-if='"admin" == "'+user.Role.name+'"') Update
                                                             |
                                                             |
-                                                            a.btn.btn-danger.btn-rounded(href="/campaigns/delete/" + item.id + "") Delete
+                                                            a.btn.btn-danger.btn-rounded(href="/campaigns/delete/" + item.id + "", ng-if='"admin" == "'+user.Role.name+'"') Delete
                                             tfoot
                                                 tr
                                                     th uid
