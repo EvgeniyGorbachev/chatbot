@@ -67,6 +67,7 @@ app.get('/campaigns/delete/:id',  require('connect-ensure-login').ensureLoggedIn
 app.get('/campaigns/:campaignid/sessions',  require('connect-ensure-login').ensureLoggedIn(), sessionsController.getSessionsById)
 app.get('/agent/:userid',  require('connect-ensure-login').ensureLoggedIn(), sessionsController.getSessionsByUserId)
 app.get('/users', require('connect-ensure-login').ensureLoggedIn(), usersController.getUsers)
+app.get('/users/:id', require('connect-ensure-login').ensureLoggedIn(), usersController.getUserById)
 
 /**
  * API routes.

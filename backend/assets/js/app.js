@@ -3,5 +3,6 @@
 angular.module('campaignsApp', [
   'campaignsApp.dashboard',
   'campaignsApp.campaignEdit',
-  'campaignsApp.sessionEdit'
+  'campaignsApp.sessionEdit',
+  'campaignsApp.userEdit'
 ])

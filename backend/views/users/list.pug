@@ -1,9 +1,9 @@
 doctype html
-html(ng-app='usersApp')
-    include header.pug
-    body(ng-controller='DashboardListController as dashboardCtr')
+html(ng-app='campaignsApp')
+    include ../header
+    body
         #wrapper
-            include navigation.pug
+            include ../navigation
             #page-wrapper.gray-bg
                 .row.border-bottom
                     nav.navbar.navbar-static-top(role='navigation', style='margin-bottom: 0')
@@ -70,9 +70,8 @@ html(ng-app='usersApp')
                                             b ID #{id}
                                             | .
                                     .row
-                                        a.btn.btn-info.btn-rounded.pull-right(href="/users/new", ng-if='"admin" == "'+user.Role.name+'"') Add
+                                        a.btn.btn-info.btn-rounded.pull-right(href="/users/new") Add
                                     form.form-horizontal#main(method='post', action='/users', role='form', novalidate)
-                                        input.form-control(type='hidden', name='jsonData', id='data', ng-model='dashboardCtr.jsonData')
                                         table.table.table-striped.table-bordered.table-hover.dataTables-example(data-order='[[ 0, "DESC" ]]' )
                                             thead
                                                 tr
@@ -93,10 +92,10 @@ html(ng-app='usersApp')
                                                         td= item.userRole
                                                         td= item.createdAt
                                                         td
-                                                            a.btn.btn-warning.btn-rounded(href="/users/" + item.id + "", ng-if='"admin" == "'+user.Role.name+'"') Update
+                                                            a.btn.btn-warning.btn-rounded(href="/users/" + item.id + "") Update
                                                             |
                                                             |
-                                                            a.btn.btn-danger.btn-rounded(href="/users/delete/" + item.id + "", ng-if='"admin" == "'+user.Role.name+'"') Delete
+                                                            a.btn.btn-danger.btn-rounded(href="/users/delete/" + item.id + "") Delete
                                             tfoot
                                                 tr
                                                     th uid
@@ -106,4 +105,4 @@ html(ng-app='usersApp')
                                                     th Role
                                                     th Created at
                                                     th
-                include footer.pug
+                include ../footer
