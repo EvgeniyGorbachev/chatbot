@@ -66,7 +66,9 @@ html(ng-app='campaignsApp')
                                             i.fa.fa-times
                                 .ibox-content
                                     input.form-control(type='hidden', name='user', ng-init="userCtr.user.object = " + user + "" id='user', ng-model='userCtr.user.object')
+
                                     form.form-horizontal#main(method='post', action="", role='form', name='userCtr.form', novalidate)
+                                        input.form-control(type='hidden', name='id', ng-model='userCtr.data.id')
                                         //Name
                                         .form-group(ng-class="{'has-error': userCtr.isFormSend && userCtr.form.username.$invalid}")
                                             label.col-sm-2.control-label User name
@@ -106,7 +108,7 @@ html(ng-app='campaignsApp')
                                                 |
                                                 span(ng-show="userCtr.isFormSend && userCtr.form.userRole.$invalid")
                                             .col-sm-10
-                                                select.form-control.m-b(name='userRole', ng-model='userCtr.data.userRole', ng-value='userCtr.data.userRole', ng-required='true', ng-options='label for (label, value) in userCtr.options', convert-to-number)
+                                                select.form-control.m-b(name='userRole', ng-model='userCtr.data.userRole', ng-value='userCtr.data.userRole', ng-required='true', ng-options='label for (label, value) in userCtr.options')
 
                                         //BUTTONS
                                         .form-group

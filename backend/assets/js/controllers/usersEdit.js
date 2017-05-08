@@ -18,6 +18,7 @@ angular.module('campaignsApp.userEdit', [])
             "object": null
         };
         vm.data        = {
+            "id"  : '',
             "username"  : '',
             "password"  : '',
             "phone"     : '',

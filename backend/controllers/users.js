@@ -3,8 +3,8 @@ const SmoochCore = require('smooch-core');
 const request    = require('request');
 
 /**
- * GET /campaigns
- * List of campaigns.
+ * GET /users
+ * List of users.
  */
 exports.getUsers = (req, res) =>
 {
@@ -27,8 +27,8 @@ exports.getUsers = (req, res) =>
 
 
 /**
- * GET /campaigns/:id
- * Get campaign by id.
+ * GET /users/:id
+ * Get user by id.
  */
 exports.getUserById = (req, res) =>
 {
@@ -48,4 +48,46 @@ exports.getUserById = (req, res) =>
     {
         res.render('users/edit');
     })
+};
+
+
+/**
+ * POST /users/:id
+ * Update useer by id.
+ */
+exports.updateUserById = (req, res) => {
+    let user = req.body;
+
+    //if update
+    if (user.id) {
+        db.Users.findOne({ where: {id: user.id} }).then(function(item) {
+            item.update(user).then(function() {
+                let data = JSON.stringify(user)
+                res.redirect('/users?updated=true');
+            }).catch(function(err) {
+                console.log(err)
+                res.render('users/edit', {err: 'Update wrong'})
+            })
+        }).catch(function(err) {
+            console.log(err)
+            db.Users.all().then(function (users)
+            {
+                res.render('users', {
+                    userList: users,
+                    err         : 'user not found'
+                })
+            })
+        })
+        //if create
+    } else {
+
+        // Save user
+        db.Users.create(user).then(function(data) {
+            res.redirect('/users?created=true');
+        }).catch(function(err) {
+            console.log(5555,  err)
+            return res.render('users/edit', {err: 'Saved wrong'})
+        })
+
+    }
 };
