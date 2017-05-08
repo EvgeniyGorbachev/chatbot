@@ -18,6 +18,7 @@ const dashboardController = require('./controllers/dashboard')
 const apiController = require('./controllers/api')
 const authController = require('./controllers/authentication')
 const sessionsController = require('./controllers/sessions')
+const usersController = require('./controllers/users')
 
 /**
  * WebSocket.
@@ -65,6 +66,7 @@ app.post('/campaigns/:id',  require('connect-ensure-login').ensureLoggedIn(), ca
 app.get('/campaigns/delete/:id',  require('connect-ensure-login').ensureLoggedIn(), campaingController.deleteCampaignById)
 app.get('/campaigns/:campaignid/sessions',  require('connect-ensure-login').ensureLoggedIn(), sessionsController.getSessionsById)
 app.get('/agent/:userid',  require('connect-ensure-login').ensureLoggedIn(), sessionsController.getSessionsByUserId)
+app.get('/users', require('connect-ensure-login').ensureLoggedIn(), usersController.getUsers)
 
 /**
  * API routes.
