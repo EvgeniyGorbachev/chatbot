@@ -34,4 +34,4 @@ nav.navbar-default.navbar-static-side(role='navigation')
                 a(href='/users')
                     i.fa.fa-flask
                     |
-                    span.nav-label Users
+                    span.nav-label(ng-if='"admin" == "'+user.Role.name+'"') Users

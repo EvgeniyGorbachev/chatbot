@@ -18,14 +18,14 @@ html(ng-app='usersApp')
                                     |  Log out
                 .row.wrapper.border-bottom.white-bg.page-heading
                     .col-lg-10
-                        h2 Campaigns
+                        h2 Users
                         ol.breadcrumb
                             li
                                 a(href='/dashboard') Home
                             li
                                 a Chatbot
                             li.active
-                                strong Campaigns
+                                strong Users
                     .col-lg-2
                 .wrapper.wrapper-content.animated.fadeInRight
                     .row
@@ -34,21 +34,21 @@ html(ng-app='usersApp')
                                 if updated
                                     .alert.alert-success.alert-dismissable
                                         button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
-                                        |  Campaign was updated
+                                        |  User was updated
                                 if created
                                     .alert.alert-success.alert-dismissable
                                         button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
-                                        |  Campaign was created
+                                        |  User was created
                                 if deleted
                                     .alert.alert-success.alert-dismissable
                                         button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
-                                        |  Campaign was deleted
+                                        |  User was deleted
                                 if err
                                     .alert.alert-danger.alert-dismissable
                                         button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
                                         |  Error
                                 .ibox-title
-                                    h5 Campaigns
+                                    h5 Users
                                     .ibox-tools
                                         a.collapse-link
                                             i.fa.fa-chevron-up
