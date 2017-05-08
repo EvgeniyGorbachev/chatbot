@@ -84,15 +84,32 @@ html(ng-app='campaignsApp')
                                             .col-sm-10
                                                 input.form-control(type='text' name='password', ng-required='true', ng-model='userCtr.data.password', ng-maxlength='255')
 
+                                        .form-group(ng-class="{'has-error': userCtr.isFormSend && userCtr.form.email.$invalid}")
+                                            label.col-sm-2.control-label Email
+                                                |
+                                                |
+                                                span(ng-show="userCtr.isFormSend && userCtr.form.email.$invalid")
+                                            .col-sm-10
+                                                input.form-control(type='email' name='email', ng-required='true', ng-model='userCtr.data.email', ng-maxlength='255')
+
+                                        .form-group(ng-class="{'has-error': userCtr.isFormSend && userCtr.form.phone.$invalid}")
+                                            label.col-sm-2.control-label Phone
+                                                |
+                                                |
+                                                span(ng-show="userCtr.isFormSend && userCtr.form.phone.$invalid")
+                                            .col-sm-10
+                                                input.form-control(type='text' name='phone', ng-required='true', ng-model='userCtr.data.phone', ng-maxlength='255')
+
+                                        .form-group(ng-class="{'has-error': userCtr.isFormSend && userCtr.form.userRole.$invalid}")
+                                            label.col-sm-2.control-label Role
+                                                |
+                                                |
+                                                span(ng-show="userCtr.isFormSend && userCtr.form.userRole.$invalid")
+                                            .col-sm-10
+                                                select.form-control.m-b(name='userRole', ng-model='userCtr.data.userRole', ng-value='userCtr.data.userRole', ng-required='true', ng-options='label for (label, value) in userCtr.options', convert-to-number)
 
                                         //BUTTONS
                                         .form-group
                                             .col-sm-4.col-sm-offset-2
                                                 a.btn.btn-w-m.btn-success#save(ng-click='userCtr.submit($event)') Save
-                                                |
-                                                |
-                                                a.btn.btn-primary(ng-click='userCtr.addStep($event)') + Add
-                                                |
-                                                |
-                                                a.btn.btn-w-m.btn-danger(ng-click='userCtr.deleteStep($event)', ng-disabled='userCtr.step == 1') Delete
                 include ../footer.pug

@@ -7,6 +7,10 @@ angular.module('campaignsApp.userEdit', [])
         let vm        = this;
         vm.step       = 0;
         vm.isFormSend = false;
+        vm.options = {
+            "Admin" : 1,
+            "Manager" : 2
+        };
 
         vm.steps       = [];
         vm.flowStorage = {};
@@ -50,7 +54,6 @@ angular.module('campaignsApp.userEdit', [])
             if (!vm.form.$valid) {
                 return false;
             }
-            vm.data.phrases = vm.flowStorage;
 
             $('#data').val(JSON.stringify(vm.data));
             $('form').submit();
