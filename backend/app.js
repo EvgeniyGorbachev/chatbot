@@ -77,7 +77,7 @@ app.get('/users', require('connect-ensure-login').ensureLoggedIn(), usersControl
 app.get('/users/:id', require('connect-ensure-login').ensureLoggedIn(), usersController.getUserById)
 app.post('/users/:id',  require('connect-ensure-login').ensureLoggedIn(), usersController.updateUserById)
 
-app.get('/webhook/web-chat', webhooks.smoochWebChat)
+app.post('/webhook/web-chat', webhooks.smoochWebChat)
 
 /**
  * API routes.

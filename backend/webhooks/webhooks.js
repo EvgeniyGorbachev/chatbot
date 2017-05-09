@@ -3,7 +3,7 @@ const SmoochCore = require('smooch-core');
 const request    = require('request');
 
 /**
- * GET /webhook/web-chat
+ * POST /webhook/web-chat
  * Webhook for web chat (Smooch integration)
  */
 exports.smoochWebChat = (req, res) =>
