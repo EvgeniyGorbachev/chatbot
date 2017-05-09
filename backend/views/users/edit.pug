@@ -108,7 +108,9 @@ html(ng-app='campaignsApp')
                                                 |
                                                 span(ng-show="userCtr.isFormSend && userCtr.form.userRole.$invalid")
                                             .col-sm-10
-                                                select.form-control.m-b(name='userRole', ng-model='userCtr.data.userRole', ng-value='userCtr.data.userRole', ng-required='true', ng-options='label for (label, value) in userCtr.options')
+                                                select.form-control.m-b(name='userRole', ng-model='userCtr.data.userRole', ng-value='userCtr.data.userRole', ng-required='true',  convert-number)
+                                                    option(value='1') Admin
+                                                    option(value='2') Manager
 
                                         //BUTTONS
                                         .form-group
