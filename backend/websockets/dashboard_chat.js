@@ -1,6 +1,6 @@
 const url = require('url')
 const WebSocket = require('ws')
-const db = require('./models/index.js')
+const db = require('./../models/index.js')
 const Smooch = require('smooch-core')
 
 /**

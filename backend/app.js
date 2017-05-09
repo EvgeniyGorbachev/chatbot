@@ -21,9 +21,16 @@ const sessionsController = require('./controllers/sessions')
 const usersController = require('./controllers/users')
 
 /**
+ * Webhooks
+ */
+const webhooks = require('./webhooks/webhooks')
+
+
+/**
  * WebSocket.
  */
-require('./websocket')
+require('./websockets/dashboard_chat')
+require('./websockets/web_chat')
 
 /**
  * API keys and Passport configuration.
@@ -69,6 +76,8 @@ app.get('/agent/:userid',  require('connect-ensure-login').ensureLoggedIn(), ses
 app.get('/users', require('connect-ensure-login').ensureLoggedIn(), usersController.getUsers)
 app.get('/users/:id', require('connect-ensure-login').ensureLoggedIn(), usersController.getUserById)
 app.post('/users/:id',  require('connect-ensure-login').ensureLoggedIn(), usersController.updateUserById)
+
+app.get('/webhook/web-chat', webhooks.smoochWebChat)
 
 /**
  * API routes.
