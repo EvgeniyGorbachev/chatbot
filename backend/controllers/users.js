@@ -59,8 +59,8 @@ exports.updateUserById = (req, res) => {
     let user = req.body;
 
     //if update
-    if (user.id) {
-        db.Users.findOne({ where: {id: user.id} }).then(function(item) {
+    if (req.params.id) {
+        db.Users.findOne({ where: {id: req.params.id} }).then(function(item) {
             item.update(user).then(function() {
                 let data = JSON.stringify(user)
                 res.redirect('/users?updated=true');
@@ -70,11 +70,14 @@ exports.updateUserById = (req, res) => {
             })
         }).catch(function(err) {
             console.log(err)
-            db.Users.all().then(function (users)
+            db.Users.all({order: 'id DESC'}).then(function (users)
             {
-                res.render('users', {
-                    userList: users,
-                    err         : 'user not found'
+                res.render('users/list', {
+                    usersList: users,
+                    updated  : req.query.updated,
+                    deleted  : req.query.deleted,
+                    created  : req.query.created,
+                    err      : req.query.err
                 })
             })
         })
