@@ -59,7 +59,7 @@ exports.updateUserById = (req, res) => {
     let user = req.body;
 
     //if update
-    if (req.params.id) {
+    if (req.params.id && ("new" != req.params.id)) {
         db.Users.findOne({ where: {id: req.params.id} }).then(function(item) {
             item.update(user).then(function() {
                 let data = JSON.stringify(user)
