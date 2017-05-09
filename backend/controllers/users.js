@@ -153,8 +153,8 @@ exports.updateUserById = (req, res) => {
             }
 
         }).catch(function(err) {
-            console.log(5555,  err)
-            return res.render('users/edit', {err: 'Saved wrong'})
+
+            return res.render('users/list', {err: 'Saved wrong'})
         })
 
     }
