@@ -43,7 +43,20 @@ exports.getUserById = (req, res) =>
     {
         console.log(user);
         let data = JSON.stringify(user);
-        res.render('users/edit', {user: data})
+
+        db.Campaigns.all({order: 'id DESC'}).then(function (campaigns)
+        {
+
+            db.UsersHasCampaign.findAll({where: {user_id: id}}).then(function(user_has_campaigns){
+                res.render('users/edit', {
+                    user     : data,
+                    campaigns: campaigns,
+                    user_has_campaign: user_has_campaigns
+                })
+            });
+
+
+        });
     }).catch(function (err)
     {
         res.render('users/edit');
