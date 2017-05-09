@@ -131,3 +131,11 @@ let smooch = new SmoochCore({
 //   console.log(response)
 // });
 
+// smooch.integrations.delete('5900c71834853e33008fa2ab', 'eak4jis0yglxcd9gqv86483fh').then((response) => {
+//   console.log(response)
+// });
+
+
+smooch.integrations.list('5900c71834853e33008fa2ab').then((response) => {
+  console.log(response)
+});
