@@ -113,6 +113,15 @@ html(ng-app='campaignsApp')
                                                     option(value='1') Admin
                                                     option(value='2') Manager
 
+                                        .form-group(ng-if="2 == userCtr.data.userRole")
+                                            label.col-sm-2.control-label Campaigns
+                                            .col-sm-10
+                                                ul
+                                                    each campaign in campaigns
+                                                        li
+                                                            label= campaign.name
+                                                                input(type='checkbox', value=''+campaign.id+'', name='user_has_campaign[]', checked=(user_has_campaign[campaign.id]?'checked':false))
+
                                         //BUTTONS
                                         .form-group
                                             .col-sm-4.col-sm-offset-2
