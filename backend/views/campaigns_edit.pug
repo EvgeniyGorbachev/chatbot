@@ -74,20 +74,20 @@ html(ng-app='campaignsApp')
                                                 |
                                                 span(ng-show="campaignCtr.isFormSend && campaignCtr.form.name.$invalid") (max. 50 characters)
                                             .col-sm-10
-                                                input.form-control(type='text' name='name', ng-required='true', ng-model='campaignCtr.data.name', ng-maxlength='50')
+                                                input.form-control(type='text' name='name', ng-required='true', ng-model='campaignCtr.campaign.object.name', ng-maxlength='50')
                                                 input.form-control(type='hidden', name='jsonData', id='data', ng-model='campaignCtr.jsonData')
 
                                         //Channel
                                         .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.channel.$invalid}")
                                             label.col-sm-2.control-label Channel
                                             .col-sm-2
-                                                select.form-control.m-b(name='channel', ng-model='campaignCtr.data.channel', ng-required='true')
+                                                select.form-control.m-b(name='channel', ng-model='campaignCtr.campaign.object.channel', ng-required='true')
                                                     option(value='sms') SMS
                                                     option(value='facebook') Facebook
                                                     option(value='telegram') Telegram
                                                     option(value='slack') Slack
                                         //Phone number
-                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone.$invalid}" ng-if="'sms' == campaignCtr.data.channel")
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone.$invalid}" ng-if="'sms' == campaignCtr.campaign.object.channel")
                                             label.col-sm-2.control-label Phone number
                                                 |
                                                 |
@@ -95,45 +95,55 @@ html(ng-app='campaignsApp')
                                             .col-sm-10
                                                 .row
                                                     .col-md-3
-                                                        input.form-control(type='text', name='phone' placeholder='+12345678900' ng-required='true', ng-model='campaignCtr.data.phone', ng-pattern='/^\\+\\d{11}$/')
+                                                        input.form-control(type='text', name='phone' placeholder='+12345678900' ng-required='true', ng-model='campaignCtr.campaign.object.phone', ng-pattern='/^\\+\\d{11}$/')
                                         //Phone number twilio sid
-                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}" ng-if="'sms' == campaignCtr.data.channel")
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}" ng-if="'sms' == campaignCtr.campaign.object.channel")
                                             label.col-sm-2.control-label Twilio phone number sid
                                             .col-sm-10
                                                 .row
                                                     .col-md-3
-                                                        input.form-control(type='text', name='phone_sid' placeholder='PNc91815148445g9b8963ab398b499b0540' ng-required='true', ng-model='campaignCtr.data.twilio_phone_number_sid')
+                                                        input.form-control(type='text', name='phone_sid' placeholder='PNc91815148445g9b8963ab398b499b0540' ng-required='true', ng-model='campaignCtr.campaign.object.twilio_phone_number_sid')
                                         //Facebook app id
-                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}" ng-if="'facebook' == campaignCtr.data.channel")
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}" ng-if="'facebook' == campaignCtr.campaign.object.channel")
                                             label.col-sm-2.control-label Facebook APP ID
                                             .col-sm-10
                                                 .row
                                                     .col-md-3
-                                                        input.form-control(type='text', name='phone_sid' placeholder='' ng-required='true', ng-model='campaignCtr.data.twilio_phone_number_sid')
+                                                        input.form-control(type='text', name='phone_sid' placeholder='' ng-required='true', ng-model='campaignCtr.campaign.object.twilio_phone_number_sid')
                                         //Telegram app id
-                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}" ng-if="'telegram' == campaignCtr.data.channel")
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}" ng-if="'telegram' == campaignCtr.campaign.object.channel")
                                             label.col-sm-2.control-label Telegram APP ID
                                             .col-sm-10
                                                 .row
                                                     .col-md-3
-                                                        input.form-control(type='text', name='phone_sid' placeholder='' ng-required='true', ng-model='campaignCtr.data.twilio_phone_number_sid')
+                                                        input.form-control(type='text', name='phone_sid' placeholder='' ng-required='true', ng-model='campaignCtr.campaign.object.twilio_phone_number_sid')
                                         //Slack app id
-                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}" ng-if="'slack' == campaignCtr.data.channel")
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}" ng-if="'slack' == campaignCtr.campaign.object.channel")
                                             label.col-sm-2.control-label Slack APP ID
                                             .col-sm-10
                                                 .row
                                                     .col-md-3
-                                                        input.form-control(type='text', name='phone_sid' placeholder='' ng-required='true', ng-model='campaignCtr.data.twilio_phone_number_sid')
+                                                        input.form-control(type='text', name='phone_sid' placeholder='' ng-required='true', ng-model='campaignCtr.campaign.object.twilio_phone_number_sid')
                                         //Start/End date
                                         .form-group(ng-class="{'has-error': campaignCtr.isFormSend && (campaignCtr.form.startDate.$invalid||campaignCtr.form.endDate.$invalid)}")
                                             label.col-sm-2.control-label Start / End date
                                             .col-sm-10
                                                 #datepicker.input-daterange.input-group
-                                                    input.input-sm.form-control.datapicker(type='text', datepicker-input name='startDate', value='', ng-model='campaignCtr.data.startDate', ng-required="true" )
+                                                    input.input-sm.form-control.datapicker(type='text', datepicker-input name='startDate', value='', ng-model='campaignCtr.campaign.object.startDate', ng-required="true" )
                                                     |
                                                     span.input-group-addon to
                                                     |
-                                                    input.input-sm.form-control.datapicker(type='text', datepicker-input name='endDate', value='', ng-model='campaignCtr.data.endDate', ng-required="true" )
+                                                    input.input-sm.form-control.datapicker(type='text', datepicker-input name='endDate', value='', ng-model='campaignCtr.campaign.object.endDate', ng-required="true" )
+
+                                        if users
+                                            //Users
+                                            .form-group(ng-class="{'has-error': campaignCtr.isFormSend && (campaignCtr.form.startDate.$invalid||campaignCtr.form.endDate.$invalid)}")
+                                                label.col-sm-2.control-label Users
+                                                .col-sm-4
+                                                    select.form-control.m-b.chosen-select(data-placeholder='Choose a user...', multiple)
+                                                        each user in users
+                                                            option(value=""+user.id+"")=user.username
+
 
                                         #repeat(ng-repeat='step in campaignCtr.steps')
                                             .hr-line-dashed

@@ -11,20 +11,21 @@ angular.module('campaignsApp.campaignEdit', [])
     vm.campaign = {
       "object": null
     };
-    vm.data = {
-      "name": '',
-      "channel": '',
-      "phone": '',
-      "startDate": '',
-      "endDate": '',
-      "phrases": ''
-    };
+
+    $('.chosen-select').chosen();
+
+    $('.chosen-select').on('change', function(evt, params) {
+      vm.campaign.object.users = $(this).val();
+    });
 
     //when edit campaign
     $scope.$watch('campaign.object', function() {
-      vm.data = vm.campaign.object;
 
       if (vm.campaign.object) {
+
+        if (vm.campaign.object.users) {
+          $('.chosen-select').chosen('destroy').val(vm.campaign.object.users).chosen();
+        }
 
         vm.steps = [];
         vm.flowStorage = {};
@@ -107,9 +108,9 @@ angular.module('campaignsApp.campaignEdit', [])
       if (!vm.form.$valid) {
         return false;
       }
-      vm.data.phrases = vm.flowStorage;
+      vm.campaign.object.phrases = vm.flowStorage;
 
-      $('#data').val(JSON.stringify(vm.data));
+      $('#data').val(JSON.stringify(vm.campaign.object));
       $('form').submit();
     }
 

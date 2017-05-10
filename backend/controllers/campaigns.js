@@ -29,8 +29,23 @@ exports.getCampaignById = (req, res) => {
   let id = req.params.id
 
   db.Campaigns.findOne({ where: {id: id} }).then(function(campaign) {
-    let data = JSON.stringify(campaign)
-    res.render('campaigns_edit', {campaign: data})
+    db.Users.all({order: 'id DESC'}).then(function (users) {
+      db.UsersHasCampaign.findAll({where: {campaign_id: id}}).then(function(items){
+
+        let usersId = []
+        items.forEach(function(item) {
+          usersId.push(item.user_id);
+        });
+
+        campaign.dataValues.users = usersId;
+        let data = JSON.stringify(campaign)
+
+        res.render('campaigns_edit', {
+          campaign: data,
+          users: users
+        })
+      })
+    })
   }).catch(function(err) {
       res.render('campaigns_edit')
   })
@@ -50,20 +65,50 @@ exports.updateCampaignById = (req, res) => {
   if (campaign.id) {
     db.Campaigns.findOne({ where: {id: campaign.id} }).then(function(item) {
       item.update(campaign).then(function() {
-        let data = JSON.stringify(campaign)
+
+        if(campaign.users){
+          db.UsersHasCampaign.destroy({
+            where:{
+              campaign_id: campaign.id
+            }
+          });
+
+          for(let i in campaign.users){
+            let obj = {
+              user_id: campaign.users[i],
+              campaign_id: campaign.id
+            };
+
+            db.UsersHasCampaign.create(obj);
+          }
+
+        }
+
         res.redirect('/campaigns?updated=true');
       }).catch(function(err) {
         console.log(err)
-        res.render('campaigns_edit', {err: 'Update wrong'})
+
+        db.Users.all({order: 'id DESC'}).then(function (users) {
+          res.render('campaigns_edit', {
+            campaign: campaigns,
+            users: users,
+            err  : 'Update wrong'
+          })
+        })
+
       })
     }).catch(function(err) {
       console.log(err)
       db.Campaigns.all().then(function (campaigns)
       {
-        res.render('campaigns', {
-          campaignList: campaigns,
-          err         : 'Campaign not found'
+        db.Users.all({order: 'id DESC'}).then(function (users) {
+          res.render('campaigns_edit', {
+            campaign: campaigns,
+            users: users,
+            err  : 'Campaign not found'
+          })
         })
+
       })
     })
     //if create
@@ -141,6 +186,18 @@ exports.updateCampaignById = (req, res) => {
           }).then((response) => {
             // Save campaign
             db.Campaigns.create(campaign).then(function(data) {
+
+              if(campaign.users){
+                for(let i in campaign.users){
+                  let obj = {
+                    user_id: campaign.users[i],
+                    campaign_id: campaign.id
+                  };
+
+                  db.UsersHasCampaign.create(obj);
+                }
+              }
+
               res.redirect('/campaigns?created=true');
             }).catch(function(err) {
               console.log(5555,  err)
