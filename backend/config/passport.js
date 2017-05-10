@@ -26,8 +26,11 @@ module.exports = function(options) {
       }]}).then(function(user) {
         if (!user) { return done(null, false) }
         if (user.password != password) { return done(null, false) }
+
         // Set user to app
-        options.app.locals.user = user
+        options.app.locals.user = user.dataValues
+        options.app.locals.user.roleName = user.Role.label
+
         return done(null, user)
       }).catch(function(err) {
         return done(err)

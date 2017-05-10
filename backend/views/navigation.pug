@@ -6,14 +6,15 @@ nav.navbar-default.navbar-static-side(role='navigation')
                     span
                         img.img-circle(alt='image', src='/assets/img/profile_small.jpg')
                     |
-                    a.dropdown-toggle(data-toggle='dropdown', href='#')
-                        span.clear
-                            span.block.m-t-xs
-                                //strong.font-bold #{user.username}
-                            |
-                            span.text-muted.text-xs.block
-                                //| #{user.Role.label}
-                                b.caret
+                    if user
+                        a.dropdown-toggle(data-toggle='dropdown', href='#')
+                            span.clear
+                                span.block.m-t-xs
+                                    strong.font-bold #{user.username}
+                                |
+                                span.text-muted.text-xs.block
+                                    | #{user.roleName}
+                                    b.caret
                     ul.dropdown-menu.animated.fadeInRight.m-t-xs
                         li
                             a(href='profile.html') Profile
@@ -35,3 +36,8 @@ nav.navbar-default.navbar-static-side(role='navigation')
                     i.fa.fa-flask
                     |
                     span.nav-label Users
+            li
+                a(href='/agent/' + user.id + '')
+                    i.fa.fa-flask
+                    |
+                    span.nav-label Chats
