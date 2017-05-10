@@ -7,6 +7,7 @@ angular.module('campaignsApp.userEdit', [])
         let vm        = this;
         vm.step       = 0;
         vm.isFormSend = false;
+        vm.submit = submit;
         vm.options = {
             "Admin" : 1,
             "Manager" : 2
@@ -30,21 +31,13 @@ angular.module('campaignsApp.userEdit', [])
         //when edit user
         $scope.$watch('user.object', function ()
         {
-            console.info("user object");
-            console.log(vm.user.object);
             vm.data = vm.user.object;
-
         });
-
-        vm.baseElement = angular.element(document.querySelector('#base'));
-        vm.mainElement = angular.element(document.querySelector('#main'));
 
         $(".datapicker").bind("keydown", function (event)
         {
             event.preventDefault();
         });
-
-        vm.submit = submit;
 
 
         function submit(event)
@@ -66,11 +59,11 @@ angular.module('campaignsApp.userEdit', [])
             require: 'ngModel',
             link: function(scope, el, attr, ctrl) {
                 ctrl.$parsers.push(function(value) {
-                    return parseInt(value, 10);
+                    if (value) return parseInt(value, 10);
                 });
 
                 ctrl.$formatters.push(function(value) {
-                    return value.toString();
+                    if (value) return value.toString();
                 });
             }
         }

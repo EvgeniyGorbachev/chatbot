@@ -39,38 +39,22 @@ exports.getUserById = (req, res) =>
 
     let id = req.params.id;
 
-    db.Users.findOne({where: {id: id}}).then(function (user)
-    {
+    if (id != 'new') {
+      db.Users.findOne({where: {id: id}}).then(function (user)
+      {
         let data = JSON.stringify(user);
 
-        db.Campaigns.all({order: 'id DESC'}).then(function (campaigns)
-        {
+        res.render('users/edit', {
+          user     : data
+        })
 
-            db.UsersHasCampaign.findAll({where: {user_id: id}}).then(function(user_has_campaigns){
-                let campaignList = [];
-                for(var i in user_has_campaigns){
-                    campaignList[user_has_campaigns[i].campaign_id] = user_has_campaigns[i].campaign_id;
-                }
-                res.render('users/edit', {
-                    user     : data,
-                    campaigns: campaigns,
-                    user_has_campaign: campaignList
-                })
-            });
-
-
-        });
-    }).catch(function (err)
-    {
-        db.Campaigns.all({order: 'id DESC'}).then(function (campaigns)
-        {
-            res.render('users/edit',{
-                user     : {},
-                campaigns: campaigns,
-                user_has_campaign: []
-            });
-        });
-    })
+      }).catch(function (err)
+      {
+        res.redirect('/users');
+      })
+    } else {
+      res.render('users/edit');
+    }
 };
 
 
@@ -86,24 +70,6 @@ exports.updateUserById = (req, res) => {
         db.Users.findOne({ where: {id: req.params.id} }).then(function(item) {
             item.update(user).then(function() {
                 let data = JSON.stringify(user);
-
-                if(user.userRole == 2){
-                    db.UsersHasCampaign.destroy({
-                        where:{
-                            user_id: req.params.id
-                        }
-                    });
-                    if(req.body.user_has_campaign){
-                        for(let i in req.body.user_has_campaign){
-                            let obj = {
-                                user_id: req.params.id,
-                                campaign_id: req.body.user_has_campaign[i]
-                            };
-
-                            db.UsersHasCampaign.create(obj);
-                        }
-                    }
-                }
                 res.redirect('/users?updated=true');
             }).catch(function(err) {
                 console.log(err)
@@ -127,30 +93,7 @@ exports.updateUserById = (req, res) => {
 
         // Save user
         db.Users.create(user).then(function(data) {
-
-            console.log("data on creation", data);
-            if(data.userRole == 2){
-                db.UsersHasCampaign.destroy({
-                    where:{
-                        user_id: data.id
-                    }
-                });
-                if(req.body.user_has_campaign){
-                    for(let i in req.body.user_has_campaign){
-                        let obj = {
-                            user_id: data.id,
-                            campaign_id: req.body.user_has_campaign[i]
-                        };
-
-                        db.UsersHasCampaign.create(obj);
-                    }
-                    res.redirect('/users?created=true');
-                }else{
-                    res.redirect('/users?created=true');
-                }
-            }else{
-                res.redirect('/users?created=true');
-            }
+            res.redirect('/users?created=true');
 
         }).catch(function(err) {
 
