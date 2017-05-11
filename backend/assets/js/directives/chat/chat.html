@@ -1,0 +1,72 @@
+<div class="ibox chat-view">
+
+  <div class="ibox-title">
+    <small class="pull-right text-muted">Last message:  Mon Jan 26 2015 - 18:39:23</small>
+    Chat room panel
+  </div>
+
+
+  <div class="ibox-content">
+
+    <div class="row">
+
+      <div class="col-md-9 ">
+        <div class="chat-discussion">
+
+          <h2 ng-if='userConversation.length == 0'>No conversation</h2>
+          <h2 ng-if='websocketIsError' class="text-danger">Websocket Error!</h2>
+
+          <div class="chat-message" ng-repeat='conv in userConversation track by $index', ng-class="{'direct1': conv.direction == 1, 'direct0': conv.direction == 0}">
+            <img class="message-avatar" src="/assets/img/person-black.png" ng-if='conv.direction == 1'>
+            <img class="message-avatar" src="/assets/img/person-white.png" ng-if='conv.direction == 0'>
+            <div class="message">
+              <a class="message-author" href="#" ng-if='conv.direction == 1' > Chat bot </a>
+              <a class="message-author" href="#" ng-if='conv.direction == 0' > {{ sessionsCtr.currentUser.username }} </a>
+              <span class="message-date">  Fri Jan 25 2015 - 11:12:36 </span>
+              <span class="message-content"> {{ conv.text || 'Empty message' }} </span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col-md-3">
+        <div class="chat-users">
+
+
+          <div class="users-list">
+
+            <div class="chat-user" ng-repeat='user in userList track by $index' ng-click='getConversation(user)' ng-class="{'current': user.id == currentUser.id}">
+              <!--<span class="pull-right label label-primary">Online</span>-->
+              <img class="chat-avatar" src="/assets/img/person-white.png" alt="">
+              <div class="chat-user-name">
+                <a href="#">{{ user.username || 'no name' }}</a>
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="chat-message-form">
+
+          <div class="form-group">
+
+            <textarea ng-model='messageText' class="form-control message-input" name="message" placeholder="Enter message text"></textarea>
+            <a ng-click='sendMessage()' ng-show='!isSend' ng-disabled='!currentUser.sender' class="btn btn-w-m btn-success chat-button">Send</a>
+            <a disabled ng-show='isSend' href="/" class="btn btn-w-m btn-success chat-button">Sending...</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>

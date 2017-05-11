@@ -29,10 +29,19 @@ exports.getSessionsByUserId = (req, res) =>
     let userId = req.params.userid || false
     db.Users.findOne({where: {id: userId}}).then(function (user)
     {
-        console.log(11111, user)
+
+      db.Conversations.findAll({where: { userId: userId }, attributes: ['id']}).then(function (conversations) {
+
+        let ids = []
+        conversations.forEach(function(item) {ids.push(item.id) })
+
         res.render('sessions', {
-          user: user
+          user: user,
+          conversations: ids
         })
+      }).catch(function(err) {
+        console.log('err1: ', err)
+      })
 
     }).catch(function (err)
     {

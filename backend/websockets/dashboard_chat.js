@@ -14,12 +14,7 @@ wss.on('connection', function connection(ws) {
 
     // Get user list
     if (mes.target == 'getUserList') {
-      let fieldName = ( mes.data.type == 'agent') ? "userId":"campaign_id";
-
-      let obj = {};
-      obj[fieldName] = mes.data.value;
-
-      db.Conversations.findAll({where: obj, include: [{
+      db.Conversations.findAll({where: { id: mes.data }, include: [{
         model: db.Campaigns
       }]}).then(function (conversations) {
         let data = {
@@ -34,7 +29,7 @@ wss.on('connection', function connection(ws) {
 
     // Get user conversation
     if (mes.target == 'getUserConversation') {
-      db.ConversationsHistory.findAll({where: {"campaign_id": mes.data.campaignId, "user_id": mes.data.userId}, order: [['id', 'ASC']]}).then(function (history) {
+      db.ConversationsHistory.findAll({where: {"user_id": mes.data.userId}, order: [['id', 'ASC']]}).then(function (history) {
         let data = {
           "target": "userConversation",
           "data": history

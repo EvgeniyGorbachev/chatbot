@@ -72,7 +72,7 @@ app.get('/campaigns/:id', require('connect-ensure-login').ensureLoggedIn(), camp
 app.post('/campaigns/:id',  require('connect-ensure-login').ensureLoggedIn(), campaingController.updateCampaignById)
 app.get('/campaigns/delete/:id',  require('connect-ensure-login').ensureLoggedIn(), campaingController.deleteCampaignById)
 app.get('/campaigns/:campaignid/sessions',  require('connect-ensure-login').ensureLoggedIn(), sessionsController.getSessionsById)
-app.get('/agent/:userid',  require('connect-ensure-login').ensureLoggedIn(), sessionsController.getSessionsByUserId)
+app.get('/agent/:userid', require('connect-ensure-login').ensureLoggedIn(), sessionsController.getSessionsByUserId)
 app.get('/users', require('connect-ensure-login').ensureLoggedIn(), usersController.getUsers)
 app.get('/users/:id', require('connect-ensure-login').ensureLoggedIn(), usersController.getUserById)
 app.post('/users/:id',  require('connect-ensure-login').ensureLoggedIn(), usersController.updateUserById)

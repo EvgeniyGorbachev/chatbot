@@ -59,47 +59,9 @@ html(ng-app='campaignsApp')
                                 a.btn.btn-warning.btn-rounded(href="/campaigns/" + campaign.id + "") Edit
                     .row
                         .col-lg-12
-                            .ibox.chat-view
-                                .ibox-title
-                                    small.pull-right.text-muted(ng-if='!sessionsCtr.websocketIsError') Last message: Mon Jan 26 2015 - 18:39:23
-                                    |  Chat room panel
-                                    small.text-danger(ng-if='sessionsCtr.websocketIsError') Websocket error: Look in the console.
-                                .ibox-content
-                                    .row
-                                        .col-md-9
-                                            .chat-discussion
-                                                h2(ng-if='sessionsCtr.userConversation.length == 0') No conversation
-                                                h2.text-danger(ng-if='sessionsCtr.websocketIsError') Websocket error: Look in the console.
-                                                .chat-message(ng-repeat='conv in sessionsCtr.userConversation track by $index', ng-class="{'direct1': conv.direction == 1, 'direct0': conv.direction == 0}")
-                                                    img.message-avatar(src='/assets/img/person-black.png', ng-if='conv.direction == 1')
-                                                    img.message-avatar(src='/assets/img/person-white.png', ng-if='conv.direction == 0')
-                                                    .message
-                                                        a.message-author(ng-if='conv.direction == 1') Chat bot
-                                                        a.message-author(ng-if='conv.direction == 0') {{ sessionsCtr.currentUser.username }}
-                                                        |
-                                                        span.message-date Mon Jan 26 2015 - 18:39:23
-                                                        |
-                                                        span.message-content
-                                                            | {{ conv.text }}
-                                        .col-md-3
-                                            .chat-users
-                                                .users-list
-                                                    .chat-user(ng-repeat='user in sessionsCtr.userList track by $index', ng-click='sessionsCtr.getConversation(user)', ng-class="{'current': user.id == sessionsCtr.currentUser.id}")
-                                                        img.chat-avatar(src='/assets/img/person-white.png', alt='')
-                                                        .chat-user-name
-                                                            a
-                                                                strong {{ user.username || 'no name' }}
-                                                            p Campaign: {{ user.Campaign.name}}
-                                                            p Type: {{ user.Campaign.channel}}
-                                    .row
-                                        .col-lg-12
-                                            .chat-message-form
-                                                .form-group
-                                                    textarea.form-control.message-input(name='message', ng-model='sessionsCtr.messageText', placeholder='Enter message text',)
-                                                    a.btn.btn-w-m.btn-success.chat-button(ng-click='sessionsCtr.sendMessage()', ng-show='!sessionsCtr.isSend', ng-disabled='!sessionsCtr.currentUser.sender') Send
-                                                    a.btn.btn-w-m.btn-success.chat-button(ng-click='sessionsCtr.sendMessage()', disabled ng-show='sessionsCtr.isSend') Sending...
-
-                                        #webchat(data-campaignid='22', data-userid='ef5673bfb7d085693978e28e')
+                            input.form-control(type='hidden', name='conversations', ng-init="sessionsCtr.conversations = [" + conversations + "]" id='conversations', ng-model='sessionsCtr.conversations')
+                            chat(ng-model='sessionsCtr.conversations')
+                            //#webchat(data-campaignid='22', data-userid='ef5673bfb7d085693978e28e')
 
 
                 include footer.pug
