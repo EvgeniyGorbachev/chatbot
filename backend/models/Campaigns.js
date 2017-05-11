@@ -2,7 +2,7 @@ let Sequelize = require("sequelize")
 let moment = require('moment')
 
 module.exports = function (sequelize, DataTypes) {
-    return sequelize.define('Campaigns', {
+    let campaign = sequelize.define('Campaigns', {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -67,6 +67,13 @@ module.exports = function (sequelize, DataTypes) {
         }
     }, {
         individualHooks: true,
-        tableName: 'campaign'
+        tableName: 'campaign',
+      classMethods:{
+        associate:function(models){
+          campaign.belongsToMany(models.Users, {through: 'UsersHasCampaign', foreignKey: 'user_id', otherKey: 'campaign_id'})
+          campaign.hasMany(models.Conversations, {foreignKey: 'campaign_id', sourceKey: 'id'});
+        }
+      }
     });
+  return campaign;
 };

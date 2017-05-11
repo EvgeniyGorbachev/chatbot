@@ -82,6 +82,12 @@ exports.updateCampaignById = (req, res) => {
             db.UsersHasCampaign.create(obj);
           }
 
+        } else {
+          db.UsersHasCampaign.destroy({
+            where:{
+              campaign_id: campaign.id
+            }
+          });
         }
 
         res.redirect('/campaigns?updated=true');

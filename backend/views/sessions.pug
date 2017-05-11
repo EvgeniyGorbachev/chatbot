@@ -18,35 +18,6 @@ html(ng-app='campaignsApp')
                                     |  Log out
                 .row.wrapper.border-bottom.white-bg.page-heading
 
-                    .col-lg-10(ng-if='sessionsCtr.type == "campaign"')
-                        if campaign
-                            h2  #{campaign.name}
-                                |
-                                |
-                                if campaign.isActive
-                                    span.label.label-info Acitve
-                                if !campaign.isActive
-                                    span.label.label-danger Inactive
-                            ol.breadcrumb
-                                li
-                                    a(href='/dashboard') Home
-                                li
-                                    a Campaign
-                                li.active
-                                    strong Sessions
-
-                    .col-lg-10(ng-if='sessionsCtr.type == "agent"')
-                        if user
-                            h2  Agent: #{user.username}
-
-                        ol.breadcrumb
-                            li
-                                a(href='/dashboard') Home
-                            li
-                                a Agent
-                            li.active
-                                strong Sessions
-                    .col-lg-2.text-center
                 .wrapper.wrapper-content.animated.fadeInRight
                     .alert.alert-warning(ng-if='sessionsCtr.type == "campaign"')
                         if campaign
@@ -57,11 +28,36 @@ html(ng-app='campaignsApp')
                             p  <strong>Last update:</strong> #{campaign.updatedAt}
                             p
                                 a.btn.btn-warning.btn-rounded(href="/campaigns/" + campaign.id + "") Edit
-                    .row
-                        .col-lg-12
-                            input.form-control(type='hidden', name='conversations', ng-init="sessionsCtr.conversations = [" + conversations + "]" id='conversations', ng-model='sessionsCtr.conversations')
-                            chat(ng-model='sessionsCtr.conversations')
-                            //#webchat(data-campaignid='22', data-userid='ef5673bfb7d085693978e28e')
+
+                    if campaigns
+                        each item in campaigns
+                            .row
+                                .col-lg-12
+                                    .ibox.float-e-margins
+                                        .ibox-title
+                                            h5 Campaigns: #{item.name}
+                                            .ibox-tools
+                                                a.collapse-link
+                                                    i.fa.fa-chevron-up
+                                                a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                                    i.fa.fa-wrench
+                                                ul.dropdown-menu.dropdown-user
+                                                    li
+                                                        a(href='#') Config option 1
+                                                    li
+                                                        a(href='#') Config option 2
+                                                a.close-link
+                                                    i.fa.fa-times
 
 
+                                        .ibox-content
+                                            if conversations[item.id] && conversations[item.id].length > 0
+                                                chat(conversations="[" + conversations[item.id] + "]")
+                                            else
+                                                h2 No conversation in this campaign
+                    else
+                        h1 You do not have any campaigns.
+
+
+                #webchat(data-campaignid='22', data-userid='ef5673bfb7d085693978e28e')
                 include footer.pug

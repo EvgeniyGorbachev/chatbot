@@ -1,10 +1,6 @@
 angular.module('campaignsApp')
   .directive('chat', function() {
     return {
-      require: 'ngModel',
-      scope: {
-        model: '=ngModel',
-      },
       templateUrl: '/assets/js/directives/chat/chat.html',
       link: function (scope, $element, $attr) {
         let websocketHost = location.hostname;
@@ -26,15 +22,15 @@ angular.module('campaignsApp')
 
         scope.userList = [];
 
-        let conversations = scope.model;
-
-
+        let conversations = JSON.parse($attr.conversations);
 
         let socket = new WebSocket('ws://' + websocketHost + ':' + websocketPort);
-        socket.onopen = function () {
-        console.log('conversations:', conversations)
-          socket.send('{"target": "getUserList", "data": ' + JSON.stringify(conversations) + '}');
-        };
+
+        if (conversations.length > 0) {
+          socket.onopen = function () {
+            socket.send('{"target": "getUserList", "data": ' + JSON.stringify(conversations) + '}');
+          };
+        }
 
         socket.onmessage = function (message) {
           let res = JSON.parse(message.data);
