@@ -37,7 +37,7 @@
           <div class="users-list">
 
             <div class="chat-user" ng-repeat='user in userList track by $index' ng-click='getConversation(user)' ng-class="{'current': user.id == currentUser.id}">
-              <!--<span class="pull-right label label-primary">Online</span>-->
+              <span class="pull-right label label-primary" ng-show="user.newMessages > 0 && user.id != currentUser.id">{{ user.newMessages }}</span>
               <img class="chat-avatar" src="/assets/img/person-white.png" alt="">
               <div class="chat-user-name">
                 <a>{{ user.username || 'no name' }}</a>

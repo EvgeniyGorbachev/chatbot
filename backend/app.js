@@ -23,16 +23,17 @@ const sessionsController = require('./controllers/sessions')
 const usersController = require('./controllers/users')
 
 /**
+ * WebSocket.
+ */
+let dashboardChatSocket = io.of('/dashboardchat');
+require('./websockets/dashboard_chat')(dashboardChatSocket)
+require('./websockets/web_chat')
+
+/**
  * Webhooks
  */
 const webhooks = require('./webhooks/webhooks')
 
-
-/**
- * WebSocket.
- */
-require('./websockets/dashboard_chat')(io)
-require('./websockets/web_chat')
 
 /**
  * API keys and Passport configuration.
@@ -47,6 +48,14 @@ app.use(bodyParser.urlencoded({extended: true, limit: '50mb'}))
 app.set('view engine', 'pug')
 app.use("/assets", express.static(__dirname + '/assets'))
 app.use(cors())
+
+/**
+ * Make io accessible to app router
+ */
+app.use(function(req,res,next){
+  req.dashboardChatSocket = dashboardChatSocket;
+  next();
+});
 
 // app.use(require('morgan')('combined'))
 app.use(require('cookie-parser')())
@@ -74,7 +83,7 @@ app.get('/campaigns/:id', require('connect-ensure-login').ensureLoggedIn(), camp
 app.post('/campaigns/:id',  require('connect-ensure-login').ensureLoggedIn(), campaingController.updateCampaignById)
 app.get('/campaigns/delete/:id',  require('connect-ensure-login').ensureLoggedIn(), campaingController.deleteCampaignById)
 app.get('/campaigns/:campaignid/sessions',  require('connect-ensure-login').ensureLoggedIn(), sessionsController.getSessionsById)
-app.get('/agent/:userid', require('connect-ensure-login').ensureLoggedIn(), sessionsController.getSessionsByUserId)
+app.get('/agent/:userid',  require('connect-ensure-login').ensureLoggedIn(), sessionsController.getSessionsByUserId)
 app.get('/users', require('connect-ensure-login').ensureLoggedIn(), usersController.getUsers)
 app.get('/users/:id', require('connect-ensure-login').ensureLoggedIn(), usersController.getUserById)
 app.post('/users/:id',  require('connect-ensure-login').ensureLoggedIn(), usersController.updateUserById)

@@ -9,6 +9,7 @@ angular.module('campaignsApp')
 
         scope.websocketIsError = false;
         scope.isSend = false;
+        scope.smoochAppId = null;
 
         scope.userConversation = [];
         scope.userList = [];
@@ -34,6 +35,14 @@ angular.module('campaignsApp')
 
         socket.on('userList', function (data) {
           scope.userList = data;
+
+          scope.smoochAppId = data[0].Campaign.smooch_app_id;
+
+          // set init count new messages
+          scope.userList.forEach(function(user) {
+            user.newMessages = 0;
+          })
+
           scope.$digest();
         });
 
@@ -41,6 +50,20 @@ angular.module('campaignsApp')
           scope.messageText = '';
           scope.isSend = false;
           scope.userConversation = data;
+          scope.$digest();
+        });
+
+        socket.on('webhook', function (data) {
+          if (data.type == 'new message') {
+            // set count new message
+            if (scope.smoochAppId == data.appId) {
+              scope.userList.forEach(function(user) {
+                if (data.userId == user.sender && user.id != scope.currentUser.id) {
+                  user.newMessages++;
+                }
+              })
+            }
+          }
           scope.$digest();
         });
 
@@ -58,14 +81,17 @@ angular.module('campaignsApp')
         // }, 3000)
 
         // Send request to find new users
-        setInterval(function () {
-          socket.emit('getUserList', conversations);
-        }, 3000);
+        // setInterval(function () {
+        //   socket.emit('getUserList', conversations);
+        // }, 3000);
 
 
         scope.getConversation = function(user) {
           scope.isSend = false;
           scope.messageText = '';
+
+          // user see all new messages
+          user.newMessages = 0;
 
           scope.currentUser = user;
           socket.emit('getUserConversation', {"userId": scope.currentUser.sender});

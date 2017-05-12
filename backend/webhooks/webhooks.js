@@ -8,7 +8,7 @@ const request    = require('request');
  */
 exports.smoochWebChat = (req, res) =>
 {
-  console.log(999999999, req);
-
+  console.log('Get webhookkkkkk: ', req.body);
+  req.dashboardChatSocket.emit('webhook', {type: 'new message', userId: req.body.appUser['_id'], appId: req.body.app['_id']});
   res.sendStatus(201);
 };
