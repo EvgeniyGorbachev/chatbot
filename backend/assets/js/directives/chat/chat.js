@@ -1,6 +1,7 @@
 angular.module('campaignsApp')
   .directive('chat', function() {
     return {
+      scope: {},
       templateUrl: '/assets/js/directives/chat/chat.html',
       link: function (scope, $element, $attr) {
 
