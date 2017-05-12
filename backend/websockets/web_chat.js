@@ -1,21 +1,13 @@
-const url = require('url')
-const WebSocket = require('ws')
 const db = require('./../models/index.js')
 const Smooch = require('smooch-core')
 const crypto = require('crypto')
 
-/**
- * WebSocket.
- */
-const wss = new WebSocket.Server({ port: 8787 });
-
-wss.on('connection', function connection(ws) {
-  ws.on('message', function incoming(message) {
-    let mes = JSON.parse(message)
+module.exports = function(webChat) {
+  webChat.on('connection', function(socket){
 
     // Init user
-    if (mes.target == 'initUser') {
-      db.Campaigns.findOne({where: {id: mes.data.campaign_id}}).then(function (campaign) {
+    socket.on('initUser', function(msg){
+      db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
 
         const smooch = new Smooch({
           keyId : campaign.smooch_app_key_id,
@@ -24,36 +16,28 @@ wss.on('connection', function connection(ws) {
         });
 
         let id = crypto.randomBytes(20).toString('hex');
+
         smooch.appUsers.create(id + '@test.com', {
           givenName: 'Test name'
         }).then((response) => {
-          let data = {
-            "target": "initUser",
-            "data": response
-          };
-          ws.send(JSON.stringify(data));
+
+            console.log('CREATE USER: ', response);
+          socket.emit('initUser', response)
+
         }).catch((err) => {
           console.log(1111111, err)
-          let data = {
-            "target": "err",
-            "data": err
-          };
-          ws.send(JSON.stringify(data));
+          socket.emit('err', err.response.statusText)
         });
       }).catch((err) => {
-        let data = {
-          "target": "err",
-          "data": err
-        };
         console.log(2222222222, err)
-        ws.send(JSON.stringify(data));
+        socket.emit('err', err.response.statusText)
+
       });
-    }
+    })
 
     // Send message
-    if (mes.target == 'sendMessage') {
-
-      db.Campaigns.findOne({where: {id: mes.data.campaign_id}}).then(function (campaign) {
+    socket.on('sendMessage', function(msg){
+      db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
 
         const smooch = new Smooch({
           keyId : campaign.smooch_app_key_id,
@@ -61,41 +45,28 @@ wss.on('connection', function connection(ws) {
           scope : 'app'
         });
 
-        smooch.appUsers.sendMessage(mes.data.user_id, {
+        smooch.appUsers.sendMessage(msg.user_id, {
           type: 'text',
-          text: mes.data.text,
+          text: msg.text,
           role: 'appUser'
         }).then((response) => {
-
-          let data = {
-            "target": "userSendMessage",
-            "data": response
-          };
-          ws.send(JSON.stringify(data));
+          console.log('SEND MESSAGE: ', response);
+          socket.emit('userSendMessage', response)
 
         }).catch((err) => {
-          let data = {
-            "target": "err",
-            "data": err
-          };
           console.log(3333333, err)
-          ws.send(JSON.stringify(data));
+          socket.emit('err', err.response.statusText)
         });
 
       }).catch((err) => {
-        let data = {
-          "target": "err",
-          "data": err
-        };
         console.log(444444, err)
-        ws.send(JSON.stringify(data));
+        socket.emit('err', err.response.statusText)
       });
-    }
+    })
 
     // Get user messages
-    if (mes.target == 'getMessages') {
-
-      db.Campaigns.findOne({where: {id: mes.data.campaign_id}}).then(function (campaign) {
+    socket.on('getMessages', function(msg){
+      db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
 
         const smooch = new Smooch({
           keyId : campaign.smooch_app_key_id,
@@ -103,32 +74,19 @@ wss.on('connection', function connection(ws) {
           scope : 'app'
         });
 
-        smooch.appUsers.getMessages(mes.data.user_id).then((response) => {
-
-          let data = {
-            "target": "getMessages",
-            "data": response
-          };
-          ws.send(JSON.stringify(data));
+        smooch.appUsers.getMessages(msg.user_id).then((response) => {
+          console.log('GET MESSAGE: ', response);
+          socket.emit('getMessages', response)
 
         }).catch((err) => {
-          let data = {
-            "target": "err",
-            "data": err
-          };
           console.log(55555555, err)
-          ws.send(JSON.stringify(data));
+          socket.emit('err', err.response.statusText)
         });
 
       }).catch((err) => {
-        let data = {
-          "target": "err",
-          "data": err
-        };
         console.log(666666, err)
-        ws.send(JSON.stringify(data));
+        socket.emit('err', err.response.statusText)
       });
-    }
-
-  });
-});
+    })
+  })
+}

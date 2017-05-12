@@ -1,5 +1,5 @@
 require('dotenv').config()
-
+const Smooch = require('smooch-core')
 let jwt = require('jsonwebtoken');
 let SmoochCore =  require('smooch-core');
 
@@ -41,11 +41,11 @@ let smoochApp = new SmoochCore({
 
 
 // Initializing Smooch Core with an account scoped key
-let smooch = new SmoochCore({
-  keyId: process.env.SMOOCH_ACC_KEY,
-  secret: process.env.SMOOCH_ACC_SECRET,
-  scope: 'account'
-});
+// let smooch = new SmoochCore({
+//   keyId: process.env.SMOOCH_ACC_KEY,
+//   secret: process.env.SMOOCH_ACC_SECRET,
+//   scope: 'account'
+// });
 
 //get barear
 // console.log(smooch.authHeaders.Authorization)
@@ -136,6 +136,21 @@ let smooch = new SmoochCore({
 // });
 
 
-smooch.integrations.list('5900c71834853e33008fa2ab').then((response) => {
-  console.log(response)
+const smooch = new Smooch({
+  keyId: 'app_5900b9a92f588d5a016a1e8d',
+  secret: 'PWUIlzOX113c2Enqj5_AzDQj',
+  scope: 'app' });
+// console.log(smooch)
+smooch.appUsers.getMessages('67aef89989d281e454174bd5').then((response) => {
+
+  console.log('1111111111', response)
+
+}).catch((err) => {
+  console.log(55555555, err)
+
 });
+
+// "bb8b6834c5c3998d629a70951f5ab92b782c5d06@test.com"
+// _id
+//   :
+//   "4457035d0aa999f500ce96e4"

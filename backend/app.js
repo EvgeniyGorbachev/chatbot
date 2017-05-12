@@ -26,8 +26,9 @@ const usersController = require('./controllers/users')
  * WebSocket.
  */
 let dashboardChatSocket = io.of('/dashboardchat');
+let webChatSocket = io.of('/webchat');
 require('./websockets/dashboard_chat')(dashboardChatSocket)
-require('./websockets/web_chat')
+require('./websockets/web_chat')(webChatSocket)
 
 /**
  * Webhooks
@@ -54,6 +55,7 @@ app.use(cors())
  */
 app.use(function(req,res,next){
   req.dashboardChatSocket = dashboardChatSocket;
+  req.webChatSocket = webChatSocket;
   next();
 });
 
@@ -88,7 +90,7 @@ app.get('/users', require('connect-ensure-login').ensureLoggedIn(), usersControl
 app.get('/users/:id', require('connect-ensure-login').ensureLoggedIn(), usersController.getUserById)
 app.post('/users/:id',  require('connect-ensure-login').ensureLoggedIn(), usersController.updateUserById)
 
-app.post('/webhook/web-chat', webhooks.smoochWebChat)
+app.post('/webhook/web-chat', webhooks.webChat)
 
 /**
  * API routes.
