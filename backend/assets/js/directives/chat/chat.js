@@ -58,8 +58,15 @@ angular.module('campaignsApp')
             // set count new message
             if (scope.smoochAppId == data.appId) {
               scope.userList.forEach(function(user) {
+
+                // If close window with webhook user, add counter
                 if (data.userId == user.sender && user.id != scope.currentUser.id) {
                   user.newMessages++;
+                }
+
+                // If open window with webhook user, refresh messages
+                if (data.userId == user.sender && user.id == scope.currentUser.id) {
+                  socket.emit('getUserConversation', {"userId": scope.currentUser.sender});
                 }
               })
             }

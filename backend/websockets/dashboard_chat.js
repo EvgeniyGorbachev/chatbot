@@ -47,20 +47,20 @@ module.exports = function(dashboardChat) {
 
             db.ConversationsHistory.findAll({where: {"campaign_id": msg.campaign_id, "user_id": msg.user_id}, order: [['id', 'ASC']]}).then(function (history) {
 
-              let dataToLambda = {
-                "trigger":"delivery:success",
-                "app":{"_id":campaign.smooch_app_id},
-                "appUser":{"_id":msg.user_id},
-                "destination":{"type":"api"},
-                "messages":[{"text":"emulation"}],
-                "timestamp":1493914595.09
-              }
-
-              // Hack for lambda
-              request.post({url: process.env.CONFIRM_ORDER_CALLBACK, body: dataToLambda, json:true}, function(err,httpResponse,body){
-                if (err) console.log('Get err from lambda: ', err)
-                console.log('Get response from lambda: ', body)
-              })
+              // let dataToLambda = {
+              //   "trigger":"delivery:success",
+              //   "app":{"_id":campaign.smooch_app_id},
+              //   "appUser":{"_id":msg.user_id},
+              //   "destination":{"type":"api"},
+              //   "messages":[{"text":"emulation"}],
+              //   "timestamp":1493914595.09
+              // }
+              //
+              // // Hack for lambda
+              // request.post({url: process.env.CONFIRM_ORDER_CALLBACK, body: dataToLambda, json:true}, function(err,httpResponse,body){
+              //   if (err) console.log('Get err from lambda: ', err)
+              //   console.log('Get response from lambda: ', body)
+              // })
 
               socket.emit('userConversationUpdate', history)
             })
