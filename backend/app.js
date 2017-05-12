@@ -1,5 +1,7 @@
 const express    = require('express')
 const app        = express()
+const http       = require('http').Server(app)
+const io         = require('socket.io')(http)
 const cors       = require('cors')
 const bodyParser = require('body-parser')
 const request    = require('request')
@@ -29,7 +31,7 @@ const webhooks = require('./webhooks/webhooks')
 /**
  * WebSocket.
  */
-require('./websockets/dashboard_chat')
+require('./websockets/dashboard_chat')(io)
 require('./websockets/web_chat')
 
 /**
@@ -46,7 +48,7 @@ app.set('view engine', 'pug')
 app.use("/assets", express.static(__dirname + '/assets'))
 app.use(cors())
 
-app.use(require('morgan')('combined'))
+// app.use(require('morgan')('combined'))
 app.use(require('cookie-parser')())
 app.use(require('body-parser').urlencoded({extended: true}))
 app.use(require('express-session')({secret: 'keyboard cat', resave: false, saveUninitialized: false}))
@@ -90,9 +92,11 @@ app.use((req, res, next) => {
     res.redirect('/login')
 })
 
+
 /**
  * Start Express server.
  */
-app.listen(8181, () => {
+http.listen(8181, () => {
     console.log('App listening on port 8181!')
 })
+

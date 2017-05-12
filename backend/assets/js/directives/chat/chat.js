@@ -3,13 +3,14 @@ angular.module('campaignsApp')
     return {
       templateUrl: '/assets/js/directives/chat/chat.html',
       link: function (scope, $element, $attr) {
-        let websocketHost = location.hostname;
-        let websocketPort = 8888;
-        scope.websocketIsError = false;
 
+        let socket = io('/dashboardchat');
+
+        scope.websocketIsError = false;
         scope.isSend = false;
 
         scope.userConversation = [];
+        scope.userList = [];
         scope.currentUser = {};
 
         scope.message = {
@@ -19,77 +20,60 @@ angular.module('campaignsApp')
           "direction": 1
         };
 
-
-        scope.userList = [];
-
         let conversations = JSON.parse($attr.conversations);
 
-        let socket = new WebSocket('ws://' + websocketHost + ':' + websocketPort);
-
         if (conversations.length > 0) {
-          socket.onopen = function () {
-            socket.send('{"target": "getUserList", "data": ' + JSON.stringify(conversations) + '}');
-          };
+          socket.emit('getUserList', conversations);
         }
 
-        socket.onmessage = function (message) {
-          let res = JSON.parse(message.data);
-
-          // console.log('get message: ', JSON.parse(message.data))
-
-          if (res.target == 'userList') {
-            scope.userList = res.data;
-          }
-
-          if (res.target == 'userConversation') {
-            scope.userConversation = res.data;
-          }
-
-          if (res.target == 'userConversationUpdate') {
-            scope.messageText = '';
-            scope.isSend = false;
-            scope.userConversation = res.data;
-          }
-
-          if (res.target == 'err') {
-            console.error('Err: ', res.data);
-            scope.websocketIsError = true;
-          }
-
+        socket.on('userConversation', function (data) {
+          scope.userConversation = data;
           scope.$digest();
-        };
+        });
 
-        socket.onerror = function (error) {
-          console.log('WebSocket error: ', error);
+        socket.on('userList', function (data) {
+          scope.userList = data;
+          scope.$digest();
+        });
+
+        socket.on('userConversationUpdate', function (data) {
+          scope.messageText = '';
+          scope.isSend = false;
+          scope.userConversation = data;
+          scope.$digest();
+        });
+
+        socket.on('err', function (data) {
+          console.log('WebSocket error: ', data);
           scope.websocketIsError = true;
           scope.$digest();
-        };
+        });
 
         // // Send request to find new messages
-        setInterval(function () {
-          if (scope.currentUser.sender) {
-            socket.send('{"target": "getUserConversation", "data": {"userId": "' + scope.currentUser.sender + '"}}');
-          }
-        }, 3000)
+        // setInterval(function () {
+        //   if (scope.currentUser.sender) {
+        //     socket.send('{"target": "getUserConversation", "data": {"userId": "' + scope.currentUser.sender + '"}}');
+        //   }
+        // }, 3000)
 
         // Send request to find new users
-        // setInterval(function () {
-        //   socket.send('{"target": "getUserList", "data": ' + JSON.stringify(conversations) + '}');
-        // }, 3000)
+        setInterval(function () {
+          socket.emit('getUserList', conversations);
+        }, 3000);
 
 
         scope.getConversation = function(user) {
-          isSend = false;
-          messageText = '';
+          scope.isSend = false;
+          scope.messageText = '';
 
           scope.currentUser = user;
-          socket.send('{"target": "getUserConversation", "data": {"userId": "' + scope.currentUser.sender + '"}}');
-        }
+          socket.emit('getUserConversation', {"userId": scope.currentUser.sender});
+        };
 
         scope.sendMessage = function() {
-          isSend = true;
-          socket.send('{"target": "sendMessage", "data": {"user_id": "' + scope.currentUser.sender + '", "campaign_id":' + scope.currentUser.campaign_id + ', "text": "'+ scope.messageText +'", "direction": 1}}');
-        }
+          scope.isSend = true;
+          socket.emit('sendMessage', {"user_id": scope.currentUser.sender, "campaign_id": scope.currentUser.campaign_id, "text": scope.messageText, "direction": 1});
+        };
 
       }
     };

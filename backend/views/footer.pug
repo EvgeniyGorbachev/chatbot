@@ -22,17 +22,19 @@ script(src='/assets/js/plugins/dataTables/dataTables.bootstrap.js')
 script(src='/assets/js/plugins/dataTables/dataTables.responsive.js')
 script(src='/assets/js/plugins/dataTables/dataTables.tableTools.min.js')
 script(src='/assets/js/inspinia.js')
-script(src='/assets/js/chat.js')
+//script(src='/assets/js/chat.js')
 script(src='/assets/js/plugins/pace/pace.min.js')
 script(src='/assets/js/plugins/datapicker/bootstrap-datepicker.js')
 script(src='/assets/js/plugins/iCheck/icheck.min.js')
 script(src='/assets/js/plugins/switchery/switchery.js')
 script(src='/assets/js/plugins/chosen/chosen.jquery.js')
+script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js')
 
 
 
 script.
   $(document).ready(function() {
+
     $('.dataTables-example').dataTable({
         "order"   : [[0, "desc"]],
       responsive  : true,

@@ -1,47 +1,36 @@
-const url = require('url')
-const WebSocket = require('ws')
 const db = require('./../models/index.js')
 const Smooch = require('smooch-core')
 
-/**
- * WebSocket.
- */
-const wss = new WebSocket.Server({ port: 8888 });
+module.exports = function(io) {
 
-wss.on('connection', function connection(ws) {
-  ws.on('message', function incoming(message) {
-    let mes = JSON.parse(message)
+  let dashboardChat = io.of('/dashboardchat');
+
+  dashboardChat.on('connection', function(socket){
 
     // Get user list
-    if (mes.target == 'getUserList') {
-      db.Conversations.findAll({where: { id: mes.data }, include: [{
+    socket.on('getUserList', function(msg){
+
+      db.Conversations.findAll({where: { id: msg }, include: [{
         model: db.Campaigns
       }]}).then(function (conversations) {
-        let data = {
-          "target": "userList",
-          "data": conversations
-        }
-        ws.send(JSON.stringify(data));
+
+        socket.emit('userList', conversations)
+
       }).catch(function(err) {
         console.log('err1: ', err)
       })
-    }
+    });
 
     // Get user conversation
-    if (mes.target == 'getUserConversation') {
-      db.ConversationsHistory.findAll({where: {"user_id": mes.data.userId}, order: [['id', 'ASC']]}).then(function (history) {
-        let data = {
-          "target": "userConversation",
-          "data": history
-        }
-        ws.send(JSON.stringify(data));
+    socket.on('getUserConversation', function(msg){
+      db.ConversationsHistory.findAll({where: {"user_id": msg.userId}, order: [['id', 'ASC']]}).then(function (history) {
+        socket.emit('userConversation', history)
       })
-    }
+    });
 
-    // Save message
-    if (mes.target == 'sendMessage') {
-
-      db.Campaigns.findOne({where: {id: mes.data.campaign_id}}).then(function (campaign) {
+    // Send message
+    socket.on('sendMessage', function(msg){
+      db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
 
         const smooch = new Smooch({
           keyId : campaign.smooch_app_key_id,
@@ -49,41 +38,26 @@ wss.on('connection', function connection(ws) {
           scope : 'app'
         });
 
-        smooch.appUsers.sendMessage(mes.data.user_id, {
+        smooch.appUsers.sendMessage(msg.user_id, {
           type: 'text',
-          text: mes.data.text,
+          text: msg.text,
           role: 'appMaker'
         }).then((response) => {
 
-          db.ConversationsHistory.create(mes.data).then(function(data) {
+          db.ConversationsHistory.create(msg).then(function(data) {
 
-            db.ConversationsHistory.findAll({where: {"campaign_id": mes.data.campaign_id, "user_id": mes.data.user_id}, order: [['id', 'ASC']]}).then(function (history) {
-              let data = {
-                "target": "userConversationUpdate",
-                "data": history
-              }
-              ws.send(JSON.stringify(data));
+            db.ConversationsHistory.findAll({where: {"campaign_id": msg.campaign_id, "user_id": msg.user_id}, order: [['id', 'ASC']]}).then(function (history) {
+              socket.emit('userConversationUpdate', history)
             })
 
           }).catch(function(err) {
-            let data = {
-              "target": "err",
-              "data": err
-            }
-            ws.send(JSON.stringify(data));
-
+            socket.emit('err', err)
           })
 
-
         }).catch((err) => {
-          let data = {
-            "target": "err",
-            "data": err
-          }
-          ws.send(JSON.stringify(data));
+          socket.emit('err', err)
         });
       })
-    }
-
+    });
   });
-});
+}
