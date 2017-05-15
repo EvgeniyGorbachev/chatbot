@@ -25,7 +25,7 @@ module.exports = function(webChat) {
           socket.emit('initUser', response)
 
         }).catch((err) => {
-          console.log(1111111, err)
+          // console.log(1111111, err)
           socket.emit('err', err.response.statusText)
         });
       }).catch((err) => {
@@ -50,7 +50,7 @@ module.exports = function(webChat) {
           text: msg.text,
           role: 'appUser'
         }).then((response) => {
-          console.log('SEND MESSAGE: ', response);
+          // console.log('SEND MESSAGE: ', response);
           socket.emit('userSendMessage', response)
 
         }).catch((err) => {
@@ -75,7 +75,7 @@ module.exports = function(webChat) {
         });
 
         smooch.appUsers.getMessages(msg.user_id).then((response) => {
-          console.log('GET MESSAGE: ', response);
+          // console.log('GET MESSAGE: ', response);
           socket.emit('getMessages', response)
 
         }).catch((err) => {

@@ -6,7 +6,7 @@ const request = require('request')
  */
 exports.webChat = (req, res) => {
   console.log('Get webhookkkkkk: ', req.body);
-  req.webChatSocket.emit('webhook', {type: 'new message', userId: req.body.appUser['_id'], appId: req.body.app['_id']});
+  req.webChatSocket.emit('webhook', {type: 'new message', userId: req.body.appUser['_id'], appId: req.body.app['_id'], messages: req.body.messages});
 
   // Hack for lambda
   if (req.body.appUser['_id'] && req.body.app['_id']) {
