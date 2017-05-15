@@ -81,16 +81,16 @@ angular.module('campaignsApp')
         });
 
         // Send request to find new messages
-        setInterval(function () {
-          if (scope.currentUser.sender) {
-            socket.emit('getUserConversation', {"userId": scope.currentUser.sender});
-          }
-        }, 3000);
-
-        // Send request to find new users
-        setInterval(function () {
-          socket.emit('getUserList', conversations);
-        }, 3500);
+        // setInterval(function () {
+        //   if (scope.currentUser.sender) {
+        //     socket.emit('getUserConversation', {"userId": scope.currentUser.sender});
+        //   }
+        // }, 3000);
+        //
+        // // Send request to find new users
+        // setInterval(function () {
+        //   socket.emit('getUserList', conversations);
+        // }, 3500);
 
 
         scope.getConversation = function(user) {

@@ -42,9 +42,12 @@ exports.webChat = (req, res) => {
         console.log('Webhookkkkkk ERRRRRR find user: ', err);
       });
     }
-
-
-    res.sendStatus(201);
   }
+
+  if (req.body.trigger == 'message:appUser') {
+    req.dashboardChatSocket.emit('webhook', {type: 'new message', userId: req.body.appUser['_id'], appId: req.body.app['_id'], messages: req.body.messages});
+  }
+
+  res.sendStatus(201);
 
 };
