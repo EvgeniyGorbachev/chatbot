@@ -21,14 +21,6 @@ module.exports = function(webChat) {
           givenName: 'Test name'
         }).then((response) => {
 
-          let conf = {
-            sender: response.appUser['_id'],
-            username: response.appUser.givenName,
-            campaign_id: campaign.id,
-            email: response.appUser.userId,
-            userId: 1
-          }
-
             // console.log('CREATE USER: ', response);
           socket.emit('initUser', response)
 
