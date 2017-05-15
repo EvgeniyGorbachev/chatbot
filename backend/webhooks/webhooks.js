@@ -30,11 +30,12 @@ exports.webChat = (req, res) => {
 
     // Attach manager to conversation
     if (req.body.appUser && req.body.appUser['_id']) {
-      console.log(222222222,req.body.appUser,  req.body.appUser['_id'])
+      console.log(111111,req.body.appUser,  req.body.appUser['_id'])
       db.Conversations.findOne({where: {sender: req.body.appUser['_id']}}).then(function (campaign) {
-        console.log(333333333,campaign)
+        console.log(2222222,campaign)
         if (campaign && !campaign.userId) {
           campaign.userId = 1;
+          console.log(333333,campaign)
           campaign.update(campaign).then(function() {
             console.log('Webhookkkkkk assign user to conversation');
           }).catch((err) => {
