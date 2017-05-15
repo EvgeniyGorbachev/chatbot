@@ -29,14 +29,6 @@ module.exports = function(webChat) {
             userId: 1
           }
 
-          // Create conversation
-          // db.Conversations.create(conf).then(function(data) {
-          //
-          // }).catch(function(err) {
-          //   console.log(err)
-          //   socket.emit('err', 'Can not create conversation')
-          // })
-
             // console.log('CREATE USER: ', response);
           socket.emit('initUser', response)
 
