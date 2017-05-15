@@ -41,9 +41,13 @@ exports.webChat = (req, res) => {
           campaign.userId = 1;
           campaign.update(campaign).then(function() {
             console.log('Webhookkkkkk assign user to conversation');
-          })
+          }).catch((err) => {
+            console.log('Webhookkkkkk ERRRRRR assign user to conversation: ', err);
+          });
         }
-      })
+      }).catch((err) => {
+        console.log('Webhookkkkkk ERRRRRR find user: ', err);
+      });
     }
     res.sendStatus(201);
   }
