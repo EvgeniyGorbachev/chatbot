@@ -103,6 +103,9 @@ html(ng-app='campaignsApp')
                                                             |
                                                             |
                                                             a.btn.btn-danger.btn-rounded(href="/campaigns/delete/" + item.id + "", ng-if='"admin" == "'+user.Role.name+'"') Delete
+                                                            |
+                                                            |
+                                                            a.btn.btn-info.btn-rounded(href="/campaigns/reset_conversation/" + item.id + "", ng-if='"admin" == "' + user.Role.name + '"') Reset conversation
                                             tfoot
                                                 tr
                                                     th uid

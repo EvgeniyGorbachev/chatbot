@@ -259,3 +259,19 @@ exports.updateCampaignStatus = (req, res) => {
     })
   })
 };
+
+/**
+ *  GET /campaigns/reset_conversation/:id
+ *
+ *  Reset conversation for selected campaign
+ */
+exports.resetCampaignConversationById = (req, res) => {
+    let id = req.params.id
+
+    db.Conversations.findAll({where: {campaign_id: id}}).then(campaigns => {
+        for(let i in campaigns){
+          campaigns[i].destroy();
+        }
+        res.redirect('/campaigns?updated=true')
+    });
+}
