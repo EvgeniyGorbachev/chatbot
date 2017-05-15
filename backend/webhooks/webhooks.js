@@ -1,4 +1,5 @@
 const request = require('request')
+const db = require('../models/index.js')
 
 /**
  * POST /webhook/web-chat
@@ -6,6 +7,7 @@ const request = require('request')
  */
 exports.webChat = (req, res) => {
   console.log('Get webhookkkkkk: ', req.body);
+
   if (req.body.trigger == 'message:appMaker') {
     req.webChatSocket.emit('webhook', {type: 'new message', userId: req.body.appUser['_id'], appId: req.body.app['_id'], messages: req.body.messages});
 
@@ -27,6 +29,22 @@ exports.webChat = (req, res) => {
     }
 
 
+    res.sendStatus(201);
+  }
+
+  // User begin conversation
+  if (req.body.trigger == 'message:appUser') {
+
+    if (req.body.appUser && req.body.appUser['_id']) {
+      db.Conversations.findOne({where: {sender: req.body.appUser['_id']}}).then(function (campaign) {
+        if (campaign && !campaign.userId) {
+          campaign.userId = 1;
+          campaign.update(campaign).then(function() {
+            console.log('Webhookkkkkk assign user to conversation');
+          })
+        }
+      })
+    }
     res.sendStatus(201);
   }
 };
