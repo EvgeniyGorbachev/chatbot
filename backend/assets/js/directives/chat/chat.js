@@ -83,7 +83,7 @@ angular.module('campaignsApp')
         // Send request to find new messages
         setInterval(function () {
           if (scope.currentUser.sender) {
-            socket.send('{"target": "getUserConversation", "data": {"userId": "' + scope.currentUser.sender + '"}}');
+            socket.emit('getUserConversation', {"userId": scope.currentUser.sender});
           }
         }, 3000);
 
