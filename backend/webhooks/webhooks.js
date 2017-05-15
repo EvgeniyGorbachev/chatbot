@@ -34,9 +34,11 @@ exports.webChat = (req, res) => {
 
   // User begin conversation
   if (req.body.trigger == 'message:appUser') {
-
+console.log(1111111111111)
     if (req.body.appUser && req.body.appUser['_id']) {
+      console.log(222222222,req.body.appUser,  req.body.appUser['_id'])
       db.Conversations.findOne({where: {sender: req.body.appUser['_id']}}).then(function (campaign) {
+        console.log(333333333,campaign)
         if (campaign && !campaign.userId) {
           campaign.userId = 1;
           campaign.update(campaign).then(function() {
