@@ -36,8 +36,8 @@ exports.webChat = (req, res) => {
         if (campaign && !campaign.userId) {
           campaign.userId = 1;
           console.log(333333,campaign)
-          campaign.update(campaign).then(function() {
-            console.log('Webhookkkkkk assign user to conversation');
+          campaign.update(campaign).then(function(camp) {
+            console.log('Webhookkkkkk assign user to conversation', camp);
           }).catch((err) => {
             console.log('Webhookkkkkk ERRRRRR assign user to conversation: ', err);
           });
