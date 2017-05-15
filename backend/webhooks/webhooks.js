@@ -28,13 +28,7 @@ exports.webChat = (req, res) => {
       })
     }
 
-
-    res.sendStatus(201);
-  }
-
-  // User begin conversation
-  if (req.body.trigger == 'message:appUser') {
-console.log(1111111111111)
+    // Attach manager to conversation
     if (req.body.appUser && req.body.appUser['_id']) {
       console.log(222222222,req.body.appUser,  req.body.appUser['_id'])
       db.Conversations.findOne({where: {sender: req.body.appUser['_id']}}).then(function (campaign) {
@@ -51,6 +45,8 @@ console.log(1111111111111)
         console.log('Webhookkkkkk ERRRRRR find user: ', err);
       });
     }
+
+
     res.sendStatus(201);
   }
 };
