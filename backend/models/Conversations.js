@@ -23,11 +23,11 @@ module.exports = function(sequelize, DataTypes) {
       type: Sequelize.TEXT
     },
     answers: {
-      type: Sequelize.JSONB,
-      default: 0
+      type: Sequelize.TEXT
     },
     last_phrase_id: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      default: 0
     },
     userId: {
       type: Sequelize.TEXT,
