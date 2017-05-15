@@ -21,11 +21,27 @@ module.exports = function(webChat) {
           givenName: 'Test name'
         }).then((response) => {
 
-            console.log('CREATE USER: ', response);
+          let conf = {
+            sender: response.appUser['_id'],
+            username: response.appUser.givenName,
+            campaign_id: campaign.id,
+            email: response.appUser.userId,
+            userId: 1
+          }
+
+          // Create conversation
+          db.Conversations.create(conf).then(function(data) {
+
+          }).catch(function(err) {
+            console.log(err)
+            socket.emit('err', 'Can not create conversation')
+          })
+
+            // console.log('CREATE USER: ', response);
           socket.emit('initUser', response)
 
         }).catch((err) => {
-          // console.log(1111111, err)
+          console.log(1111111, err)
           socket.emit('err', err.response.statusText)
         });
       }).catch((err) => {

@@ -80,17 +80,17 @@ angular.module('campaignsApp')
           scope.$digest();
         });
 
-        // // Send request to find new messages
-        // setInterval(function () {
-        //   if (scope.currentUser.sender) {
-        //     socket.send('{"target": "getUserConversation", "data": {"userId": "' + scope.currentUser.sender + '"}}');
-        //   }
-        // }, 3000)
+        // Send request to find new messages
+        setInterval(function () {
+          if (scope.currentUser.sender) {
+            socket.send('{"target": "getUserConversation", "data": {"userId": "' + scope.currentUser.sender + '"}}');
+          }
+        }, 3000);
 
         // Send request to find new users
-        // setInterval(function () {
-        //   socket.emit('getUserList', conversations);
-        // }, 3000);
+        setInterval(function () {
+          socket.emit('getUserList', conversations);
+        }, 3500);
 
 
         scope.getConversation = function(user) {

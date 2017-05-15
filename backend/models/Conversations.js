@@ -8,51 +8,29 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true // Automatically gets converted to SERIAL for postgres
     },
     campaign_id: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-      notEmpty: true
+      type: Sequelize.INTEGER
     },
     sender: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      notEmpty: true
+      type: Sequelize.STRING
     },
     username: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      notEmpty: true
+      type: Sequelize.STRING
     },
     email: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      notEmpty: true
+      type: Sequelize.STRING
     },
     address: {
-      type: Sequelize.TEXT,
-      allowNull: false,
-      notEmpty: true
+      type: Sequelize.TEXT
     },
     answers: {
       type: Sequelize.INTEGER,
-      default: 0,
-      allowNull: false,
-      notEmpty: true
+      default: 0
     },
     last_phrase_id: {
-      type: Sequelize.TEXT,
-      allowNull: false,
-      notEmpty: true
+      type: Sequelize.TEXT
     },
     userId: {
       type: Sequelize.TEXT,
-      allowNull: true,
-      notEmpty: true
-    },
-    created_at: {
-      type: Sequelize.DATE
-    },
-    updated_at: {
-      type: Sequelize.DATE
     }
   }, {
     classMethods:{
@@ -60,23 +38,9 @@ module.exports = function(sequelize, DataTypes) {
         Conversations.belongsTo(models.Campaigns, { foreignKey: 'campaign_id'} )
       }
     },
+
     individualHooks: true,
-    underscored: true,
     tableName: 'conversations',
-    validate: {
-      isJSON: function() {
-        // try {
-        //   JSON.parse(this.shipping)
-        // } catch (e) {
-        //   throw new Error('shipping contains not valid json')
-        // }
-        // try {
-        //   JSON.parse(this.billing)
-        // } catch (e) {
-        //   throw new Error('billing contains not valid json')
-        // }
-      }
-    }
   })
   return Conversations
 }
