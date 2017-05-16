@@ -32,6 +32,8 @@ exports.webChat = (req, res) => {
     if (req.body.appUser && req.body.appUser['_id']) {
       db.Conversations.findOne({where: {sender: req.body.appUser['_id']}}).then(function (conv) {
         if (conv && !conv.userId) {
+
+          // Attention HARDCODE
           conv.update({"userId": '1'}).then(function(c) {
             console.log('Webhookkkkkk assign user to conversation', c);
           }).catch((err) => {
