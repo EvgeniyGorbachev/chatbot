@@ -54,7 +54,8 @@ angular.module('campaignsApp')
         });
 
         socket.on('webhook', function (data) {
-          if (data.type == 'new message') {
+          if (data.type == 'new message from user') {
+            console.log('Get message from user', data.userId, scope.currentUser.id)
             // set count new message
             if (scope.smoochAppId == data.appId) {
               scope.userList.forEach(function(user) {
@@ -69,6 +70,14 @@ angular.module('campaignsApp')
                   socket.emit('getUserConversation', {"userId": scope.currentUser.sender});
                 }
               })
+            }
+          }
+
+          if (data.type == 'new message from bot') {
+            // If open window with webhook user, refresh messages
+            if (data.userId == scope.currentUser.id) {
+              console.log('Get message from bot', data.userId, scope.currentUser.id)
+              socket.emit('getUserConversation', {"userId": scope.currentUser.sender});
             }
           }
           scope.$digest();
