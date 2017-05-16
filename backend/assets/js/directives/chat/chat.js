@@ -55,7 +55,7 @@ angular.module('campaignsApp')
 
         socket.on('webhook', function (data) {
           if (data.type == 'new message from user') {
-            console.log('Get message from user', data.userId, scope.currentUser.sender)
+            console.log('webhook. Get message from user')
             // set count new message
             if (scope.smoochAppId == data.appId) {
               scope.userList.forEach(function(user) {
@@ -74,7 +74,7 @@ angular.module('campaignsApp')
           }
 
           if (data.type == 'new message from bot') {
-            console.log('Get message from bot', data.userId, scope.currentUser.sender)
+            console.log('webhook. Get message from bot')
             // If open window with webhook user, refresh messages
             if (data.userId == scope.currentUser.sender) {
               socket.emit('getUserConversation', {"userId": scope.currentUser.sender});
@@ -110,7 +110,6 @@ angular.module('campaignsApp')
           user.newMessages = 0;
 
           scope.currentUser = user;
-          console.log('current user: ', scope.currentUser)
           socket.emit('getUserConversation', {"userId": scope.currentUser.sender});
         };
 
