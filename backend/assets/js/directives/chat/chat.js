@@ -74,9 +74,9 @@ angular.module('campaignsApp')
           }
 
           if (data.type == 'new message from bot') {
+            console.log('Get message from bot', data.userId, scope.currentUser.id)
             // If open window with webhook user, refresh messages
             if (data.userId == scope.currentUser.id) {
-              console.log('Get message from bot', data.userId, scope.currentUser.id)
               socket.emit('getUserConversation', {"userId": scope.currentUser.sender});
             }
           }
@@ -110,6 +110,7 @@ angular.module('campaignsApp')
           user.newMessages = 0;
 
           scope.currentUser = user;
+          console.log('current user: ', scope.currentUser)
           socket.emit('getUserConversation', {"userId": scope.currentUser.sender});
         };
 
