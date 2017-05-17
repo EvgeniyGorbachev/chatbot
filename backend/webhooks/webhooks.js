@@ -32,7 +32,7 @@ exports.webChat = (req, res) => {
     if (req.body.appUser && req.body.appUser['_id']) {
       db.Conversations.findOne({where: {sender: req.body.appUser['_id']}}).then(function (conv) {
         console.log('Webhookkkkkk Is need save:', (conv && !conv.userId),  conv.userId, conv);
-        if (conv && !conv.userId) {
+        if (conv && conv.userId == null) {
 
           // Attention HARDCODE
           conv.update({"userId": '1'}).then(function(c) {
