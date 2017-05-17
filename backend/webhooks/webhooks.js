@@ -36,6 +36,9 @@ exports.webChat = (req, res) => {
           // Attention HARDCODE
           conv.update({"userId": '1'}).then(function(c) {
             console.log('Webhookkkkkk assign user to conversation', c);
+
+            req.dashboardChatSocket.emit('webhook', {type: 'new conversation added', userId: req.body.appUser['_id'], appId: req.body.app['_id'], agentId: c.userId});
+
           }).catch((err) => {
             console.log('Webhookkkkkk ERRRRRR assign user to conversation: ', err);
           });

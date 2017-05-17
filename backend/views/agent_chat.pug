@@ -9,6 +9,7 @@ html(ng-app='campaignsApp' ng-cloak)
                         .ibox-content
                             .panel.blank-panel
                                 input.form-control(type='hidden', name='conversations', ng-init="chatAgentCtr.conversations = " + conversations + "" , ng-model='chatAgentCtr.conversations')
+                                input.form-control(type='hidden', name='agent', ng-init="chatAgentCtr.agent = " + user + "" , ng-model='chatAgentCtr.agent')
                                 .panel-heading
                                     .panel-options
                                         ul.nav.nav-tabs(ng-if='chatAgentCtr.conversations')

@@ -20,6 +20,20 @@ module.exports = function(dashboardChat) {
       })
     });
 
+    // Get user list by user id
+    socket.on('getUserListById', function(msg){
+
+      db.Conversations.findAll({where: { userId: msg }, include: [{
+        model: db.Campaigns
+      }]}).then(function (conversations) {
+
+        socket.emit('userListById', conversations)
+
+      }).catch(function(err) {
+        console.log('err1: ', err)
+      })
+    });
+
     // Get user conversation
     socket.on('getUserConversation', function(msg){
       db.ConversationsHistory.findAll({where: {"user_id": msg.userId}, order: [['id', 'ASC']]}).then(function (history) {
