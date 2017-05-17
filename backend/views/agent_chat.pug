@@ -4,7 +4,7 @@ html(ng-app='campaignsApp' ng-cloak)
     body(ng-controller='AgentChatController as chatAgentCtr')
         #wrapper
             .row
-                .col-lg-10
+                .col-lg-12
                     .ibox.float-e-margins
                         .ibox-content
                             .panel.blank-panel
@@ -25,7 +25,7 @@ html(ng-app='campaignsApp' ng-cloak)
                                                 |     Chat room panel
                                             .ibox-content
                                                 .row
-                                                    .col-md-9
+                                                    .col-md-12
                                                         .chat-discussion
                                                             h2(ng-if='chatAgentCtr.userConversation.length == 0') No messages
                                                             h2.text-danger(ng-if='chatAgentCtr.websocketIsError') Websocket Error!

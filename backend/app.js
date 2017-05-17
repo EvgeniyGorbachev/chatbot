@@ -91,7 +91,7 @@ app.get('/agent/:userid',  require('connect-ensure-login').ensureLoggedIn(), ses
 app.get('/users', require('connect-ensure-login').ensureLoggedIn(), usersController.getUsers)
 app.get('/users/:id', require('connect-ensure-login').ensureLoggedIn(), usersController.getUserById)
 app.post('/users/:id',  require('connect-ensure-login').ensureLoggedIn(), usersController.updateUserById)
-app.get('/chat/agent/:id', chatController.getAgentChats)
+app.get('/chat/agent/:id', require('connect-ensure-login').ensureLoggedIn(), chatController.getAgentChats)
 
 app.post('/webhook/web-chat', webhooks.webChat)
 
