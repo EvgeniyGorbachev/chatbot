@@ -39,7 +39,7 @@ angular.module('campaignsApp.agentChat', [])
         // set count new message
         vm.conversations.forEach(function(conv) {
           // If close window with webhook user, add counter
-          console.log(111111, data, conv, vm.currentUser, (data.userId == conv.sender),( conv.id != vm.currentUser.sender));
+          console.log(111111, data.userId, conv.sender, conv.id, vm.currentUser.sender);
           if (data.userId == conv.sender && conv.id != vm.currentUser.sender) {
             if (!conv.newMessages) {
               conv.newMessages = 0;
