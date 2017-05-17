@@ -31,6 +31,7 @@ exports.webChat = (req, res) => {
     // Attach manager to conversation
     if (req.body.appUser && req.body.appUser['_id']) {
       db.Conversations.findOne({where: {sender: req.body.appUser['_id']}}).then(function (conv) {
+        console.log('Webhookkkkkk Is need save:', (conv && !conv.userId),  conv.userId, conv);
         if (conv && !conv.userId) {
 
           // Attention HARDCODE
