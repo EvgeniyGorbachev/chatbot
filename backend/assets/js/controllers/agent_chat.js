@@ -37,20 +37,19 @@ angular.module('campaignsApp.agentChat', [])
       if (data.type == 'new message from user') {
         console.log('webhook. Get message from user')
         // set count new message
-        if (vm.smoochAppId == data.appId) {
-          vm.conversations.forEach(function(conv) {
+        vm.conversations.forEach(function(conv) {
+console.log(1111111, data, conv, vm.currentUser)
+          // If close window with webhook user, add counter
+          if (data.userId == conv.sender && conv.id != vm.currentUser.sender) {
+            console.log(2222222)
+            conv.newMessages++;
+          }
 
-            // If close window with webhook user, add counter
-            if (data.userId == conv.sender && conv.id != vm.currentUser.sender) {
-              conv.newMessages++;
-            }
-
-            // If open window with webhook user, refresh messages
-            if (data.userId == conv.sender && conv.id == vm.currentUser.sender) {
-              socket.emit('getUserConversation', {"userId": vm.currentUser.sender});
-            }
-          })
-        }
+          // If open window with webhook user, refresh messages
+          if (data.userId == conv.sender && conv.id == vm.currentUser.sender) {
+            socket.emit('getUserConversation', {"userId": vm.currentUser.sender});
+          }
+        })
       }
 
       if (data.type == 'new message from bot') {
