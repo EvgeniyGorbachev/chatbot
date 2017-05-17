@@ -22,12 +22,12 @@ angular.module('campaignsApp.agentChat', [])
     };
 
     socket.on('userConversation', function (data) {
-      data.newMessages = 1;
       vm.userConversation = data;
       $scope.$digest();
     });
 
     socket.on('addedNewConversation', function (data) {
+      data.newMessages = 1;
       vm.conversations.push(data);
       $scope.$digest();
     });
