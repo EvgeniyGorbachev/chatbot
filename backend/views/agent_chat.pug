@@ -1,0 +1,55 @@
+doctype html
+html(ng-app='campaignsApp' ng-cloak)
+    include header.pug
+    body(ng-controller='AgentChatController as chatAgentCtr')
+        #wrapper
+            .row
+                .col-lg-10
+                    .ibox.float-e-margins
+                        .ibox-content
+                            .panel.blank-panel
+                                input.form-control(type='hidden', name='conversations', ng-init="chatAgentCtr.conversations = " + conversations + "" , ng-model='chatAgentCtr.conversations')
+                                .panel-heading
+                                    .panel-options
+                                        ul.nav.nav-tabs(ng-if='chatAgentCtr.conversations')
+                                            li(ng-repeat='conv in chatAgentCtr.conversations')
+                                                a(data-toggle='tab', href='{{ conv.id }}' ng-click='chatAgentCtr.getConversation(conv)') {{ conv.username || 'No name' }}
+                                                    span.pull-right.label.label-primary(ng-show='conv.newMessages > 0 && conv.id != chatAgentCtr.currentUser.id') {{ conv.newMessages }}
+
+                                .panel-body
+                                    .tab-content
+                                        .ibox.chat-view
+                                            .ibox-title
+                                                small.pull-right.text-muted Last message:  Mon Jan 26 2015 - 18:39:23
+                                                |     Chat room panel
+                                            .ibox-content
+                                                .row
+                                                    .col-md-9
+                                                        .chat-discussion
+                                                            h2(ng-if='chatAgentCtr.userConversation.length == 0') No messages
+                                                            h2.text-danger(ng-if='chatAgentCtr.websocketIsError') Websocket Error!
+                                                            .chat-message(ng-repeat='conv in chatAgentCtr.userConversation track by $index', ,='', ng-class="{'direct1': conv.direction == 1, 'direct0': conv.direction == 0}")
+                                                                img.message-avatar(src='/assets/img/person-black.png', ng-if='conv.direction == 1')
+                                                                img.message-avatar(src='/assets/img/person-white.png', ng-if='conv.direction == 0')
+                                                                .message
+                                                                    a.message-author(href='#', ng-if='conv.direction == 1')  Chat bot
+                                                                    a.message-author(href='#', ng-if='conv.direction == 0')  {{ chatAgentCtr.currentUser.username }}
+                                                                    span.message-date   Fri Jan 25 2015 - 11:12:36
+                                                                    span.message-content  {{ conv.text || 'Empty message' }}
+                                                    //.col-md-3
+                                                    //    .chat-users
+                                                    //        .users-list
+                                                    //            .chat-user(ng-repeat='user in userList track by $index', ng-click='getConversation(user)', ng-class="{'current': user.id == currentUser.id}")
+                                                    //                span.pull-right.label.label-primary(ng-show='user.newMessages > 0 && user.id != currentUser.id') {{ user.newMessages }}
+                                                    //                img.chat-avatar(src='/assets/img/person-white.png', alt='')
+                                                    //                .chat-user-name
+                                                    //                    a {{ user.username || 'no name' }}
+                                                .row
+                                                    .col-lg-12
+                                                        .chat-message-form
+                                                            .form-group
+                                                                textarea.form-control.message-input(ng-model='chatAgentCtr.messageText', name='message', placeholder='Enter message text')
+                                                                a.btn.btn-w-m.btn-success.chat-button(ng-click='chatAgentCtr.sendMessage()', ng-show='!chatAgentCtr.isSend', ng-disabled='!chatAgentCtr.currentUser.sender') Send
+                                                                a.btn.btn-w-m.btn-success.chat-button(disabled='', ng-show='chatAgentCtr.isSend', href='/') Sending...
+
+            include footer.pug
