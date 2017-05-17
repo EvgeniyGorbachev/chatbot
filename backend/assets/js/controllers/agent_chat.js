@@ -21,6 +21,16 @@ angular.module('campaignsApp.agentChat', [])
       "direction": 1
     };
 
+    socket.on('new_user_data', function (data) {
+      // update username
+      vm.conversations.forEach(function(conv, i) {
+        if (conv.sender == data.sender) {
+          vm.conversations[i].username = data.username;
+        }
+      })
+      $scope.$digest();
+    });
+
     socket.on('userConversation', function (data) {
       vm.userConversation = data;
       $scope.$digest();
@@ -103,6 +113,7 @@ angular.module('campaignsApp.agentChat', [])
 
       vm.currentUser = user;
       socket.emit('getUserConversation', {"userId": vm.currentUser.sender});
+      socket.emit('check_user_data', vm.currentUser.sender);
     };
 
     vm.sendMessage = function() {

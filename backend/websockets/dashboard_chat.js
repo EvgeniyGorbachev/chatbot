@@ -34,6 +34,20 @@ module.exports = function(dashboardChat) {
       })
     });
 
+    // Get new conversation by user id
+    socket.on('check_user_data', function(msg){
+
+      db.Conversations.findOne({where: { sender: msg }, include: [{
+        model: db.Campaigns
+      }]}).then(function (conversations) {
+
+        socket.emit('new_user_data', conversations)
+
+      }).catch(function(err) {
+        console.log('err1: ', err)
+      })
+    });
+
     // Get user conversation
     socket.on('getUserConversation', function(msg){
       db.ConversationsHistory.findAll({where: {"user_id": msg.userId}, order: [['id', 'ASC']]}).then(function (history) {
