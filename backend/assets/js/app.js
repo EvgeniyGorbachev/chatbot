@@ -4,5 +4,6 @@ angular.module('campaignsApp', [
   'campaignsApp.dashboard',
   'campaignsApp.campaignEdit',
   'campaignsApp.sessionEdit',
-  'campaignsApp.userEdit'
+  'campaignsApp.userEdit',
+  'campaignsApp.agentChat'
 ])

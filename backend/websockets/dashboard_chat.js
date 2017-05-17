@@ -52,11 +52,11 @@ module.exports = function(dashboardChat) {
             })
 
           }).catch(function(err) {
-            socket.emit('err', err)
+            socket.emit('err', err.response.statusText)
           })
 
         }).catch((err) => {
-          socket.emit('err', err)
+          socket.emit('err', err.response.statusText)
         });
       })
     });

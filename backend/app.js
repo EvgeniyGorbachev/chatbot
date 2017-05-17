@@ -21,6 +21,7 @@ const apiController = require('./controllers/api')
 const authController = require('./controllers/authentication')
 const sessionsController = require('./controllers/sessions')
 const usersController = require('./controllers/users')
+const chatController = require('./controllers/agent_chat')
 
 /**
  * WebSocket.
@@ -90,6 +91,7 @@ app.get('/agent/:userid',  require('connect-ensure-login').ensureLoggedIn(), ses
 app.get('/users', require('connect-ensure-login').ensureLoggedIn(), usersController.getUsers)
 app.get('/users/:id', require('connect-ensure-login').ensureLoggedIn(), usersController.getUserById)
 app.post('/users/:id',  require('connect-ensure-login').ensureLoggedIn(), usersController.updateUserById)
+app.get('/chat/agent/:id', chatController.getAgentChats)
 
 app.post('/webhook/web-chat', webhooks.webChat)
 
