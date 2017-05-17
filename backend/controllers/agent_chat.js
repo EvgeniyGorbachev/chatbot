@@ -15,8 +15,8 @@ exports.getAgentChats = (req, res) => {
     db.Conversations.findAll({where: { userId: userId }}).then(function (conversations) {
 
       res.render('agent_chat', {
-        user: user,
-        campaigns: user.Campaigns,
+        user: JSON.stringify(user),
+        campaigns: JSON.stringify(user.Campaigns),
         conversations: JSON.stringify(conversations)
       })
 
