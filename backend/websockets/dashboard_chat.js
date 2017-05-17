@@ -20,14 +20,14 @@ module.exports = function(dashboardChat) {
       })
     });
 
-    // Get user list by user id
-    socket.on('getUserListById', function(msg){
+    // Get new conversation by user id
+    socket.on('getConversationByUserId', function(msg){
 
-      db.Conversations.findAll({where: { userId: msg }, include: [{
+      db.Conversations.findAll({where: { sender: id }, include: [{
         model: db.Campaigns
       }]}).then(function (conversations) {
 
-        socket.emit('userListById', conversations)
+        socket.emit('addedNewConversation', conversations)
 
       }).catch(function(err) {
         console.log('err1: ', err)

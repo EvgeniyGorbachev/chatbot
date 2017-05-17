@@ -26,8 +26,8 @@ angular.module('campaignsApp.agentChat', [])
       $scope.$digest();
     });
 
-    socket.on('userListById', function (data) {
-      vm.conversations = data;
+    socket.on('addedNewConversation', function (data) {
+      vm.conversations.push(data);
       $scope.$digest();
     });
 
@@ -68,7 +68,7 @@ angular.module('campaignsApp.agentChat', [])
 
       if (data.type == 'new conversation added') {
         console.log('webhook. Add new conversation to agent')
-        socket.emit('getUserListById', vm.agent.id);
+        socket.emit('getConversationByUserId', data.userId);
       }
       $scope.$digest();
     });
