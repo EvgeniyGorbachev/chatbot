@@ -27,3 +27,12 @@ exports.getAgentChats = (req, res) => {
     console.log('err1: ', err)
   })
 };
+
+/**
+ * GET /webchat/campaign/:id
+ * Get web chat example
+ */
+exports.getChatExample = (req, res) => {
+  let id = req.params.id || false
+  res.render('web_chat_example', {id: id})
+};
