@@ -16,7 +16,7 @@
           <h2 ng-if='userConversation.length == 0'>No messages</h2>
           <h2 ng-if='websocketIsError' class="text-danger">Websocket Error!</h2>
 
-          <div class="chat-message" ng-repeat='conv in userConversation track by $index', ng-class="{'direct1': conv.direction == 1, 'direct0': conv.direction == 0}">
+          <div class="chat-message" ng-repeat='conv in userConversation track by $index', ng-if='conv.text != "emulation"' ng-class="{'direct1': conv.direction == 1, 'direct0': conv.direction == 0}">
             <img class="message-avatar" src="/assets/img/person-black.png" ng-if='conv.direction == 1'>
             <img class="message-avatar" src="/assets/img/person-white.png" ng-if='conv.direction == 0'>
             <div class="message">
