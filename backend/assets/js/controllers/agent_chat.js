@@ -97,11 +97,15 @@ angular.module('campaignsApp.agentChat', [])
     //     socket.emit('getUserConversation', {"userId": vm..currentUser.sender});
     //   }
     // }, 3000);
-    //
-    // // Send request to find new users
-    // setInterval(function () {
-    //   socket.emit('getUserList', conversations);
-    // }, 3500);
+
+    // Check user data
+    setInterval(function () {
+      vm.conversations.forEach(function(conv, i) {
+        if (conv.username == null) {
+          socket.emit('check_user_data', conv.sender);
+        }
+      })
+    }, 2000);
 
 
     vm.getConversation = function(user) {
@@ -113,7 +117,6 @@ angular.module('campaignsApp.agentChat', [])
 
       vm.currentUser = user;
       socket.emit('getUserConversation', {"userId": vm.currentUser.sender});
-      socket.emit('check_user_data', vm.currentUser.sender);
     };
 
     vm.sendMessage = function() {
