@@ -37,7 +37,7 @@ module.exports = function(dashboardChat) {
     // Get new conversation by user id
     socket.on('check_user_data', function(msg){
 
-      db.Conversations.findOne({where: { sender: msg }, include: [{
+      db.Conversations.findAll({where: { sender: msg }, include: [{
         model: db.Campaigns
       }]}).then(function (conversations) {
 

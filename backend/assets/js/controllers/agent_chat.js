@@ -22,12 +22,14 @@ angular.module('campaignsApp.agentChat', [])
     };
 
     socket.on('new_user_data', function (data) {
-      // update username
+      // Update username
       vm.conversations.forEach(function(conv, i) {
-        if (conv.sender == data.sender) {
-          vm.conversations[i].username = data.username;
-        }
-      })
+        data.forEach(function(newConv, n) {
+          if (conv.sender == newConv.sender) {
+            vm.conversations[i].username = data[n].username;
+          }
+        });
+      });
       $scope.$digest();
     });
 
@@ -37,9 +39,21 @@ angular.module('campaignsApp.agentChat', [])
     });
 
     socket.on('addedNewConversation', function (data) {
-      data.newMessages = 1;
-      vm.conversations.push(data);
-      $scope.$digest();
+
+      let isDuplicate = false;
+
+      vm.conversations.forEach(function(conv) {
+        if (conv.sender == data.sender) {
+          isDuplicate = true;
+        }
+      });
+
+      if (!isDuplicate) {
+        data.newMessages = 1;
+        vm.conversations.push(data);
+        $scope.$digest();
+      }
+
     });
 
     socket.on('userConversationUpdate', function (data) {
@@ -100,12 +114,15 @@ angular.module('campaignsApp.agentChat', [])
 
     // Check user data
     setInterval(function () {
+      let ids = [];
       vm.conversations.forEach(function(conv, i) {
         if (conv.username == null) {
-          socket.emit('check_user_data', conv.sender);
+          ids.push(conv.sender);
         }
       })
-    }, 2000);
+
+      socket.emit('check_user_data', ids);
+    }, 4000);
 
 
     vm.getConversation = function(user) {
