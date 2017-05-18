@@ -11,7 +11,8 @@ exports.getLoginPage = (req, res) => {
  * Login user
  */
 exports.login = (req, res) => {
-  res.redirect('/campaigns')
+  res.redirect(req.session.returnTo || '/campaigns')
+  delete req.session.returnTo
 };
 
 /**
@@ -20,5 +21,16 @@ exports.login = (req, res) => {
  */
 exports.logout = (req, res) => {
   req.logout()
+  res.redirect('/login')
+};
+
+/**
+ * Ensure authenticated
+ */
+exports.ensureAuthenticated = (req, res, next) => {
+  req.session.returnTo = req.path
+  if (req.isAuthenticated()) {
+    return next()
+  }
   res.redirect('/login')
 };

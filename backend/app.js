@@ -68,30 +68,29 @@ app.use(require('express-session')({secret: 'keyboard cat', resave: false, saveU
 app.use(passport.initialize())
 app.use(passport.session())
 
-
 /**
  * Authentication routes.
  */
 app.get('/login', authController.getLoginPage)
 app.get('/logout', authController.logout)
-app.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), authController.login)
+app.post('/login', passport.authenticate('local', {successReturnToOrRedirect: '/', failureRedirect: '/login'}), authController.login)
 
 /**
  * Primary app routes.
  */
-app.get('/dashboard/:id', require('connect-ensure-login').ensureLoggedIn(), dashboardController.getDashboardById)
-app.post('/campaigns', require('connect-ensure-login').ensureLoggedIn(), campaingController.updateCampaignStatus)
-app.get('/campaigns', require('connect-ensure-login').ensureLoggedIn(), campaingController.getCampaigns)
-app.get('/campaigns/:id', require('connect-ensure-login').ensureLoggedIn(), campaingController.getCampaignById)
-app.post('/campaigns/:id',  require('connect-ensure-login').ensureLoggedIn(), campaingController.updateCampaignById)
-app.get('/campaigns/delete/:id',  require('connect-ensure-login').ensureLoggedIn(), campaingController.deleteCampaignById)
-app.get('/campaigns/reset_conversation/:id',  require('connect-ensure-login').ensureLoggedIn(), campaingController.resetCampaignConversationById)
-app.get('/campaigns/:campaignid/sessions',  require('connect-ensure-login').ensureLoggedIn(), sessionsController.getSessionsById)
-app.get('/agent/:userid',  require('connect-ensure-login').ensureLoggedIn(), sessionsController.getSessionsByUserId)
-app.get('/users', require('connect-ensure-login').ensureLoggedIn(), usersController.getUsers)
-app.get('/users/:id', require('connect-ensure-login').ensureLoggedIn(), usersController.getUserById)
-app.post('/users/:id',  require('connect-ensure-login').ensureLoggedIn(), usersController.updateUserById)
-app.get('/chat/agent/:id', require('connect-ensure-login').ensureLoggedIn(), chatController.getAgentChats)
+app.get('/dashboard/:id', authController.ensureAuthenticated, dashboardController.getDashboardById)
+app.post('/campaigns', authController.ensureAuthenticated, campaingController.updateCampaignStatus)
+app.get('/campaigns', authController.ensureAuthenticated, campaingController.getCampaigns)
+app.get('/campaigns/:id', authController.ensureAuthenticated, campaingController.getCampaignById)
+app.post('/campaigns/:id',  authController.ensureAuthenticated, campaingController.updateCampaignById)
+app.get('/campaigns/delete/:id',  authController.ensureAuthenticated, campaingController.deleteCampaignById)
+app.get('/campaigns/reset_conversation/:id',  authController.ensureAuthenticated, campaingController.resetCampaignConversationById)
+app.get('/campaigns/:campaignid/sessions',  authController.ensureAuthenticated, sessionsController.getSessionsById)
+app.get('/agent/:userid',  authController.ensureAuthenticated, sessionsController.getSessionsByUserId)
+app.get('/users', authController.ensureAuthenticated, usersController.getUsers)
+app.get('/users/:id', authController.ensureAuthenticated, usersController.getUserById)
+app.post('/users/:id',  authController.ensureAuthenticated, usersController.updateUserById)
+app.get('/chat/agent/:id', authController.ensureAuthenticated, chatController.getAgentChats)
 
 app.post('/webhook/web-chat', webhooks.webChat)
 
