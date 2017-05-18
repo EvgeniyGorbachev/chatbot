@@ -1,5 +1,4 @@
 const db = require('../models/index.js');
-let jwt  = require('jsonwebtoken');
 
 
 /**

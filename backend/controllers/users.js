@@ -6,12 +6,7 @@ const request    = require('request');
  * GET /users
  * List of users.
  */
-exports.getUsers = (req, res) =>
-{
-
-    if (req.app.locals.user.Role.name != 'admin') {
-        res.redirect('/campaigns');
-    }
+exports.getUsers = (req, res) => {
 
     db.Users.all({order: 'id DESC'}).then(function (users)
     {
@@ -30,12 +25,7 @@ exports.getUsers = (req, res) =>
  * GET /users/:id
  * Get user by id.
  */
-exports.getUserById = (req, res) =>
-{
-
-    if (req.app.locals.user.Role.name != 'admin') {
-        res.redirect('/campaigns');
-    }
+exports.getUserById = (req, res) => {
 
     let id = req.params.id;
 

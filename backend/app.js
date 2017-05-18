@@ -32,6 +32,11 @@ require('./websockets/dashboard_chat')(dashboardChatSocket)
 require('./websockets/web_chat')(webChatSocket)
 
 /**
+ * Roles
+ */
+const role = require('./config/role')
+
+/**
  * Webhooks
  */
 const webhooks = require('./webhooks/webhooks')
@@ -78,26 +83,26 @@ app.post('/login', passport.authenticate('local', {successReturnToOrRedirect: '/
 /**
  * Primary app routes.
  */
-app.get('/dashboard/:id', authController.ensureAuthenticated, dashboardController.getDashboardById)
-app.post('/campaigns', authController.ensureAuthenticated, campaingController.updateCampaignStatus)
-app.get('/campaigns', authController.ensureAuthenticated, campaingController.getCampaigns)
-app.get('/campaigns/:id', authController.ensureAuthenticated, campaingController.getCampaignById)
-app.post('/campaigns/:id',  authController.ensureAuthenticated, campaingController.updateCampaignById)
-app.get('/campaigns/delete/:id',  authController.ensureAuthenticated, campaingController.deleteCampaignById)
-app.get('/campaigns/reset_conversation/:id',  authController.ensureAuthenticated, campaingController.resetCampaignConversationById)
-app.get('/campaigns/:campaignid/sessions',  authController.ensureAuthenticated, sessionsController.getSessionsById)
-app.get('/agent/:userid',  authController.ensureAuthenticated, sessionsController.getSessionsByUserId)
-app.get('/users', authController.ensureAuthenticated, usersController.getUsers)
-app.get('/users/:id', authController.ensureAuthenticated, usersController.getUserById)
-app.post('/users/:id',  authController.ensureAuthenticated, usersController.updateUserById)
-app.get('/chat/agent/:id', authController.ensureAuthenticated, chatController.getAgentChats)
+app.get('/dashboard/:id',                   authController.ensureAuthenticated, role.require(['admin']), dashboardController.getDashboardById)
+app.post('/campaigns',                      authController.ensureAuthenticated, role.require(['admin']), campaingController.updateCampaignStatus)
+app.get('/campaigns',                       authController.ensureAuthenticated, role.require(['admin']), campaingController.getCampaigns)
+app.get('/campaigns/:id',                   authController.ensureAuthenticated, role.require(['admin']), campaingController.getCampaignById)
+app.post('/campaigns/:id',                  authController.ensureAuthenticated, role.require(['admin']), campaingController.updateCampaignById)
+app.get('/campaigns/delete/:id',            authController.ensureAuthenticated, role.require(['admin']), campaingController.deleteCampaignById)
+app.get('/campaigns/reset_conversation/:id',authController.ensureAuthenticated, role.require(['admin']), campaingController.resetCampaignConversationById)
+app.get('/campaigns/:campaignid/sessions',  authController.ensureAuthenticated, role.require(['admin']), sessionsController.getSessionsById)
+app.get('/agent/:userid',                   authController.ensureAuthenticated, role.require(['admin']), sessionsController.getSessionsByUserId)
+app.get('/users',                           authController.ensureAuthenticated, role.require(['admin']), usersController.getUsers)
+app.get('/users/:id',                       authController.ensureAuthenticated, role.require(['admin']), usersController.getUserById)
+app.post('/users/:id',                      authController.ensureAuthenticated, role.require(['admin']), usersController.updateUserById)
+app.get('/chat/agent/:id',                  authController.ensureAuthenticated, role.require(['admin', 'agent']), chatController.getAgentChats)
 
 app.post('/webhook/web-chat', webhooks.webChat)
 
 /**
  * API routes.
  */
-app.get('/campaigns/delete/:id', apiController.welcome)
+app.get('/api', apiController.welcome)
 app.post('/api/user', apiController.paymentProcessing)
 app.get('/api/invoice/:id', apiController.getInvoice)
 

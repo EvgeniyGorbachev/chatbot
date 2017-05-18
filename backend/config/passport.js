@@ -9,7 +9,9 @@ module.exports = function(options) {
   })
 
   passport.deserializeUser(function (id, cb) {
-    db.Users.findById(id).then(function(user) {
+    db.Users.findOne({ where: {id: id} , include: [{
+      model: db.Roles
+    }]}).then(function(user) {
       cb(null, user)
     }).catch(function(err) {
       return cb('err')

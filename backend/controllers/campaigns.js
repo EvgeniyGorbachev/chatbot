@@ -24,8 +24,6 @@ exports.getCampaigns = (req, res) => {
  */
 exports.getCampaignById = (req, res) => {
 
-  if (req.app.locals.user.Role.name != 'admin') {res.redirect('/campaigns');}
-
   let id = req.params.id
 
   db.Campaigns.findOne({ where: {id: id} }).then(function(campaign) {
