@@ -45,6 +45,7 @@ module.exports = function (sequelize, DataTypes) {
         associate:function(models){
           users.belongsTo(models.Roles, { foreignKey: 'userRole'} );
           users.belongsToMany(models.Campaigns, {through: 'UsersHasCampaign', foreignKey: 'user_id', otherKey: 'campaign_id'})
+          users.hasMany(models.Conversations, {foreignKey: 'userId', sourceKey: 'id'});
         }
       }
     });

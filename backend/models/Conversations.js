@@ -30,7 +30,7 @@ module.exports = function(sequelize, DataTypes) {
       default: 0
     },
     userId: {
-      type: Sequelize.TEXT,
+      type: Sequelize.INTEGER,
     },
     meta_data: {
       type: Sequelize.JSONB,
@@ -39,6 +39,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods:{
       associate:function(models){
         Conversations.belongsTo(models.Campaigns, { foreignKey: 'campaign_id'} )
+        Conversations.belongsTo(models.Users, { foreignKey: 'userId', targetKey: 'id'} )
       }
     },
 

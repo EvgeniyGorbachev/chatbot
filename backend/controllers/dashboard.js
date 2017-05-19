@@ -8,7 +8,9 @@ const db = require('../models/index.js');
 exports.getDashboardById = (req, res) => {
   let id = req.params.id || false
   db.Payments.findAll({ where: {campaign_id: id} }).then(function (users) {
-    db.Conversations.findAll({ where: {campaign_id: id} }).then(function (conversations) {
+    db.Conversations.findAll({ where: {campaign_id: id} , include: [{
+      model: db.Users
+    }]}).then(function (conversations) {
       db.Campaigns.findOne({where: {id: id}}).then(function (campaign) {
         if (campaign != null) {
             res.render('dashboard', {

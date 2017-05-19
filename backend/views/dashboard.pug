@@ -70,7 +70,7 @@ html(ng-app='campaignsApp' ng-cloak)
                                                 th Email
                                                 th Phone
                                                 th Invoice ID
-                                                th Billin info
+                                                th Billing info
                                                 th Cteated at
                                         tbody
                                             each item in payments
@@ -89,7 +89,7 @@ html(ng-app='campaignsApp' ng-cloak)
                                                 th Email
                                                 th Phone
                                                 th Invoice ID
-                                                th Billin info
+                                                th Billing info
                                                 th Cteated at
                     .row
                         .col-lg-12
@@ -114,12 +114,18 @@ html(ng-app='campaignsApp' ng-cloak)
                                         thead
                                             tr
                                                 th id
-                                                th Phone
+                                                th Sender
                                                 th Username
+                                                th Channel
+                                                th Agent name
+                                                th IP
+                                                th City
+                                                th Country
+                                                th Platform
+                                                th User-agent
+                                                th Time zone
                                                 th Email
                                                 th Address
-                                                th Last phrase ID
-                                                th Answers
                                                 th Edit
                                         tbody
                                             each item in conversations
@@ -127,10 +133,37 @@ html(ng-app='campaignsApp' ng-cloak)
                                                     td= item.id
                                                     td= item.sender
                                                     td= item.username
+                                                    td= campaign.channel
+                                                    if item.User
+                                                        td= item.User.username
+                                                    else
+                                                        td
+                                                    if item.meta_data
+                                                        td= item.meta_data.location.ip
+                                                    else
+                                                        td
+                                                    if item.meta_data
+                                                        td= item.meta_data.location.city
+                                                    else
+                                                        td
+                                                    if item.meta_data
+                                                        td= item.meta_data.location.country_name
+                                                    else
+                                                        td
+                                                    if item.meta_data
+                                                        td= item.meta_data.platform
+                                                    else
+                                                        td
+                                                    if item.meta_data
+                                                        td= item.meta_data.userAgent
+                                                    else
+                                                        td
+                                                    if item.meta_data
+                                                        td= item.meta_data.location.time_zone
+                                                    else
+                                                        td
                                                     td= item.email
                                                     td= item.address
-                                                    td= item.last_phrase_id
-                                                    td= item.answers
                                                     td
                                                         a(href="/campaigns/" + campaign.id + "/sessions") Chat history
                                                         br
@@ -140,12 +173,18 @@ html(ng-app='campaignsApp' ng-cloak)
                                         tfoot
                                             tr
                                                 th id
-                                                th Phone
+                                                th Sender
                                                 th Username
+                                                th Channel
+                                                th Agent name
+                                                th IP
+                                                th City
+                                                th Country
+                                                th Platform
+                                                th User-agent
+                                                th Time zone
                                                 th Email
                                                 th Address
-                                                th Last phrase ID
-                                                th Answers
                                                 th Edit
 
                 #webchat(data-campaignid= "" + campaign.id)
