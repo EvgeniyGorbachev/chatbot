@@ -31,6 +31,9 @@ module.exports = function(sequelize, DataTypes) {
     },
     userId: {
       type: Sequelize.TEXT,
+    },
+    meta_data: {
+      type: Sequelize.JSONB,
     }
   }, {
     classMethods:{
