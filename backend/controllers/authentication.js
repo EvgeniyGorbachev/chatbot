@@ -3,7 +3,7 @@
  * Login page
  */
 exports.getLoginPage = (req, res) => {
-  res.render('login', {title: 'Hey', message: 'Hello there!'})
+  res.render('login')
 };
 
 /**
@@ -28,7 +28,9 @@ exports.logout = (req, res) => {
  * Ensure authenticated
  */
 exports.ensureAuthenticated = (req, res, next) => {
-  req.session.returnTo = req.path
+  let path = (req.path == '/login')? '/campaigns': req.path;
+  console.log(1111111, path)
+  req.session.returnTo = path
   if (req.isAuthenticated()) {
     return next()
   }

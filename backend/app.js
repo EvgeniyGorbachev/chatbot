@@ -78,7 +78,7 @@ app.use(passport.session())
  */
 app.get('/login', authController.getLoginPage)
 app.get('/logout', authController.logout)
-app.post('/login', passport.authenticate('local', {successReturnToOrRedirect: '/', failureRedirect: '/login'}), authController.login)
+app.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), authController.login)
 
 /**
  * Primary app routes.
