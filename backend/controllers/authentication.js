@@ -29,7 +29,6 @@ exports.logout = (req, res) => {
  */
 exports.ensureAuthenticated = (req, res, next) => {
   let path = (req.path == '/login')? '/campaigns': req.path;
-  console.log(1111111, path)
   req.session.returnTo = path
   if (req.isAuthenticated()) {
     return next()
