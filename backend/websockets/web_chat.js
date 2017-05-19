@@ -88,5 +88,26 @@ module.exports = function(webChat) {
         socket.emit('err', err.response.statusText)
       });
     })
+
+    // Get user metadata
+    socket.on('userMetaData', function(msg){
+      db.Conversations.findOne({where: { sender: msg.userId }}).then(function (campaign) {
+        if (campaign) {
+          campaign.update({"meta_data": msg.data}).then(function() {
+            socket.emit('savedUserMetaData', 'success')
+          }).catch(function(err) {
+            console.log(1616161616616, err)
+            socket.emit('err', err.response.statusText)
+          })
+        } else {
+          socket.emit('savedUserMetaData', 'error')
+        }
+
+
+      }).catch((err) => {
+        console.log(13131331313133, err)
+        socket.emit('err', err.response.statusText)
+      });
+    })
   })
 }
