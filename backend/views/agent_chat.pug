@@ -36,7 +36,8 @@ html(ng-app='campaignsApp' ng-cloak)
                                                                     a.message-author(href='#', ng-if='conv.direction == 1')  Chat bot
                                                                     a.message-author(href='#', ng-if='conv.direction == 0')  {{ chatAgentCtr.currentUser.username }}
                                                                     span.message-date   Fri Jan 25 2015 - 11:12:36
-                                                                    span.message-content  {{ conv.text || 'Empty message' }}
+                                                                    span.message-content(ng-if="conv.text", ng-bind-html="conv.text | trust")
+                                                                    span.message-content(ng-if="!conv.text") Empty message.
                                                     //.col-md-3
                                                     //    .chat-users
                                                     //        .users-list
@@ -52,5 +53,7 @@ html(ng-app='campaignsApp' ng-cloak)
                                                                 textarea.form-control.message-input(ng-model='chatAgentCtr.messageText', name='message', placeholder='Enter message text')
                                                                 a.btn.btn-w-m.btn-success.chat-button(ng-click='chatAgentCtr.sendMessage()', ng-show='!chatAgentCtr.isSend', ng-disabled='!chatAgentCtr.currentUser.sender') Send
                                                                 a.btn.btn-w-m.btn-success.chat-button(disabled='', ng-show='chatAgentCtr.isSend', href='/') Sending...
+                                                                input.btn.btn-w-m.btn-success.chat-button(ng-disabled='!chatAgentCtr.currentUser.sender', id="file" type="file")
+                                                                p.text-danger(ng-show='chatAgentCtr.fileErrorText') {{ chatAgentCtr.fileErrorText }}
 
             include footer.pug

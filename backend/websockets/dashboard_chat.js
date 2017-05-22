@@ -1,10 +1,29 @@
 const db = require('./../models/index.js')
 const Smooch = require('smooch-core')
 const request = require('request')
+const ss = require('socket.io-stream')
+const stream = ss.createStream()
+const fs = require('fs')
+const path = require('path')
 
 module.exports = function(dashboardChat) {
 
   dashboardChat.on('connection', function(socket){
+
+    ss(socket).on('file', function(stream, data) {
+
+      let dir = path.resolve("./assets/img/user_files")
+
+      if (!fs.existsSync(dir)){
+        fs.mkdirSync(dir);
+      }
+
+      let filename =  data.userId + "_" + new Date().getTime() + "_"+ data.name
+      let filenameFullPath = path.resolve( "./assets/img/user_files/" + filename)
+      stream.pipe(fs.createWriteStream(filenameFullPath))
+
+      socket.emit('fileSaved', {"fileName": filename, "userId": data.userId, "campaign_id": data.campaign_id})
+    });
 
     // Get user list
     socket.on('getUserList', function(msg){

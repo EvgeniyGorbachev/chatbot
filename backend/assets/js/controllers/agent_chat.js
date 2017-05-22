@@ -9,6 +9,7 @@ angular.module('campaignsApp.agentChat', [])
     vm.websocketIsError = false;
     vm.isSend = false;
     vm.smoochAppId = null;
+    vm.fileErrorText = null;
 
     vm.userConversation = [];
     vm.userList = [];
@@ -20,6 +21,21 @@ angular.module('campaignsApp.agentChat', [])
       "campaign_id": '',
       "direction": 1
     };
+
+    $(function() {
+
+      $('#file').change(function(e) {
+
+        let file = e.target.files[0];
+        let stream = ss.createStream();
+
+        if (vm.isValidFile(file)) {
+          // upload a file to the server.
+          ss(socket).emit('file', stream, {"name": file.name, "userId": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id,});
+          ss.createBlobReadStream(file).pipe(stream);
+        }
+      });
+    });
 
     socket.on('new_user_data', function (data) {
       // Update username
@@ -105,6 +121,12 @@ angular.module('campaignsApp.agentChat', [])
       $scope.$digest();
     });
 
+    socket.on('fileSaved', function (data) {
+      let link = '/assets/img/user_files/' + data.fileName
+      let text = '<a data-file-name= "'+ data.fileName +'" href="' + link +'" download>Download link</a>'
+      socket.emit('sendMessage', {"user_id": data.sender, "campaign_id": data.campaign_id, "text": text, "direction": 1});
+    });
+
     // Send request to find new messages
     // setInterval(function () {
     //   if (vm..currentUser.sender) {
@@ -141,4 +163,35 @@ angular.module('campaignsApp.agentChat', [])
       socket.emit('sendMessage', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": vm.messageText, "direction": 1});
     };
 
-  });
+    vm.isValidFile = function(file) {
+
+      if (file.size > 10000000) {
+        vm.fileErrorText = 'File size can not be greater than 10Mb';
+        return false;
+      }
+
+      let availableExtention = {
+        "doc" : true,
+        "jpeg": true,
+        "pdf" : true,
+        "png" : true,
+        "xls" : true,
+        "xlsx": true
+      };
+
+      let fileExtenstion = file.name.split('.').pop();
+
+      if (!availableExtention[fileExtenstion]) {
+        vm.fileErrorText = 'Only files with extension are allowed: .png, .jpeg, .pdf, .doc, .xlsx, .xls';
+        return false;
+      }
+
+      $scope.$digest();
+      return true;
+    };
+
+  }).filter("trust", ['$sce', function($sce) {
+  return function(htmlCode){
+    return $sce.trustAsHtml(htmlCode);
+  }
+}]);

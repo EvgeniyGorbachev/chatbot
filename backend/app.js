@@ -95,7 +95,7 @@ app.get('/agent/:userid',                   authController.ensureAuthenticated, 
 app.get('/users',                           authController.ensureAuthenticated, role.require(['admin']), usersController.getUsers)
 app.get('/users/:id',                       authController.ensureAuthenticated, role.require(['admin']), usersController.getUserById)
 app.post('/users/:id',                      authController.ensureAuthenticated, role.require(['admin']), usersController.updateUserById)
-app.get('/chat/agent/:id',                  authController.ensureAuthenticated, role.require(['admin', 'agent']), chatController.getAgentChats)
+app.get('/chat/agent/:id',                  chatController.getAgentChats)
 
 app.get('/webchat/campaign/:id',            chatController.getChatExample)
 

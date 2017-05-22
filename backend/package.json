@@ -38,6 +38,7 @@
     "sequelize-cli": "^2.5.1",
     "smooch-core": "^3.5.0",
     "socket.io": "^2.0.1",
+    "socket.io-stream": "^0.9.1",
     "twilio": "^2.11.1",
     "url": "^0.11.0",
     "websocket": "^1.0.24",
