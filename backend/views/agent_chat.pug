@@ -53,7 +53,7 @@ html(ng-app='campaignsApp' ng-cloak)
                                                                 textarea.form-control.message-input(ng-model='chatAgentCtr.messageText', name='message', placeholder='Enter message text')
                                                                 a.btn.btn-w-m.btn-success.chat-button(ng-click='chatAgentCtr.sendMessage()', ng-show='!chatAgentCtr.isSend', ng-disabled='!chatAgentCtr.currentUser.sender') Send
                                                                 a.btn.btn-w-m.btn-success.chat-button(disabled='', ng-show='chatAgentCtr.isSend', href='/') Sending...
-                                                                input.btn.btn-w-m.btn-success.chat-button(ng-disabled='!chatAgentCtr.currentUser.sender', id="file" type="file")
+                                                                input.btn.btn-w-m.btn-success.chat-button(ng-disabled='(chatAgentCtr.currentUser.sender && chatAgentCtr.isDownloadingFile ) || !chatAgentCtr.currentUser.sender', id="file" type="file")
                                                                 p.text-danger(ng-show='chatAgentCtr.fileErrorText') {{ chatAgentCtr.fileErrorText }}
 
             include footer.pug

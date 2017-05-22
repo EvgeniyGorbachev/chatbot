@@ -8,6 +8,7 @@ angular.module('campaignsApp.agentChat', [])
 
     vm.websocketIsError = false;
     vm.isSend = false;
+    vm.isDownloadingFile = false;
     vm.smoochAppId = null;
     vm.fileErrorText = null;
 
@@ -24,13 +25,14 @@ angular.module('campaignsApp.agentChat', [])
 
     $(function() {
 
+      // Download file
       $('#file').change(function(e) {
-
+        vm.isDownloadingFile = true;
         let file = e.target.files[0];
         let stream = ss.createStream();
 
         if (vm.isValidFile(file)) {
-          // upload a file to the server.
+          // Upload a file to the server.
           ss(socket).emit('file', stream, {"name": file.name, "userId": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id,});
           ss.createBlobReadStream(file).pipe(stream);
         }
@@ -125,14 +127,8 @@ angular.module('campaignsApp.agentChat', [])
       let link = '/assets/img/user_files/' + data.fileName
       let text = '<a data-file-name= "'+ data.fileName +'" href="' + link +'" download>Download link</a>'
       socket.emit('sendMessage', {"user_id": data.userId, "campaign_id": data.campaign_id, "text": text, "direction": 1});
+      vm.isDownloadingFile = false;
     });
-
-    // Send request to find new messages
-    // setInterval(function () {
-    //   if (vm..currentUser.sender) {
-    //     socket.emit('getUserConversation', {"userId": vm..currentUser.sender});
-    //   }
-    // }, 3000);
 
     // Check user data
     setInterval(function () {
@@ -164,6 +160,8 @@ angular.module('campaignsApp.agentChat', [])
     };
 
     vm.isValidFile = function(file) {
+
+      if (!file) return false;
 
       if (file.size > 10000000) {
         vm.fileErrorText = 'File size can not be greater than 10Mb';
