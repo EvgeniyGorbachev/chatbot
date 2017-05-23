@@ -93,7 +93,7 @@ html(ng-app='campaignsApp' ng-cloak)
                                                             input(type='checkbox', ng-checked="" + item.isActive + "" name="item.id" ng-model="dashboardCtr.isActive[" + item.id + "]" ng-click="dashboardCtr.change(" + item.id + ")")
                                                         td
                                                             a(href="/dashboard/" + item.id + "", ng-if='"admin" == "'+user.Role.name+'"') #{item.name}
-                                                            a(href="/chat/agent/" + item.id + "", ng-if='"admin" != "'+user.Role.name+'"') #{item.name}
+                                                            a(href="/chat/agent/" + user.id + "", ng-if='"admin" != "'+user.Role.name+'"') #{item.name}
                                                         td= item.channel
                                                         td= item.phone
                                                         td= item.startDate
