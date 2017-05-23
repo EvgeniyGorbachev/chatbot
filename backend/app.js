@@ -83,7 +83,7 @@ app.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), 
 /**
  * Primary app routes.
  */
-app.get('/dashboard/:id',                   authController.ensureAuthenticated, role.require(['admin']), dashboardController.getDashboardById)
+app.get('/dashboard/:id',                   authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), dashboardController.getDashboardById)
 app.post('/campaigns',                      authController.ensureAuthenticated, role.require(['admin']), campaingController.updateCampaignStatus)
 app.get('/campaigns',                       authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), campaingController.getCampaigns)
 app.get('/campaigns/:id',                   authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), campaingController.getCampaignById)
@@ -91,7 +91,7 @@ app.post('/campaigns/:id',                  authController.ensureAuthenticated, 
 app.get('/campaigns/delete/:id',            authController.ensureAuthenticated, role.require(['admin']), campaingController.deleteCampaignById)
 app.get('/campaigns/reset_conversation/:id',authController.ensureAuthenticated, role.require(['admin']), campaingController.resetCampaignConversationById)
 app.get('/campaigns/:campaignid/sessions',  authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), sessionsController.getSessionsById)
-app.get('/agent/:userid',                   authController.ensureAuthenticated, role.require(['admin']), sessionsController.getSessionsByUserId)
+app.get('/agent/:userid',                   authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), sessionsController.getSessionsByUserId)
 app.get('/users',                           authController.ensureAuthenticated, role.require(['admin']), usersController.getUsers)
 app.get('/users/:id',                       authController.ensureAuthenticated, role.require(['admin']), usersController.getUserById)
 app.post('/users/:id',                      authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), usersController.updateUserById)
