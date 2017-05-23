@@ -102,7 +102,7 @@ html(ng-app='campaignsApp' ng-cloak)
                                                             a.btn.btn-warning.btn-rounded(href="/campaigns/" + item.id + "", ng-if='"admin" == "'+user.Role.name+'"') Update
                                                             |
                                                             |
-                                                            a.btn.btn-danger.btn-rounded(href="/campaigns/delete/" + item.id + "", ng-if='"admin" == "'+user.Role.name+'"') Delete
+                                                            a.btn.btn-danger.btn-rounded(href="/campaigns/delete/" + item.id + "",ng-confirm-click="Did you really want to delete campaign?", ng-if='"admin" == "'+user.Role.name+'"') Delete
                                                             |
                                                             |
                                                             a.btn.btn-info.btn-rounded(href="/campaigns/reset_conversation/" + item.id + "", ng-if='"admin" == "' + user.Role.name + '"') Reset conversation
