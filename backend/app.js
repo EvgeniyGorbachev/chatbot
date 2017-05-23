@@ -83,7 +83,7 @@ app.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), 
 /**
  * Primary app routes.
  */
-app.get('/dashboard/:id',                   authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), dashboardController.getDashboardById)
+app.get('/dashboard/:id',                   authController.ensureAuthenticated, role.require(['admin']), dashboardController.getDashboardById)
 app.post('/campaigns',                      authController.ensureAuthenticated, role.require(['admin']), campaingController.updateCampaignStatus)
 app.get('/campaigns',                       authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), campaingController.getCampaigns)
 app.get('/campaigns/:id',                   authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), campaingController.getCampaignById)
