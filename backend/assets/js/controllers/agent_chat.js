@@ -25,6 +25,15 @@ angular.module('campaignsApp.agentChat', [])
 
     $(function() {
 
+        $("textarea").emojioneArea({
+            pickerPosition: "top",
+            filtersPosition: "bottom",
+            tones: false,
+            autocomplete: false,
+            inline: true,
+            hidePickerOnBlur: false
+        });
+
       // Download file
       $('#file').change(function(e) {
         vm.isDownloadingFile = true;
