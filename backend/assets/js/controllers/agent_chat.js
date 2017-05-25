@@ -25,13 +25,14 @@ angular.module('campaignsApp.agentChat', [])
 
     $(function() {
 
-        $("textarea").emojioneArea({
-            pickerPosition: "top",
-            filtersPosition: "bottom",
-            tones: false,
-            autocomplete: false,
-            inline: true,
-            hidePickerOnBlur: false
+        $("#messageEditor").emojioneArea({
+            pickerPosition  : "top",
+            filtersPosition : "bottom",
+            tones           : false,
+            autocomplete    : false,
+            inline          : true,
+            hidePickerOnBlur: false,
+            shortnames      : true
         });
 
       // Download file
@@ -165,6 +166,7 @@ angular.module('campaignsApp.agentChat', [])
 
     vm.sendMessage = function() {
       vm.isSend = true;
+      console.log( vm.messageText);
       socket.emit('sendMessage', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": vm.messageText, "direction": 1});
     };
 

@@ -50,7 +50,7 @@ html(ng-app='campaignsApp' ng-cloak)
                                                     .col-lg-12
                                                         .chat-message-form
                                                             .form-group
-                                                                textarea.form-control.message-input(ng-model='chatAgentCtr.messageText', name='message', placeholder='Enter message text')
+                                                                textarea.form-control.message-input(ng-model='chatAgentCtr.messageText', name='message', placeholder='Enter message text', id='messageEditor')
                                                                 a.btn.btn-w-m.btn-success.chat-button(ng-click='chatAgentCtr.sendMessage()', ng-show='!chatAgentCtr.isSend', ng-disabled='!chatAgentCtr.currentUser.sender') Send
                                                                 a.btn.btn-w-m.btn-success.chat-button(disabled='', ng-show='chatAgentCtr.isSend', href='/') Sending...
                                                                 input.btn.btn-w-m.btn-success.chat-button(ng-disabled='(chatAgentCtr.currentUser.sender && chatAgentCtr.isDownloadingFile ) || !chatAgentCtr.currentUser.sender', id="file" type="file")
