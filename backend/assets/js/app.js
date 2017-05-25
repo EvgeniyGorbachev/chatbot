@@ -5,5 +5,6 @@ angular.module('campaignsApp', [
   'campaignsApp.campaignEdit',
   'campaignsApp.sessionEdit',
   'campaignsApp.userEdit',
-  'campaignsApp.agentChat'
+  'campaignsApp.agentChat',
+    'ngSanitize','ngEmojione'
 ])
