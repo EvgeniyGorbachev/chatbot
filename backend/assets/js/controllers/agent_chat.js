@@ -32,7 +32,15 @@ angular.module('campaignsApp.agentChat', [])
             autocomplete    : false,
             inline          : true,
             hidePickerOnBlur: false,
-            shortnames      : true
+            shortnames      : true,
+            events: {
+                change: function (editor, event) {
+                    console.log('event:change');
+                    console.log(editor);
+                    vm.message.text = $("#messageEditor").val();
+                    vm.messageText = $("#messageEditor").val();
+                }
+            }
         });
 
       // Download file
