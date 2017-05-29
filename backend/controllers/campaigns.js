@@ -183,33 +183,47 @@ exports.updateCampaignById = (req, res) => {
             scope: 'app'
           });
 
-          // Smooch add webhook
+          // Smooch add webhook for chatbot (Lambda)
           smoochApp.webhooks.create({
             target: process.env.CONFIRM_ORDER_CALLBACK,
             triggers: '*'
           }).then((response) => {
-            // Save campaign
-            db.Campaigns.create(campaign).then(function(data) {
 
-              if(campaign.users){
-                for(let i in campaign.users){
-                  let obj = {
-                    user_id: campaign.users[i],
-                    campaign_id: campaign.id
-                  };
+            // Smooch add webhook for WebChat UI
+            smoochApp.webhooks.create({
+              target: process.env.WEBCHAT_WEBHOOK,
+              triggers: '*'
+            }).then((response) => {
 
-                  db.UsersHasCampaign.create(obj);
-                }
-              }
+                // Save campaign
+                db.Campaigns.create(campaign).then(function(data) {
 
-              res.redirect('/campaigns?created=true');
-            }).catch(function(err) {
-              console.log(5555,  err)
-              return res.render('campaigns_edit', {err: 'Saved wrong'})
-            })
+                  if(campaign.users){
+                    for(let i in campaign.users){
+                      let obj = {
+                        user_id: campaign.users[i],
+                        campaign_id: campaign.id
+                      };
+
+                      db.UsersHasCampaign.create(obj);
+                    }
+                  }
+
+                  res.redirect('/campaigns?created=true');
+                }).catch(function(err) {
+                  console.log(5555,  err)
+                  return res.render('campaigns_edit', {err: 'Saved wrong'})
+                })
+
+              }).catch(function(err) {
+                console.log(101010101010, err)
+                return res.render('campaigns_edit', {errSmooch: 'Smooch: Can not add Webhook for WebChat UI'})
+              })
+
+
           }).catch(function(err) {
             console.log(11111, err)
-            return res.render('campaigns_edit', {errSmooch: 'Smooch: Can not add Webhook'})
+            return res.render('campaigns_edit', {errSmooch: 'Smooch: Can not add Webhook for chatbot(AWS Lambda)'})
           })
         }).catch(function(err) {
           console.log(22222, err)
