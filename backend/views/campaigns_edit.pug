@@ -108,8 +108,22 @@ html(ng-app='campaignsApp' ng-cloak)
                                             label.col-sm-2.control-label Facebook APP ID
                                             .col-sm-10
                                                 .row
-                                                    .col-md-3
-                                                        input.form-control(type='text', name='phone_sid' placeholder='' ng-required='true', ng-model='campaignCtr.campaign.object.twilio_phone_number_sid')
+                                                    .col-md-6
+                                                        input.form-control(type='text', name='facebook_app_id' placeholder='' ng-required='true', ng-model='campaignCtr.campaign.object.facebook_app_id')
+                                        //Facebook app secret
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}" ng-if="'facebook' == campaignCtr.campaign.object.channel")
+                                            label.col-sm-2.control-label Facebook APP SECRET
+                                            .col-sm-10
+                                                .row
+                                                    .col-md-6
+                                                        input.form-control(type='text', name='facebook_app_secret' placeholder='' ng-required='true', ng-model='campaignCtr.campaign.object.facebook_app_secret')
+                                        //Facebook app pageAccessToken
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}" ng-if="'facebook' == campaignCtr.campaign.object.channel")
+                                            label.col-sm-2.control-label Facebook Page Access Token
+                                            .col-sm-10
+                                                .row
+                                                    .col-md-6
+                                                        input.form-control(type='text', name='facebook_app_page_access_token' placeholder='' ng-required='true', ng-model='campaignCtr.campaign.object.facebook_app_page_access_token')
                                         //Telegram app id
                                         .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}" ng-if="'telegram' == campaignCtr.campaign.object.channel")
                                             label.col-sm-2.control-label Telegram APP ID

@@ -168,13 +168,28 @@ exports.updateCampaignById = (req, res) => {
         campaign.smooch_app_key_id = smoochData.key['_id']
         campaign.smooch_app_secret = smoochData.key.secret
 
+        let integrationData = {}
+        if (campaign.channel == 'sms') {
+           integrationData = {
+             type: 'twilio',
+             accountSid: process.env.TWILIO_ACCOUNT_SID,
+             authToken: process.env.TWILIO_AUTH_TOKEN,
+             phoneNumberSid: campaign.twilio_phone_number_sid
+           }
+        } else if (campaign.channel == 'facebook') {
+          integrationData = {
+            type: 'messenger',
+            pageAccessToken: campaign.facebook_app_page_access_token,
+            appId: campaign.facebook_app_id,
+            appSecret: campaign.facebook_app_secret
+          }
+        } else {
+          console.log(31313131331313, err)
+          return res.render('campaigns_edit', {errSmooch: 'Unsupported channel type'})
+        }
+
         // Smooch add twilio integration
-        smooch.integrations.create(campaign.smooch_app_id, {
-          type: 'twilio',
-          accountSid: process.env.TWILIO_ACCOUNT_SID,
-          authToken: process.env.TWILIO_AUTH_TOKEN,
-          phoneNumberSid: campaign.twilio_phone_number_sid
-        }).then((response) => {
+        smooch.integrations.create(campaign.smooch_app_id, integrationData).then((response) => {
 
           // Initializing Smooch Core with as an app scoped key
           let smoochApp = new SmoochCore({
@@ -195,30 +210,30 @@ exports.updateCampaignById = (req, res) => {
               triggers: '*'
             }).then((response) => {
 
-                // Save campaign
-                db.Campaigns.create(campaign).then(function(data) {
+              // Save campaign
+              db.Campaigns.create(campaign).then(function(data) {
 
-                  if(campaign.users){
-                    for(let i in campaign.users){
-                      let obj = {
-                        user_id: campaign.users[i],
-                        campaign_id: campaign.id
-                      };
+                if(campaign.users){
+                  for(let i in campaign.users){
+                    let obj = {
+                      user_id: campaign.users[i],
+                      campaign_id: campaign.id
+                    };
 
-                      db.UsersHasCampaign.create(obj);
-                    }
+                    db.UsersHasCampaign.create(obj);
                   }
+                }
 
-                  res.redirect('/campaigns?created=true');
-                }).catch(function(err) {
-                  console.log(5555,  err)
-                  return res.render('campaigns_edit', {err: 'Saved wrong'})
-                })
-
+                res.redirect('/campaigns?created=true');
               }).catch(function(err) {
-                console.log(101010101010, err)
-                return res.render('campaigns_edit', {errSmooch: 'Smooch: Can not add Webhook for WebChat UI'})
+                console.log(5555,  err)
+                return res.render('campaigns_edit', {err: 'Saved wrong'})
               })
+
+            }).catch(function(err) {
+              console.log(101010101010, err)
+              return res.render('campaigns_edit', {errSmooch: 'Smooch: Can not add Webhook for WebChat UI'})
+            })
 
 
           }).catch(function(err) {
