@@ -101,9 +101,12 @@ angular.module('campaignsApp.agentChat', [])
 
     socket.on('webhook', function (data) {
       if (data.type == 'new message from user') {
-        console.log('webhook. Get message from user')
+        console.log('webhook. Get message from user: ', data)
+        console.log('current conversation list: ', vm.conversations)
+
         // set count new message
         vm.conversations.forEach(function(conv) {
+          console.log('current conversation list HELPER: ', data.userId, conv.sender, vm.currentUser.sender)
           // If close window with webhook user, add counter
           if (data.userId == conv.sender && conv.sender != vm.currentUser.sender) {
             if (!conv.newMessages) {
@@ -120,7 +123,7 @@ angular.module('campaignsApp.agentChat', [])
       }
 
       if (data.type == 'new message from bot') {
-        console.log('webhook. Get message from bot')
+        console.log('webhook. Get message from bot: ', data)
         // If open window with webhook user, refresh messages
         if (data.userId == vm.currentUser.sender) {
           socket.emit('getUserConversation', {"userId": vm.currentUser.sender});
@@ -128,7 +131,7 @@ angular.module('campaignsApp.agentChat', [])
       }
 
       if (data.type == 'new conversation added') {
-        console.log('webhook. Add new conversation to agent')
+        console.log('webhook. Add new conversation to agent: ', data)
         socket.emit('getConversationByUserId', data.userId);
       }
       $scope.$digest();
@@ -169,6 +172,7 @@ angular.module('campaignsApp.agentChat', [])
       user.newMessages = 0;
 
       vm.currentUser = user;
+      console.log('Check new user: ', vm.currentUser.sender);
       socket.emit('getUserConversation', {"userId": vm.currentUser.sender});
     };
 
