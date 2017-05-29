@@ -177,6 +177,8 @@ exports.updateCampaignById = (req, res) => {
              phoneNumberSid: campaign.twilio_phone_number_sid
            }
         } else if (campaign.channel == 'facebook') {
+          campaign.phone = 'facebook'
+
           integrationData = {
             type: 'messenger',
             pageAccessToken: campaign.facebook_app_page_access_token,
