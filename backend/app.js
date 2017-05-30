@@ -32,6 +32,11 @@ require('./websockets/dashboard_chat')(dashboardChatSocket)
 require('./websockets/web_chat')(webChatSocket)
 
 /**
+ * Cron Job.
+ */
+require('./cron/cron')
+
+/**
  * Roles
  */
 const role = require('./config/role')

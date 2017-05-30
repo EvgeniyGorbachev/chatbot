@@ -49,11 +49,21 @@ html(ng-app='campaignsApp' ng-cloak)
                                                 .row
                                                     .col-lg-12
                                                         .chat-message-form
-                                                            .form-group
+                                                            .form-group(ng-show="chatAgentCtr.currentUser.id")
                                                                 textarea.form-control.message-input(ng-model='chatAgentCtr.messageText', name='message', placeholder='Enter message text', id='messageEditor')
-                                                                a.btn.btn-w-m.btn-success.chat-button(ng-click='chatAgentCtr.sendMessage()', ng-show='!chatAgentCtr.isSend', ng-disabled='!chatAgentCtr.currentUser.sender') Send
-                                                                a.btn.btn-w-m.btn-success.chat-button(disabled='', ng-show='chatAgentCtr.isSend', href='/') Sending...
-                                                                input.btn.btn-w-m.btn-success.chat-button(ng-disabled='(chatAgentCtr.currentUser.sender && chatAgentCtr.isDownloadingFile ) || !chatAgentCtr.currentUser.sender', id="file" type="file")
-                                                                p.text-danger(ng-show='chatAgentCtr.fileErrorText') {{ chatAgentCtr.fileErrorText }}
+
+                                                                .form-group
+                                                                    span Pause
+                                                                    |
+                                                                    |
+                                                                    |
+                                                                    input(type='checkbox', name="" ng-model="chatAgentCtr.currentUser.isPaused" ng-click="chatAgentCtr.paused()")
+
+                                                                div(ng-show="chatAgentCtr.currentUser.isPaused")
+                                                                    a.btn.btn-w-m.btn-success.chat-button(ng-click='chatAgentCtr.sendMessage()', ng-show='!chatAgentCtr.isSend', ng-disabled='!chatAgentCtr.currentUser.sender') Send
+                                                                    a.btn.btn-w-m.btn-success.chat-button(disabled='', ng-show='chatAgentCtr.isSend', href='/') Sending...
+                                                                    input.btn.btn-w-m.btn-success.chat-button(ng-disabled='(chatAgentCtr.currentUser.sender && chatAgentCtr.isDownloadingFile ) || !chatAgentCtr.currentUser.sender', id="file" type="file")
+                                                                    p.text-danger(ng-show='chatAgentCtr.fileErrorText') {{ chatAgentCtr.fileErrorText }}
+
 
             include footer.pug

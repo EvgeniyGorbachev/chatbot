@@ -176,7 +176,7 @@ angular.module('campaignsApp.agentChat', [])
       user.newMessages = 0;
 
       vm.currentUser = user;
-      console.log('Check new user: ', vm.currentUser.sender);
+      console.log('Check new user: ', vm.currentUser);
       socket.emit('getUserConversation', {"userId": vm.currentUser.sender});
     };
 
@@ -184,6 +184,10 @@ angular.module('campaignsApp.agentChat', [])
       vm.isSend = true;
       socket.emit('sendMessage', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": vm.messageText, "direction": 1});
       vm.messageText = '';
+    };
+
+    vm.paused = function() {
+      socket.emit('pausedConversation', {"conversationId": vm.currentUser.id, "isPaused": vm.currentUser.isPaused});
     };
 
     vm.isValidFile = function(file) {

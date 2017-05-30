@@ -34,6 +34,12 @@ module.exports = function(sequelize, DataTypes) {
     },
     meta_data: {
       type: Sequelize.JSONB,
+    },
+    isPaused: {
+      type: Sequelize.BOOLEAN,
+    },
+    pausedTime: {
+      type: Sequelize.DATE,
     }
   }, {
     classMethods:{

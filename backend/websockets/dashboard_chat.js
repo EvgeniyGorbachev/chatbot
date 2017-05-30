@@ -67,6 +67,25 @@ module.exports = function(dashboardChat) {
       })
     });
 
+    // Set pause on conversation
+    socket.on('pausedConversation', function(msg){
+
+      db.Conversations.findOne({where: { id: msg.conversationId }}).then(function (conversations) {
+
+        conversations.update({
+          isPaused: msg.isPaused,
+          pausedTime: msg.isPaused ? new Date(): null
+        }).then(function () {
+
+        }).catch(function (err) {
+          console.log('err4444: ', err)
+        })
+
+      }).catch(function(err) {
+        console.log('err22222: ', err)
+      })
+    });
+
     // Get user conversation
     socket.on('getUserConversation', function(msg){
       db.ConversationsHistory.findAll({where: {"user_id": msg.userId}, order: [['id', 'ASC']]}).then(function (history) {
