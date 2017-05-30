@@ -116,7 +116,7 @@ angular.module('campaignsApp.agentChat', [])
           }
 
           // If open window with webhook user, refresh messages
-          if (data.userId == conv.sender && conv.id == vm.currentUser.sender) {
+          if (data.userId == conv.sender && conv.sender == vm.currentUser.sender) {
             socket.emit('getUserConversation', {"userId": vm.currentUser.sender});
           }
         })
