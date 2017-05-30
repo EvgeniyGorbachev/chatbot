@@ -71,6 +71,10 @@ angular.module('campaignsApp.agentChat', [])
 
     socket.on('userConversation', function (data) {
       vm.userConversation = data;
+
+      // Scroll to bottom
+      $(".chat-discussion").scrollTop($(".chat-discussion")[0].scrollHeight);
+
       $scope.$digest();
     });
 
@@ -178,8 +182,8 @@ angular.module('campaignsApp.agentChat', [])
 
     vm.sendMessage = function() {
       vm.isSend = true;
-      console.log( vm.messageText);
       socket.emit('sendMessage', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": vm.messageText, "direction": 1});
+      vm.messageText = '';
     };
 
     vm.isValidFile = function(file) {
