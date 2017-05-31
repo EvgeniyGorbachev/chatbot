@@ -62,7 +62,8 @@ angular.module('campaignsApp.agentChat', [])
       vm.conversations.forEach(function(conv, i) {
         data.forEach(function(newConv, n) {
           if (conv.sender == newConv.sender) {
-            vm.conversations[i] = data[n];
+            vm.conversations[i].username = data[n].username;
+            vm.conversations[i].isPaused = data[n].isPaused;
           }
         });
       });
