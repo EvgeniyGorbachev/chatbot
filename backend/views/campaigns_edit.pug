@@ -157,6 +157,11 @@ html(ng-app='campaignsApp' ng-cloak)
                                                     select.form-control.m-b.chosen-select(data-placeholder='Choose a user...', multiple)
                                                         each user in users
                                                             option(value=""+user.id+"")=user.username
+                                        //Stop word
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.stop_word.$invalid}")
+                                            label.col-sm-2.control-label Stop word
+                                            .col-sm-10
+                                                input.form-control(type='text', name='stop_word' placeholder='Help, human, I do not know...' ng-required='true', ng-model='campaignCtr.campaign.object.stop_word')
 
 
                                         #repeat(ng-repeat='step in campaignCtr.steps')

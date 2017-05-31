@@ -2,7 +2,7 @@ let Sequelize = require("sequelize")
 let moment = require('moment')
 
 module.exports = function (sequelize, DataTypes) {
-  const StopWordHasCampaign =  sequelize.define('stopWordHasConversation', {
+  const StopWordHasCampaign =  sequelize.define('StopWordHasCampaign', {
     stop_word_id: {
           type: Sequelize.INTEGER,
           primaryKey: true,
@@ -14,11 +14,11 @@ module.exports = function (sequelize, DataTypes) {
   }, {
       classMethods:{
         associate:function(models){
-          StopWordHasCampaign.belongsTo(models.stop_words, { foreignKey: 'stop_word_id'} );
+          StopWordHasCampaign.belongsTo(models.StopWords, { foreignKey: 'stop_word_id'} );
           StopWordHasCampaign.belongsTo(models.Campaigns, { foreignKey: 'campaign_id'} );
         }
       },
-      tableName      : 'stopWordHasConversation',
+      tableName      : 'stopWordHasCampaign',
       timestamps: false
     });
 

@@ -1,4 +1,5 @@
 const db = require('../models/index.js')
+const helper = require('../lib/helper')
 const SmoochCore =  require('smooch-core')
 const request = require('request')
 
@@ -26,7 +27,9 @@ exports.getCampaignById = (req, res) => {
 
   let id = req.params.id
 
-  db.Campaigns.findOne({ where: {id: id} }).then(function(campaign) {
+  db.Campaigns.findOne({ where: {id: id}, include: [{
+    model: db.StopWords
+  }]}).then(function(campaign) {
     db.Users.all({order: 'id DESC'}).then(function (users) {
       db.UsersHasCampaign.findAll({where: {campaign_id: id}}).then(function(items){
 
@@ -35,9 +38,17 @@ exports.getCampaignById = (req, res) => {
           usersId.push(item.user_id);
         });
 
+        if (campaign.StopWords.length > 0){
+          let stop_word_string = ''
+          for(let i in campaign.StopWords){
+            stop_word_string +=  campaign.StopWords[i].word + ', ';
+
+          }
+          campaign.dataValues.stop_word = stop_word_string;
+        }
+
         campaign.dataValues.users = usersId;
         let data = JSON.stringify(campaign)
-
         res.render('campaigns_edit', {
           campaign: data,
           users: users
@@ -45,6 +56,7 @@ exports.getCampaignById = (req, res) => {
       })
     })
   }).catch(function(err) {
+    console.log('555555 errr', err)
       res.render('campaigns_edit')
   })
 };
@@ -87,6 +99,10 @@ exports.updateCampaignById = (req, res) => {
             }
           });
         }
+
+        // Update stop word
+        helper.updateStopWord(campaign.stop_word, campaign.id)
+
 
         res.redirect('/campaigns?updated=true');
       }).catch(function(err) {
@@ -225,6 +241,11 @@ exports.updateCampaignById = (req, res) => {
                     db.UsersHasCampaign.create(obj);
                   }
                 }
+
+                // Update stop word
+                helper.updateStopWord(campaign.stop_word, data.id)
+
+
 
                 res.redirect('/campaigns?created=true');
               }).catch(function(err) {
