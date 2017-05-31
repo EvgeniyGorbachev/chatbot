@@ -34,7 +34,7 @@ require('./websockets/web_chat')(webChatSocket)
 /**
  * Cron Job.
  */
-require('./cron/cron')
+// require('./cron/cron')
 
 /**
  * Roles
