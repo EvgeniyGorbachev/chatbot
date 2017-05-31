@@ -40,6 +40,9 @@ module.exports = function(sequelize, DataTypes) {
     },
     pausedTime: {
       type: Sequelize.DATE,
+    },
+    pauseInitiator: {
+      type: Sequelize.TEXT,
     }
   }, {
     classMethods:{

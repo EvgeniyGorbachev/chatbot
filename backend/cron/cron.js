@@ -8,7 +8,7 @@ let j = schedule.scheduleJob('*/1 * * * *', function(){
   let twoMinutesLater = new Date();
   twoMinutesLater.setMinutes(twoMinutesLater.getMinutes() - 2);
 
-  db.sequelize.query("SELECT * FROM conversations WHERE \"isPaused\" = 'true' AND \"pausedTime\" < '" + twoMinutesLater.toISOString() + "'").spread((conversations, metadata) => {
+  db.sequelize.query("SELECT * FROM conversations WHERE \"isPaused\" = 'true' AND \"pauseInitiator\" = 'agent' AND \"pausedTime\" < '" + twoMinutesLater.toISOString() + "'").spread((conversations, metadata) => {
     if (conversations.length > 0) {
       console.log('Cron conversation: ', conversations)
       conversations.forEach(function(conversation) {

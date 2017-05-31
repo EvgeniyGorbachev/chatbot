@@ -61,6 +61,7 @@ angular.module('campaignsApp.agentChat', [])
       // Update username
       vm.conversations.forEach(function(conv, i) {
         data.forEach(function(newConv, n) {
+          // Update only
           if (conv.sender == newConv.sender) {
             vm.conversations[i].username = data[n].username;
             vm.conversations[i].isPaused = data[n].isPaused;

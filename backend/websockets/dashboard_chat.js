@@ -74,7 +74,8 @@ module.exports = function(dashboardChat) {
 
         conversations.update({
           isPaused: msg.isPaused,
-          pausedTime: msg.isPaused ? new Date(): null
+          pausedTime: msg.isPaused ? new Date(): null,
+          pauseInitiator: 'agent'
         }).then(function () {
 
         }).catch(function (err) {
