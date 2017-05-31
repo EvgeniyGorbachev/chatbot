@@ -62,7 +62,7 @@ angular.module('campaignsApp.agentChat', [])
       vm.conversations.forEach(function(conv, i) {
         data.forEach(function(newConv, n) {
           if (conv.sender == newConv.sender) {
-            vm.conversations[i].username = data[n].username;
+            vm.conversations[i] = data[n];
           }
         });
       });
@@ -159,14 +159,11 @@ angular.module('campaignsApp.agentChat', [])
     setInterval(function () {
       let ids = [];
       vm.conversations.forEach(function(conv, i) {
-        if (conv.username == null) {
-          ids.push(conv.sender);
-        }
+        ids.push(conv.sender);
       })
 
       socket.emit('check_user_data', ids);
     }, 4000);
-
 
     vm.getConversation = function(user) {
       vm.isSend = false;
