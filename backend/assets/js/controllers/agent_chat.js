@@ -67,6 +67,7 @@ angular.module('campaignsApp.agentChat', [])
             vm.conversations[i].isPaused = data[n].isPaused;
           }
         });
+        vm.toggleTextArea();
       });
       $scope.$digest();
     });
@@ -177,6 +178,8 @@ angular.module('campaignsApp.agentChat', [])
       vm.currentUser = user;
       console.log('Check new user: ', vm.currentUser);
       socket.emit('getUserConversation', {"userId": vm.currentUser.sender});
+
+      vm.toggleTextArea();
     };
 
     vm.sendMessage = function() {
@@ -186,7 +189,17 @@ angular.module('campaignsApp.agentChat', [])
     };
 
     vm.paused = function() {
+      vm.currentUser.isPaused = !vm.currentUser.isPaused;
       socket.emit('pausedConversation', {"conversationId": vm.currentUser.id, "isPaused": vm.currentUser.isPaused});
+      vm.toggleTextArea();
+    };
+
+    vm.toggleTextArea = function () {
+      if (!vm.currentUser.isPaused) {
+        $(".emojionearea").addClass("disablearea")
+      } else {
+        $(".emojionearea").removeClass("disablearea")
+      }
     };
 
     vm.isValidFile = function(file) {

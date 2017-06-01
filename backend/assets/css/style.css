@@ -17,6 +17,11 @@
   max-width: 100% !important;
 }
 
+.disablearea {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
 /*
  *
  *   INSPINIA - Responsive Admin Theme

@@ -51,13 +51,7 @@ html(ng-app='campaignsApp' ng-cloak)
                                                         .chat-message-form
                                                             .form-group(ng-show="chatAgentCtr.currentUser.id")
                                                                 textarea.form-control.message-input(ng-model='chatAgentCtr.messageText', name='message', placeholder='Enter message text', id='messageEditor')
-
-                                                                .form-group
-                                                                    span Pause
-                                                                    |
-                                                                    |
-                                                                    |
-                                                                    input(type='checkbox', name="" ng-model="chatAgentCtr.currentUser.isPaused" ng-click="chatAgentCtr.paused()")
+                                                                a.btn.btn-w-m.btn-success.chat-button(ng-click='chatAgentCtr.paused()') {{ chatAgentCtr.currentUser.isPaused? 'Unpause Bot':'Pause Bot';}}
 
                                                                 div(ng-show="chatAgentCtr.currentUser.isPaused")
                                                                     a.btn.btn-w-m.btn-success.chat-button(ng-click='chatAgentCtr.sendMessage()', ng-show='!chatAgentCtr.isSend', ng-disabled='!chatAgentCtr.currentUser.sender') Send
