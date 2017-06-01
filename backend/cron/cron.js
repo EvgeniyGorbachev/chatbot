@@ -16,7 +16,8 @@ let j = schedule.scheduleJob('*/1 * * * *', function(){
 
           conv.update({
             isPaused: false,
-            pausedTime:  null
+            pausedTime:  null,
+            pauseInitiator:  null
           }).then(function () {
 
           }).catch(function (err) {
