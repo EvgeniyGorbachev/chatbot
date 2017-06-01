@@ -16,6 +16,8 @@ html(ng-app='campaignsApp' ng-cloak)
                                             li(ng-repeat='conv in chatAgentCtr.conversations')
                                                 a(data-toggle='tab', href='{{ conv.id }}' ng-click='chatAgentCtr.getConversation(conv)') {{ conv.username || 'No name' }} &nbsp
                                                     span.pull-right.label.label-primary(ng-show='!chatAgentCtr.currentUser || (conv.newMessages > 0 && conv.id != chatAgentCtr.currentUser.id)') {{ conv.newMessages }}
+                                                    |
+                                                    |
                                                     span.pull-right.badge.badge-danger(ng-show='conv.isPaused && conv.pauseInitiator == "bot"') !
 
                                 .panel-body
