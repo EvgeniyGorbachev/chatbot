@@ -181,6 +181,7 @@ angular.module('campaignsApp.agentChat', [])
       socket.emit('getUserConversation', {"userId": vm.currentUser.sender});
 
       vm.toggleTextArea();
+      vm.cleanTextArea();
     };
 
     vm.sendMessage = function() {
@@ -188,8 +189,7 @@ angular.module('campaignsApp.agentChat', [])
       socket.emit('sendMessage', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": vm.messageText, "direction": 1});
       vm.messageText = '';
 
-      // Clean text from emoji area (our textarea)
-      $(".emojionearea-editor").empty()
+      vm.cleanTextArea();
     };
 
     vm.paused = function() {
@@ -204,6 +204,10 @@ angular.module('campaignsApp.agentChat', [])
       } else {
         $(".emojionearea").removeClass("disablearea")
       }
+    };
+
+    vm.cleanTextArea = function () {
+      $(".emojionearea-editor").empty()
     };
 
     vm.isValidFile = function(file) {
