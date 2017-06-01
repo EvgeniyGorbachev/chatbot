@@ -65,6 +65,7 @@ angular.module('campaignsApp.agentChat', [])
           if (conv.sender == newConv.sender) {
             vm.conversations[i].username = data[n].username;
             vm.conversations[i].isPaused = data[n].isPaused;
+            vm.conversations[i].pauseInitiator = data[n].pauseInitiator;
           }
         });
         vm.toggleTextArea();
@@ -163,7 +164,7 @@ angular.module('campaignsApp.agentChat', [])
       let ids = [];
       vm.conversations.forEach(function(conv, i) {
         ids.push(conv.sender);
-      })
+      });
 
       socket.emit('check_user_data', ids);
     }, 4000);
@@ -186,6 +187,9 @@ angular.module('campaignsApp.agentChat', [])
       vm.isSend = true;
       socket.emit('sendMessage', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": vm.messageText, "direction": 1});
       vm.messageText = '';
+
+      // Clean text from emoji area (our textarea)
+      $(".emojionearea-editor").empty()
     };
 
     vm.paused = function() {

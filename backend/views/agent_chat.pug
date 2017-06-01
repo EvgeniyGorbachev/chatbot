@@ -16,6 +16,7 @@ html(ng-app='campaignsApp' ng-cloak)
                                             li(ng-repeat='conv in chatAgentCtr.conversations')
                                                 a(data-toggle='tab', href='{{ conv.id }}' ng-click='chatAgentCtr.getConversation(conv)') {{ conv.username || 'No name' }} &nbsp
                                                     span.pull-right.label.label-primary(ng-show='!chatAgentCtr.currentUser || (conv.newMessages > 0 && conv.id != chatAgentCtr.currentUser.id)') {{ conv.newMessages }}
+                                                    span.pull-right.badge.badge-danger(ng-show='chatAgentCtr.currentUser.isPaused && chatAgentCtr.currentUser.pauseInitiator == "bot"') !
 
                                 .panel-body
                                     .tab-content
@@ -51,11 +52,11 @@ html(ng-app='campaignsApp' ng-cloak)
                                                         .chat-message-form
                                                             .form-group(ng-show="chatAgentCtr.currentUser.id")
                                                                 textarea.form-control.message-input(ng-model='chatAgentCtr.messageText', name='message', placeholder='Enter message text', id='messageEditor')
-                                                                a.btn.btn-w-m.btn-success.chat-button(ng-click='chatAgentCtr.paused()') {{ chatAgentCtr.currentUser.isPaused? 'Unpause Bot':'Pause Bot';}}
+                                                                a.btn.btn-w-m.btn-warning.chat-button(ng-click='chatAgentCtr.paused()') {{ chatAgentCtr.currentUser.isPaused? 'Unpause Bot':'Pause Bot';}}
 
                                                                 div(ng-show="chatAgentCtr.currentUser.isPaused")
-                                                                    a.btn.btn-w-m.btn-success.chat-button(ng-click='chatAgentCtr.sendMessage()', ng-show='!chatAgentCtr.isSend', ng-disabled='!chatAgentCtr.currentUser.sender') Send
-                                                                    a.btn.btn-w-m.btn-success.chat-button(disabled='', ng-show='chatAgentCtr.isSend', href='/') Sending...
+                                                                    a.btn.btn-w-m.btn-info.chat-button(ng-click='chatAgentCtr.sendMessage()', ng-show='!chatAgentCtr.isSend', ng-disabled='!chatAgentCtr.currentUser.sender') Send
+                                                                    a.btn.btn-w-m.btn-info.chat-button(disabled='', ng-show='chatAgentCtr.isSend', href='/') Sending...
                                                                     input.btn.btn-w-m.btn-success.chat-button(ng-disabled='(chatAgentCtr.currentUser.sender && chatAgentCtr.isDownloadingFile ) || !chatAgentCtr.currentUser.sender', id="file" type="file")
                                                                     p.text-danger(ng-show='chatAgentCtr.fileErrorText') {{ chatAgentCtr.fileErrorText }}
 
