@@ -1,0 +1,121 @@
+doctype html
+html(ng-app='campaignsApp' ng-cloak)
+    include header.pug
+    body(ng-controller='DashboardListController as dashboardCtr')
+        #wrapper
+            include navigation.pug
+            #page-wrapper.gray-bg
+                .row.border-bottom
+                    nav.navbar.navbar-static-top(role='navigation', style='margin-bottom: 0')
+                        .navbar-header
+                            a.navbar-minimalize.minimalize-styl-2.btn.btn-primary(href='#')
+                                i.fa.fa-bars
+                            form.navbar-form-custom(role='search', method='post', action='search_results.html')
+                        ul.nav.navbar-top-links.navbar-right
+                            li
+                                a(href='/logout')
+                                    i.fa.fa-sign-out
+                                    |  Log out
+                .row.wrapper.border-bottom.white-bg.page-heading
+                    .col-lg-10
+                        h2 Campaigns
+                        ol.breadcrumb
+                            li
+                                a(href='/dashboard') Home
+                            li
+                                a Chatbot
+                            li.active
+                                strong Campaigns
+                    .col-lg-2
+                .wrapper.wrapper-content.animated.fadeInRight
+                    .row
+                        .col-lg-12
+                            .ibox.float-e-margins
+                                if updated
+                                    .alert.alert-success.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  Campaign was updated
+                                if created
+                                    .alert.alert-success.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  Campaign was created
+                                if deleted
+                                    .alert.alert-success.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  Campaign was deleted
+                                if err
+                                    .alert.alert-danger.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  Error
+                                .ibox-title
+                                    h5 Campaigns
+                                    .ibox-tools
+                                        a.collapse-link
+                                            i.fa.fa-chevron-up
+                                        a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                            i.fa.fa-wrench
+                                        ul.dropdown-menu.dropdown-user
+                                            li
+                                                a(href='#') Config option 1
+                                            li
+                                                a(href='#') Config option 2
+                                        a.close-link
+                                            i.fa.fa-times
+                                .ibox-content
+                                    if id
+                                        .alert.alert-success.alert-dismissable
+                                            button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                            |  Created successfully
+                                            |
+                                            b ID #{id}
+                                            | .
+                                    .row
+                                        a.btn.btn-info.btn-rounded.pull-right(href="/campaigns/new", ng-if='"admin" == "'+user.Role.name+'"') Add
+                                    form.form-horizontal#main(method='post', action='/campaigns', role='form', novalidate)
+                                        input.form-control(type='hidden', name='jsonData', id='data', ng-model='dashboardCtr.jsonData')
+                                        table.table.table-striped.table-bordered.table-hover.dataTables-example(data-order='[[ 0, "DESC" ]]' )
+                                            thead
+                                                tr
+                                                    th uid
+                                                    th Active
+                                                    th Name
+                                                    th Channel
+                                                    th Phone
+                                                    th Start
+                                                    th End
+                                                    th Cteated at
+                                                    th
+                                            tbody
+                                                each item in campaignList
+                                                    tr.gradeA
+                                                        td= item.id
+                                                        td.text-center
+                                                            input(type='checkbox', ng-checked="" + item.isActive + "" name="item.id" ng-model="dashboardCtr.isActive[" + item.id + "]" ng-click="dashboardCtr.change(" + item.id + ")")
+                                                        td
+                                                            a(href="/dashboard/" + item.id + "", ng-if='"admin" == "'+user.Role.name+'"') #{item.name}
+                                                            a(href="/chat/agent/" + user.id + "", ng-if='"admin" != "'+user.Role.name+'"') #{item.name}
+                                                        td= item.channel
+                                                        td= item.phone
+                                                        td= item.startDate
+                                                        td= item.endDate
+                                                        td= item.createdAt
+                                                        td
+                                                            a.btn.btn-warning.btn-rounded(href="/campaigns/" + item.id + "", ng-if='"admin" == "'+user.Role.name+'"') Update
+                                                            |
+                                                            |
+                                                            a.btn.btn-danger.btn-rounded(href="/campaigns/delete/" + item.id + "",ng-confirm-click="Did you really want to delete campaign?", ng-if='"admin" == "'+user.Role.name+'"') Delete
+                                                            |
+                                                            |
+                                                            a.btn.btn-info.btn-rounded(href="/campaigns/reset_conversation/" + item.id + "", ng-if='"admin" == "' + user.Role.name + '"') Reset conversation
+                                            tfoot
+                                                tr
+                                                    th uid
+                                                    th Active
+                                                    th Name
+                                                    th Channel
+                                                    th Phone
+                                                    th Start
+                                                    th End
+                                                    th Cteated at
+                                                    th
+                include footer.pug

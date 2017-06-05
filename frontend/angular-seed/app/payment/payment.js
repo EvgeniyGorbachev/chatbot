@@ -10,29 +10,26 @@ angular.module('myApp.payment', ['ngRoute'])
   });
 }])
 
-.controller('PaymentCtrl', ['$location', 'userService', function($location, userService) {
+.controller('PaymentCtrl', ['$location', 'userService', '$scope', function($location, userService, $scope) {
   var vm = this;
   vm.user = userService.getUser();
-  vm.isFormFalid = false;
   vm.isFormSend = false;
   vm.isCheckedBillingAddres = true;
 
-  vm.go = function ( path ) {
-    console.log(vm.isCheckedBillingAddres);
-    vm.isFormSend = true;
-    if (!vm.formp.$valid && path == '/review') {
-      return false;
-    }
+  saveShippingAsBilling();
 
-    if (vm.isCheckedBillingAddres) {
-      vm.saveShippingAsBilling();
+  vm.go = function ( path ) {
+    vm.isFormSend = true;
+
+    if (!vm.form.$valid && path == '/review') {
+      return false;
     }
 
     userService.saveUser(vm.user);
     $location.path( path );
   };
 
-  vm.saveShippingAsBilling =function () {
+  function saveShippingAsBilling () {
     vm.user.billing.firstName = vm.user.shipping.firstName;
     vm.user.billing.lastName = vm.user.shipping.lastName;
     vm.user.billing.email = vm.user.shipping.email;
@@ -41,7 +38,28 @@ angular.module('myApp.payment', ['ngRoute'])
     vm.user.billing.city = vm.user.shipping.city;
     vm.user.billing.state = vm.user.shipping.state;
     vm.user.billing.zipCode = vm.user.shipping.zipCode;
-  }
+  };
+
+  function notSaveShippingAsBilling () {
+    vm.user.billing.firstName = '';
+    vm.user.billing.lastName = '';
+    vm.user.billing.email = '';
+    vm.user.billing.addressFirst = '';
+    vm.user.billing.addressSecond = '';
+    vm.user.billing.city = '';
+    vm.user.billing.state = '';
+    vm.user.billing.zipCode = '';
+  };
+
+  vm.changeCheckedBillingAddress =function () {
+    vm.isCheckedBillingAddres = !vm.isCheckedBillingAddres;
+
+    if (vm.isCheckedBillingAddres) {
+      saveShippingAsBilling();
+    } else {
+      notSaveShippingAsBilling();
+    }
+  };
 
   vm.states = {
     "AL": "Alabama",

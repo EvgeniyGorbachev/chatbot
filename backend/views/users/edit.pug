@@ -1,0 +1,121 @@
+doctype html
+html(ng-app='campaignsApp')
+    include ../header.pug
+    body(ng-controller='UserEditListController as userCtr')
+        #wrapper
+            include ../navigation.pug
+            #page-wrapper.gray-bg
+                .row.border-bottom
+                    nav.navbar.navbar-static-top(role='navigation', style='margin-bottom: 0')
+                        .navbar-header
+                            a.navbar-minimalize.minimalize-styl-2.btn.btn-primary(href='#')
+                                i.fa.fa-bars
+                            form.navbar-form-custom(role='search', method='post', action='search_results.html')
+                        ul.nav.navbar-top-links.navbar-right
+                            li
+                                a(href='/logout')
+                                    i.fa.fa-sign-out
+                                    |  Log out
+                .row.wrapper.border-bottom.white-bg.page-heading
+                    .col-lg-10
+                        h2 Users
+                        ol.breadcrumb
+                            li
+                                a(href='/dashboard') Home
+                            li
+                                a Chatbot
+                            li.active
+                                strong Users
+                    .col-lg-2
+                .wrapper.wrapper-content.animated.fadeInRight
+                    .row
+                        .col-lg-12
+                            .ibox.float-e-margins
+                                if updated
+                                    .alert.alert-success.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  #{updated}
+                                if err
+                                    .alert.alert-danger.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  Error
+                                if errSmooch
+                                    .alert.alert-danger.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  #{errSmooch}
+
+                                .alert.alert-danger(ng-if="!userCtr.form.$valid && userCtr.isFormSend")
+                                    | Please fill out all the highlighted steps.
+
+                                .ibox-title
+                                    if user
+                                        h5 Update user
+                                    else
+                                        h5 Add new user
+                                    .ibox-tools
+                                        a.collapse-link
+                                            i.fa.fa-chevron-up
+                                        a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                            i.fa.fa-wrench
+                                        ul.dropdown-menu.dropdown-user
+                                            li
+                                                a(href='#') Config option 1
+                                            li
+                                                a(href='#') Config option 2
+                                        a.close-link
+                                            i.fa.fa-times
+                                .ibox-content
+                                    if user
+                                        input.form-control(type='hidden', name='user', ng-init="userCtr.user.object = " + user + "" id='user', ng-model='userCtr.user.object')
+
+                                    form.form-horizontal#main(method='post', action="", role='form', name='userCtr.form', novalidate)
+                                        input.form-control(type='hidden', name='id', ng-model='userCtr.data.id')
+                                        //Name
+                                        .form-group(ng-class="{'has-error': userCtr.isFormSend && userCtr.form.username.$invalid}")
+                                            label.col-sm-2.control-label User name
+                                                |
+                                                |
+                                                span(ng-show="userCtr.isFormSend && userCtr.form.username.$invalid")
+                                            .col-sm-10
+                                                input.form-control(type='text' name='username', ng-required='true', ng-model='userCtr.data.username', ng-maxlength='255')
+
+                                        .form-group(ng-class="{'has-error': userCtr.isFormSend && userCtr.form.password.$invalid}")
+                                            label.col-sm-2.control-label Password
+                                                |
+                                                |
+                                                span(ng-show="userCtr.isFormSend && userCtr.form.password.$invalid")
+                                            .col-sm-10
+                                                input.form-control(type='text' name='password', ng-required='true', ng-model='userCtr.data.password', ng-maxlength='255')
+
+                                        .form-group(ng-class="{'has-error': userCtr.isFormSend && userCtr.form.email.$invalid}")
+                                            label.col-sm-2.control-label Email
+                                                |
+                                                |
+                                                span(ng-show="userCtr.isFormSend && userCtr.form.email.$invalid")
+                                            .col-sm-10
+                                                input.form-control(type='email' name='email', ng-required='true', ng-model='userCtr.data.email', ng-maxlength='255')
+
+                                        .form-group(ng-class="{'has-error': userCtr.isFormSend && userCtr.form.phone.$invalid}")
+                                            label.col-sm-2.control-label Phone
+                                                |
+                                                |
+                                                span(ng-show="userCtr.isFormSend && userCtr.form.phone.$invalid")
+                                            .col-sm-10
+                                                input.form-control(type='text' name='phone', ng-required='true', ng-model='userCtr.data.phone', ng-maxlength='255')
+
+                                        .form-group(ng-class="{'has-error': userCtr.isFormSend && userCtr.form.userRole.$invalid}")
+                                            label.col-sm-2.control-label Role
+                                                |
+                                                |
+                                                span(ng-show="userCtr.isFormSend && userCtr.form.userRole.$invalid")
+                                            .col-sm-10
+                                                select.form-control.m-b(name='userRole', ng-model='userCtr.data.userRole', ng-value='userCtr.data.userRole', ng-required='true',  convert-number)
+                                                    option(value='') -- Select Role --
+                                                    option(value='1') Admin
+                                                    option(value='2') Manager
+
+                                        //BUTTONS
+                                        .form-group
+                                            .col-sm-4.col-sm-offset-2
+                                                a.btn.btn-w-m.btn-success#save(ng-click='userCtr.submit($event)') Save
+                include ../footer.pug

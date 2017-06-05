@@ -1,0 +1,247 @@
+doctype html
+html(ng-app='campaignsApp' ng-cloak)
+    include header.pug
+    body(ng-controller='CampaignEditListController as campaignCtr')
+        #wrapper
+            include navigation.pug
+            #page-wrapper.gray-bg
+                .row.border-bottom
+                    nav.navbar.navbar-static-top(role='navigation', style='margin-bottom: 0')
+                        .navbar-header
+                            a.navbar-minimalize.minimalize-styl-2.btn.btn-primary(href='#')
+                                i.fa.fa-bars
+                            form.navbar-form-custom(role='search', method='post', action='search_results.html')
+                        ul.nav.navbar-top-links.navbar-right
+                            li
+                                a(href='/logout')
+                                    i.fa.fa-sign-out
+                                    |  Log out
+                .row.wrapper.border-bottom.white-bg.page-heading
+                    .col-lg-10
+                        h2 Campaigns
+                        ol.breadcrumb
+                            li
+                                a(href='/dashboard') Home
+                            li
+                                a Chatbot
+                            li.active
+                                strong Campaigns
+                    .col-lg-2
+                .wrapper.wrapper-content.animated.fadeInRight
+                    .row
+                        .col-lg-12
+                            .ibox.float-e-margins
+                                if updated
+                                    .alert.alert-success.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  #{updated}
+                                if err
+                                    .alert.alert-danger.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  Error
+                                if errSmooch
+                                    .alert.alert-danger.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  #{errSmooch}
+
+                                .alert.alert-danger(ng-if="!campaignCtr.form.$valid && campaignCtr.isFormSend")
+                                    | Please fill out all the highlighted steps.
+
+                                .ibox-title
+                                    if campaign
+                                        h5 Update campaign
+                                    else
+                                        h5 Add new campaign
+                                    .ibox-tools
+                                        a.collapse-link
+                                            i.fa.fa-chevron-up
+                                        a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                            i.fa.fa-wrench
+                                        ul.dropdown-menu.dropdown-user
+                                            li
+                                                a(href='#') Config option 1
+                                            li
+                                                a(href='#') Config option 2
+                                        a.close-link
+                                            i.fa.fa-times
+                                .ibox-content
+                                    input.form-control(type='hidden', name='campaign', ng-init="campaignCtr.campaign.object = " + campaign + "" id='campaign', ng-model='campaignCtr.campaign.object')
+                                    form.form-horizontal#main(method='post', action="", role='form', name='campaignCtr.form', novalidate)
+                                        //Name
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.name.$invalid}")
+                                            label.col-sm-2.control-label Name
+                                                |
+                                                |
+                                                span(ng-show="campaignCtr.isFormSend && campaignCtr.form.name.$invalid") (max. 50 characters)
+                                            .col-sm-10
+                                                input.form-control(type='text' name='name', ng-required='true', ng-model='campaignCtr.campaign.object.name', ng-maxlength='50')
+                                                input.form-control(type='hidden', name='jsonData', id='data', ng-model='campaignCtr.jsonData')
+
+                                        //Channel
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.channel.$invalid}")
+                                            label.col-sm-2.control-label Channel
+                                            .col-sm-2
+                                                select.form-control.m-b(name='channel', ng-model='campaignCtr.campaign.object.channel', ng-required='true')
+                                                    option(value='sms') SMS
+                                                    option(value='facebook') Facebook
+                                                    option(value='telegram') Telegram
+                                                    option(value='slack') Slack
+                                        //Phone number
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone.$invalid}" ng-if="'sms' == campaignCtr.campaign.object.channel")
+                                            label.col-sm-2.control-label Phone number
+                                                |
+                                                |
+                                                span(ng-show="campaignCtr.isFormSend && campaignCtr.form.phone.$invalid") (format +12345678900)
+                                            .col-sm-10
+                                                .row
+                                                    .col-md-3
+                                                        input.form-control(type='text', name='phone' placeholder='+12345678900' ng-required='true', ng-model='campaignCtr.campaign.object.phone', ng-pattern='/^\\+\\d{11}$/')
+                                        //Phone number twilio sid
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}" ng-if="'sms' == campaignCtr.campaign.object.channel")
+                                            label.col-sm-2.control-label Twilio phone number sid
+                                            .col-sm-10
+                                                .row
+                                                    .col-md-3
+                                                        input.form-control(type='text', name='phone_sid' placeholder='PNc91815148445g9b8963ab398b499b0540' ng-required='true', ng-model='campaignCtr.campaign.object.twilio_phone_number_sid')
+                                        //Facebook app id
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}" ng-if="'facebook' == campaignCtr.campaign.object.channel")
+                                            label.col-sm-2.control-label Facebook APP ID
+                                            .col-sm-10
+                                                .row
+                                                    .col-md-6
+                                                        input.form-control(type='text', name='facebook_app_id' placeholder='' ng-required='true', ng-model='campaignCtr.campaign.object.facebook_app_id')
+                                        //Facebook app secret
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}" ng-if="'facebook' == campaignCtr.campaign.object.channel")
+                                            label.col-sm-2.control-label Facebook APP SECRET
+                                            .col-sm-10
+                                                .row
+                                                    .col-md-6
+                                                        input.form-control(type='text', name='facebook_app_secret' placeholder='' ng-required='true', ng-model='campaignCtr.campaign.object.facebook_app_secret')
+                                        //Facebook app pageAccessToken
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}" ng-if="'facebook' == campaignCtr.campaign.object.channel")
+                                            label.col-sm-2.control-label Facebook Page Access Token
+                                            .col-sm-10
+                                                .row
+                                                    .col-md-6
+                                                        input.form-control(type='text', name='facebook_app_page_access_token' placeholder='' ng-required='true', ng-model='campaignCtr.campaign.object.facebook_app_page_access_token')
+                                        //Telegram app id
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}" ng-if="'telegram' == campaignCtr.campaign.object.channel")
+                                            label.col-sm-2.control-label Telegram APP ID
+                                            .col-sm-10
+                                                .row
+                                                    .col-md-3
+                                                        input.form-control(type='text', name='phone_sid' placeholder='' ng-required='true', ng-model='campaignCtr.campaign.object.twilio_phone_number_sid')
+                                        //Slack app id
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.phone_sid.$invalid}" ng-if="'slack' == campaignCtr.campaign.object.channel")
+                                            label.col-sm-2.control-label Slack APP ID
+                                            .col-sm-10
+                                                .row
+                                                    .col-md-3
+                                                        input.form-control(type='text', name='phone_sid' placeholder='' ng-required='true', ng-model='campaignCtr.campaign.object.twilio_phone_number_sid')
+                                        //Start/End date
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && (campaignCtr.form.startDate.$invalid||campaignCtr.form.endDate.$invalid)}")
+                                            label.col-sm-2.control-label Start / End date
+                                            .col-sm-10
+                                                #datepicker.input-daterange.input-group
+                                                    input.input-sm.form-control.datapicker(type='text', datepicker-input name='startDate', value='', ng-model='campaignCtr.campaign.object.startDate', ng-required="true" )
+                                                    |
+                                                    span.input-group-addon to
+                                                    |
+                                                    input.input-sm.form-control.datapicker(type='text', datepicker-input name='endDate', value='', ng-model='campaignCtr.campaign.object.endDate', ng-required="true" )
+
+                                        if users
+                                            //Users
+                                            .form-group(ng-class="{'has-error': campaignCtr.isFormSend && (campaignCtr.form.startDate.$invalid||campaignCtr.form.endDate.$invalid)}")
+                                                label.col-sm-2.control-label Users
+                                                .col-sm-4
+                                                    select.form-control.m-b.chosen-select(data-placeholder='Choose a user...', multiple)
+                                                        each user in users
+                                                            option(value=""+user.id+"")=user.username
+                                        //Stop word
+                                        .form-group(ng-class="{'has-error': campaignCtr.isFormSend && campaignCtr.form.stop_word.$invalid}")
+                                            label.col-sm-2.control-label Stop word
+                                            .col-sm-10
+                                                input.form-control(type='text', name='stop_word' placeholder='Help, human, I do not know...' ng-required='true', ng-model='campaignCtr.campaign.object.stop_word')
+
+
+                                        #repeat(ng-repeat='step in campaignCtr.steps')
+                                            .hr-line-dashed
+                                            h3 Step {{step.id}}
+
+                                            //QUESTION
+                                            .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['question-{{step.id}}'].$invalid}")
+                                                label.col-sm-2.control-label Question
+                                                    |
+                                                    |
+                                                    span(ng-show="campaignCtr.isFormSend && campaignCtr.form['question-{{step.id}}'].$invalid") (max. 500 characters)
+                                                .col-sm-10
+                                                    input.form-control(type='text', name='question-{{step.id}}', ng-required="true" ng-maxlength="500", ng-model="campaignCtr.flowStorage[step.id].text")
+
+                                            //RESPONSE
+                                            .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['response-{{step.id}}'].$invalid}")
+                                                label.col-sm-2.control-label Response
+                                                .col-sm-2
+                                                    select.form-control.m-b(name='response-{{step.id}}', ng-required="true", ng-model="campaignCtr.flowStorage[step.id].response")
+                                                        option(value="username" selected='') Name
+                                                        option(value="text") Text
+                                                        option(value="no") No
+                                                        option(value="email") Email
+                                                        option(value="address") Address
+                                                        option(value="boolean") Boolean
+
+                                            //NEXT STEP
+                                            .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['step-{{step.id}}'].$invalid}" ng-show="campaignCtr.flowStorage[step.id].response != 'boolean'")
+                                                label.col-sm-2.control-label Next step
+                                                    |
+                                                    |
+                                                    span(ng-show="campaignCtr.isFormSend && campaignCtr.form['step-{{step.id}}'].$invalid") (max. 3 digits)
+                                                .col-sm-2
+                                                    input.form-control(type='number', name='step-{{step.id}}', ng-required="campaignCtr.flowStorage[step.id].response != 'boolean'" ng-pattern='/^[0-9]{1,3}\d*$/', ng-model="campaignCtr.flowStorage[step.id].nextStep.default")
+
+                                            //NEXT STEP IF YES
+                                            .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['step-yes-{{step.id}}'].$invalid}" ng-show="campaignCtr.flowStorage[step.id].response == 'boolean'")
+                                                label.col-sm-2.control-label Next step, If Yes
+                                                    |
+                                                    |
+                                                    span(ng-show="campaignCtr.isFormSend && campaignCtr.form['step-yes-{{step.id}}'].$invalid") (max. 3 digits)
+                                                .col-sm-2
+                                                    input.form-control(type='number', name='step-yes-{{step.id}}', ng-required="campaignCtr.flowStorage[step.id].response == 'boolean'" ng-pattern='/^[0-9]{1,3}\d*$/', ng-model="campaignCtr.flowStorage[step.id].nextStep.ifYes")
+
+                                            //NEXT STEP IF NO
+                                            .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['step-no-{{step.id}}'].$invalid}" ng-show="campaignCtr.flowStorage[step.id].response == 'boolean'")
+                                                label.col-sm-2.control-label Next step, If No
+                                                    |
+                                                    |
+                                                    span(ng-show="campaignCtr.isFormSend && campaignCtr.form['step-no-{{step.id}}'].$invalid") (max. 3 digits)
+                                                .col-sm-2
+                                                    input.form-control(type='number', name='step-no-{{step.id}}', ng-required="campaignCtr.flowStorage[step.id].response == 'boolean'" ng-pattern='/^[0-9]{1,3}\d*$/', ng-model="campaignCtr.flowStorage[step.id].nextStep.ifNo")
+
+                                            //INITIATOR
+                                            .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['initiator-{{step.id}}'].$invalid}")
+                                                label.col-sm-2.control-label Initiator
+                                                .col-sm-2
+                                                    select.form-control.m-b(name='initiator-{{step.id}}', ng-required="true" , ng-change="campaignCtr.changeResponse(step.id)", ng-model="campaignCtr.flowStorage[step.id].initiator")
+                                                        option(value="user" selected='') User
+                                                        option(value="bot") Bot
+                                                        option(value="external_request") External
+
+                                            //DELAY
+                                            .form-group(ng-class="{'has-error': campaignCtr.isFormSend &&  campaignCtr.form['delay-{{step.id}}'].$invalid}")
+                                                label.col-sm-2.control-label Delay, sec.
+                                                    |
+                                                    |
+                                                    span(ng-show="campaignCtr.isFormSend && campaignCtr.form['delay-{{step.id}}'].$invalid") (max. 3 digits)
+                                                .col-sm-2
+                                                    input.form-control(type='number', name='delay-{{step.id}}', ng-required="true" ng-pattern='/^[0-9]{1,3}\d*$/', ng-model="campaignCtr.flowStorage[step.id].delay")
+
+                                        //BUTTONS
+                                        .form-group
+                                            .col-sm-4.col-sm-offset-2
+                                                a.btn.btn-w-m.btn-success#save(ng-click='campaignCtr.submit($event)') Save
+                                                |
+                                                |
+                                                a.btn.btn-primary(ng-click='campaignCtr.addStep($event)') + Add
+                                                |
+                                                |
+                                                a.btn.btn-w-m.btn-danger(ng-click='campaignCtr.deleteStep($event)', ng-disabled='campaignCtr.step == 1') Delete
+                include footer.pug

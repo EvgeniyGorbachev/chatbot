@@ -1,0 +1,77 @@
+<section class="slide">
+
+  <header class="header">
+    <img src="../assets/img/logo.png" alt="Logo">
+  </header> <!-- /.header -->
+
+  <div class="body">
+
+    <div class="content" ng-if="InvoiceCtrl.invoice.uid">
+
+      <h3 class="text-center">Invoice</h3>
+
+      <br>
+
+      <div class="preview-data">
+        <h5 class="text-uppercase text-semibold">
+          Order ID
+        </h5>
+
+        <ul class="preview-list">
+          <li>{{ InvoiceCtrl.invoice.uid }}</li>
+        </ul>
+      </div> <!-- /.preview-data -->
+
+      <div class="preview-data">
+        <h5 class="text-uppercase text-semibold">
+          Client
+        </h5>
+
+        <ul class="preview-list">
+          <li>{{ InvoiceCtrl.invoice.billing.firstName }} {{ InvoiceCtrl.invoice.billing.lastName }}</li>
+        </ul>
+      </div> <!-- /.preview-data -->
+
+      <div class="preview-data">
+        <h5 class="text-uppercase text-semibold">
+          Address
+        </h5>
+        <ul class="preview-list">
+          <li>{{ InvoiceCtrl.invoice.billing.addressFirst }} </li>
+          <li>{{ InvoiceCtrl.invoice.billing.addressSecond }}</li>
+          <li>{{ InvoiceCtrl.invoice.billing.city }}, {{ InvoiceCtrl.invoice.billing.state }} {{ InvoiceCtrl.invoice.billing.zipCoe }}</li>
+        </ul>
+      </div> <!-- /.preview-data -->
+
+      <div class="preview-data">
+
+        <div class="cart-total-right">
+          Tax: <strong>$5.93</strong>
+          <br>
+          Total: <strong>$78.73</strong>
+        </div>
+      </div> <!-- /.preview-data -->
+
+    </div> <!-- /.content -->
+
+    <div class="content" ng-if="InvoiceCtrl.invoice == 'wrong'">
+      <h3 class="text-center">Wrong invoice ID</h3>
+    </div>
+
+    <div class="content" ng-if="InvoiceCtrl.invoice == 'load'">
+      <h3 class="text-center">Checking invoice ID...</h3>
+    </div>
+
+    <div class="content" ng-if="InvoiceCtrl.invoice == 'empty'">
+      <h3 class="text-center">Тot specified invoice ID</h3>
+    </div>
+
+  </div>  <!-- /.body -->
+
+  <nav class="actions">
+    <!--<button ng-click="ReviewCtrl.go('/payment')" ng-disabled="ReviewCtrl.user.isPaymentCompleted" class="btn btn-default action-back" data-direction="back">Print</button>-->
+  </nav> <!-- /.actions -->
+
+</section> <!-- /.slide -->
+
+

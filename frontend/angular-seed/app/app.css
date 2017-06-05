@@ -23,3 +23,18 @@
   content: "|";
   padding-right: 0.3em;
 }
+
+.error {
+  border: solid 1px red;
+}
+
+.card {
+  width: 38px;
+  height: auto;
+  padding-top: 10px;
+  padding-right: 6px;
+}
+
+nav.actions.bg-success-custom {
+  background-color: #dff0d8 !important;
+}

@@ -7,19 +7,14 @@ angular.module('myApp', [
   'myApp.shipping',
   'myApp.payment',
   'myApp.review',
-  'myApp.version'
+  'myApp.invoice',
+  'myApp.version',
+  'credit-cards'
 ]).
-constant('config', {
-
-  // set API URL //
-  apiUrl: 'http://localhost:8181'
-  // set API URL //
-
-}).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('');
   // $locationProvider.html5Mode(true);
-  $routeProvider.otherwise({redirectTo: '/main'});
+  $routeProvider.otherwise({redirectTo: '/order'});
 }]).factory('userService',['$http', '$q', 'config', function($http, $q, config) {
   return {
     user: false,
@@ -35,6 +30,16 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     sendData: function setData (params) {
       var deferred = $q.defer();
       $http.post(config.apiUrl + '/api/user', params).then(function (response) {
+        deferred.resolve(response);
+      }, function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    },
+
+    getInvoice: function getInvoice (id) {
+      var deferred = $q.defer();
+      $http.get(config.apiUrl + '/api/invoice/' + id).then(function (response) {
         deferred.resolve(response);
       }, function (response) {
         deferred.reject(response);

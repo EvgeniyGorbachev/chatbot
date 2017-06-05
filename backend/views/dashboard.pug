@@ -1,0 +1,211 @@
+doctype html
+html(ng-app='campaignsApp' ng-cloak)
+    include header.pug
+    body(ng-controller='DashboardListController as dashboardCtr')
+        #wrapper
+            include navigation.pug
+            #page-wrapper.gray-bg
+                .row.border-bottom
+                    nav.navbar.navbar-static-top(role='navigation', style='margin-bottom: 0')
+                        .navbar-header
+                            a.navbar-minimalize.minimalize-styl-2.btn.btn-primary(href='#')
+                                i.fa.fa-bars
+                            form.navbar-form-custom(role='search', method='post', action='search_results.html')
+                        ul.nav.navbar-top-links.navbar-right
+                            li
+                                a(href='/logout')
+                                    i.fa.fa-sign-out
+                                    |  Log out
+                .row.wrapper.border-bottom.white-bg.page-heading
+                    .col-lg-10
+                        h2  #{campaign.name}
+                            |
+                            |
+                            if campaign.isActive
+                                span.label.label-info Acitve
+                            if !campaign.isActive
+                                span.label.label-danger Inactive
+                        ol.breadcrumb
+                            li
+                                a(href='/dashboard') Home
+                            li
+                                a Campaign
+                            li.active
+                                strong Statistics
+                    .col-lg-2.text-center
+                .wrapper.wrapper-content.animated.fadeInRight
+                    .alert.alert-warning
+                        input(type='hidden',  id='smooch_app_token', value=''+campaign.smooch_app_token+'')
+                        p  <strong>Time interval:</strong> #{campaign.startDate} - #{campaign.endDate}
+                        p  <strong>Resource:</strong> #{campaign.channel} (#{campaign.phone})
+                        p  <strong>Created at:</strong> #{campaign.createdAt}
+                        p  <strong>Last update:</strong> #{campaign.updatedAt}
+                        p
+                            a.btn.btn-warning.btn-rounded(href="/campaigns/" + campaign.id + "") Edit
+
+                    .row
+                        .col-lg-12
+                            .ibox.float-e-margins
+                                .ibox-title
+                                    h5 Chatbot payments
+                                    span.label.label-primary #{paymentsCount}
+                                    .ibox-tools
+                                        a.collapse-link
+                                            i.fa.fa-chevron-up
+                                        a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                            i.fa.fa-wrench
+                                        ul.dropdown-menu.dropdown-user
+                                            li
+                                                a(href='#') Config option 1
+                                            li
+                                                a(href='#') Config option 2
+                                        a.close-link
+                                            i.fa.fa-times
+                                .ibox-content
+                                    table.table.table-striped.table-bordered.table-hover.dataTables-example
+                                        thead
+                                            tr
+                                                th uid
+                                                th Username
+                                                th Email
+                                                th Phone
+                                                th Invoice ID
+                                                th Billing info
+                                                th Cteated at
+                                        tbody
+                                            each item in payments
+                                                tr.gradeA
+                                                    td= item.uid
+                                                    td= item.userName
+                                                    td= item.email
+                                                    td= item.phone
+                                                    td= item.invoiceId
+                                                    td= item.billing
+                                                    td= item.createdAt
+                                        tfoot
+                                            tr
+                                                th uid
+                                                th Username
+                                                th Email
+                                                th Phone
+                                                th Invoice ID
+                                                th Billing info
+                                                th Cteated at
+                    .row
+                        .col-lg-12
+                            .ibox.float-e-margins
+                                .ibox-title
+                                    h5 Chatbot sessions
+                                    span.label.label-primary #{conversationsCount}
+                                    .ibox-tools
+                                        a.collapse-link
+                                            i.fa.fa-chevron-up
+                                        a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                            i.fa.fa-wrench
+                                        ul.dropdown-menu.dropdown-user
+                                            li
+                                                a(href='#') Config option 1
+                                            li
+                                                a(href='#') Config option 2
+                                        a.close-link
+                                            i.fa.fa-times
+                                .ibox-content
+                                    table.table.table-striped.table-bordered.table-hover.dataTables-example
+                                        thead
+                                            tr
+                                                th id
+                                                th Sender
+                                                th Username
+                                                th Channel
+                                                th Agent name
+                                                th IP
+                                                th City
+                                                th Country
+                                                th Platform
+                                                th User-agent
+                                                th Time zone
+                                                th Email
+                                                th Address
+                                                th Edit
+                                        tbody
+                                            each item in conversations
+                                                tr.gradeA
+                                                    td= item.id
+                                                    td= item.sender
+                                                    td= item.username
+                                                    td= campaign.channel
+                                                    if item.User
+                                                        td= item.User.username
+                                                    else
+                                                        td
+                                                    if item.meta_data
+                                                        td= item.meta_data.location.ip
+                                                    else
+                                                        td
+                                                    if item.meta_data
+                                                        td= item.meta_data.location.city
+                                                    else
+                                                        td
+                                                    if item.meta_data
+                                                        td= item.meta_data.location.country_name
+                                                    else
+                                                        td
+                                                    if item.meta_data
+                                                        td= item.meta_data.platform
+                                                    else
+                                                        td
+                                                    if item.meta_data
+                                                        td= item.meta_data.userAgent
+                                                    else
+                                                        td
+                                                    if item.meta_data
+                                                        td= item.meta_data.location.time_zone
+                                                    else
+                                                        td
+                                                    td= item.email
+                                                    td= item.address
+                                                    td
+                                                        a(href="/campaigns/" + campaign.id + "/sessions") Chat history
+                                                        br
+                                                        br
+                                                        a(href="/chat/agent/" + campaign.id) Agent page
+
+                                        tfoot
+                                            tr
+                                                th id
+                                                th Sender
+                                                th Username
+                                                th Channel
+                                                th Agent name
+                                                th IP
+                                                th City
+                                                th Country
+                                                th Platform
+                                                th User-agent
+                                                th Time zone
+                                                th Email
+                                                th Address
+                                                th Edit
+
+                #webchat(data-campaignid= "" + campaign.id)
+                include footer.pug
+
+                style.
+                    /*Hide Smooch web messenger logo*/
+                    .sk-logo {
+                        display: none;
+                    }
+
+                    /*Set iFrame size*/
+                    .sk-msg {
+                        /*max-width: 230px !important;*/
+                        width: 100% !important;
+                    }
+
+                    .sk-message-item {
+                        width: 100% !important;
+                    }
+
+                    .sk-message-item a{
+                        color: blue;
+                    }

@@ -1,58 +1,54 @@
-var Sequelize = require("sequelize")
+let Sequelize = require("sequelize")
+let moment = require('moment')
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Users', {
-    uid: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
-      autoIncrement: true // Automatically gets converted to SERIAL for postgres
-    },
-    userName: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      notEmpty: true
-    },
-    email: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      notEmpty: true
-    },
-    phone: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    shipping: {
-      type: Sequelize.TEXT,
-      allowNull: false,
-      notEmpty: true
-    },
-    billing: {
-      type: Sequelize.TEXT,
-      allowNull: false,
-      notEmpty: true
-    },
-    createdAt: {
-      type: Sequelize.DATE
-    },
-    updatedAt: {
-      type: Sequelize.DATE
-    }
-  }, {
-    individualHooks: true,
-    tableName: 'Users',
-    validate: {
-      isJSON: function() {
-        try {
-          JSON.parse(this.shipping)
-        } catch (e) {
-          throw new Error('shipping contains invalid json')
+module.exports = function (sequelize, DataTypes) {
+  const users =  sequelize.define('Users', {
+        id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        username: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        password: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        email: {
+            type: Sequelize.STRING,
+            allowNull: true
+        },
+        phone: {
+            type: Sequelize.STRING,
+            allowNull: true
+        },
+        userRole: {
+            type: Sequelize.INTEGER,
+            allowNull: true
+        },
+        createdAt: {
+            type: Sequelize.DATE,
+            get      : function()  {
+                return moment(this.getDataValue('createdAt')).format("MM/DD/YYYY");
+            }
+        },
+        updatedAt: {
+            type: Sequelize.DATE,
+            get      : function()  {
+                return moment(this.getDataValue('updatedAt')).format("MM/DD/YYYY");
+            }
         }
-        try {
-          JSON.parse(this.billing)
-        } catch (e) {
-          throw new Error('billing contains invalid json')
+    }, {
+      classMethods:{
+        associate:function(models){
+          users.belongsTo(models.Roles, { foreignKey: 'userRole'} );
+          users.belongsToMany(models.Campaigns, {through: 'UsersHasCampaign', foreignKey: 'user_id', otherKey: 'campaign_id'})
+          users.hasMany(models.Conversations, {foreignKey: 'userId', sourceKey: 'id'});
         }
       }
-    }
-  })
-}
+    });
+
+  return users;
+};

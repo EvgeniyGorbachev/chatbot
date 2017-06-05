@@ -1,0 +1,61 @@
+doctype html
+html(ng-app='campaignsApp' ng-cloak)
+    include header.pug
+    body(ng-controller='SessionsListController as sessionsCtr')
+        #wrapper
+            include navigation.pug
+            #page-wrapper.gray-bg
+                .row.border-bottom
+                    nav.navbar.navbar-static-top(role='navigation', style='margin-bottom: 0')
+                        .navbar-header
+                            a.navbar-minimalize.minimalize-styl-2.btn.btn-primary(href='#')
+                                i.fa.fa-bars
+                            form.navbar-form-custom(role='search', method='post', action='search_results.html')
+                        ul.nav.navbar-top-links.navbar-right
+                            li
+                                a(href='/logout')
+                                    i.fa.fa-sign-out
+                                    |  Log out
+                .row.wrapper.border-bottom.white-bg.page-heading
+
+                .wrapper.wrapper-content.animated.fadeInRight
+                    .alert.alert-warning(ng-if='sessionsCtr.type == "campaign"')
+                        if campaign
+                            h3  Campaign info:
+                            p  <strong>Time interval:</strong> #{campaign.startDate} - #{campaign.endDate}
+                            p  <strong>Resource:</strong> #{campaign.channel} (#{campaign.phone})
+                            p  <strong>Created at:</strong> #{campaign.createdAt}
+                            p  <strong>Last update:</strong> #{campaign.updatedAt}
+                            p
+                                a.btn.btn-warning.btn-rounded(href="/campaigns/" + campaign.id + "") Edit
+
+                    if campaigns
+                        each item in campaigns
+                            .row
+                                .col-lg-12
+                                    .ibox.float-e-margins
+                                        .ibox-title
+                                            h5 Campaigns: #{item.name}
+                                            .ibox-tools
+                                                a.collapse-link
+                                                    i.fa.fa-chevron-up
+                                                a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                                    i.fa.fa-wrench
+                                                ul.dropdown-menu.dropdown-user
+                                                    li
+                                                        a(href='#') Config option 1
+                                                    li
+                                                        a(href='#') Config option 2
+                                                a.close-link
+                                                    i.fa.fa-times
+
+
+                                        .ibox-content
+                                            if conversations[item.id] && conversations[item.id].length > 0
+                                                chat(conversations="[" + conversations[item.id] + "]")
+                                            else
+                                                h2 No conversation in this campaign
+                    else
+                        h1 You do not have any campaigns.
+
+                include footer.pug

@@ -14,26 +14,28 @@ angular.module('myApp.review', ['ngRoute'])
   var vm = this;
 
   vm.user = userService.getUser();
-  vm.buttonText = ' Complete Payment';
+  vm.buttonText = null;
+  vm.isDataSend = false;
 
   vm.go = function ( path ) {
     $location.path( path );
   };
 
   vm.save = function () {
+    vm.isDataSend = true;
+    vm.buttonText = true;
 
     userService.sendData(userService.getUser())
       .then(function (res) {
 
         if (res.status == 200) {
-          vm.buttonText = ' Complete successfully!';
           vm.user.isPaymentCompleted = true;
           userService.saveUser(vm.user);
         } else {
-          vm.buttonText = ' Payment error';
+          vm.buttonText = false;
         }
       }, function (res) {
-        vm.buttonText = ' Payment error';
-      });
+        vm.buttonText = false;
+    });
   };
 }]);

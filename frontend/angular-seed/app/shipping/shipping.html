@@ -15,70 +15,81 @@
       <form role="form" class="form-mobile" name="ShippingCtrl.form" novalidate>
 
         <h5 class="text-uppercase text-semibold">Shipping Information</h5>
-        <p ng-if="!ShippingCtrl.isFormFalid && ShippingCtrl.isFormSend" class="bg-danger">Required all fields!</p>
+        <p ng-if="!ShippingCtrl.form.$valid && ShippingCtrl.isFormSend" class="text-danger">Please fill out all the highlighted fields</p>
+        <p ng-if="ShippingCtrl.isFormSend && ShippingCtrl.form.email.$error.pattern" class="text-danger">Email: not valid email</p>
+        <p ng-if="ShippingCtrl.isFormSend && ShippingCtrl.form.zipCode.$error.pattern" class="text-danger">Zip code: not valid zip code</p>
+        <p ng-if="ShippingCtrl.isFormSend && ShippingCtrl.form.firstName.$error.maxlength" class="text-danger">First Name: max. length - 15</p>
+        <p ng-if="ShippingCtrl.isFormSend && ShippingCtrl.form.lastName.$error.maxlength" class="text-danger">Last Name: max. length - 15</p>
+
+        <p ng-if="ShippingCtrl.isFormSend && ShippingCtrl.form.addressFirst.$error.maxlength" class="text-danger">Address 1: max. length - 50</p>
+        <p ng-if="ShippingCtrl.isFormSend && ShippingCtrl.form.addressSecond.$error.maxlength" class="text-danger">Address 2: max. length - 50</p>
+        <p ng-if="ShippingCtrl.isFormSend && ShippingCtrl.form.city.$error.maxlength" class="text-danger">City: max. length - 30</p>
 
         <fieldset class="fieldset-mobile">
           <div class="form-group">
             <label for="fname">First Name</label>
-            <div class="form-field">
+            <div class="form-field" ng-class="{'error': ShippingCtrl.isFormSend && ShippingCtrl.form.firstName.$invalid}">
               <input type="text" id="fname" name="firstName" class="form-control"
                      ng-required="true"
+                     ng-maxlength="15"
                      ng-model="ShippingCtrl.user.shipping.firstName">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
 
           <div class="form-group">
             <label for="lname">Last Name</label>
-            <div class="form-field">
+            <div class="form-field" ng-class="{'error': ShippingCtrl.isFormSend && ShippingCtrl.form.lastName.$invalid}">
               <input type="text" id="lname" name="lastName" class="form-control"
                      ng-required="true"
+                     ng-maxlength="15"
                      ng-model="ShippingCtrl.user.shipping.lastName">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
 
           <div class="form-group">
             <label for="email">Email</label>
-            <div class="form-field">
+            <div class="form-field" ng-class="{'error': ShippingCtrl.isFormSend && ShippingCtrl.form.email.$invalid}">
               <input type="text" id="email" name="email" class="form-control"
                      ng-required="true"
+                     ng-pattern='/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/'
                      ng-model="ShippingCtrl.user.shipping.email">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
         </fieldset> <!-- /.fieldset-mobile -->
 
-
-
         <fieldset class="fieldset-mobile">
           <div class="form-group">
             <label for="address1">Address 1</label>
-            <div class="form-field">
+            <div class="form-field" ng-class="{'error': ShippingCtrl.isFormSend && ShippingCtrl.form.addressFirst.$invalid}">
               <input type="text" id="address1" name="addressFirst" class="form-control"
                      ng-required="true"
+                     ng-maxlength="50"
                      ng-model="ShippingCtrl.user.shipping.addressFirst">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
 
           <div class="form-group">
             <label for="address2">Address 2</label>
-            <div class="form-field">
+            <div class="form-field" ng-class="{'error': ShippingCtrl.isFormSend && ShippingCtrl.form.addressSecond.$invalid}">
               <input type="text" id="address2" name="addressSecond" class="form-control"
-                     ng-required="true"
+                     ng-maxlength="50"
                      ng-model="ShippingCtrl.user.shipping.addressSecond">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
 
           <div class="form-group">
             <label for="city">City</label>
-            <div class="form-field">
+            <div class="form-field" ng-class="{'error': ShippingCtrl.isFormSend && ShippingCtrl.form.city.$invalid}">
               <input type="text" id="city" name="city" class="form-control"
                      ng-required="true"
+                     ng-maxlength="30"
                      ng-model="ShippingCtrl.user.shipping.city">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->
 
           <div class="form-group">
             <label for="state">State</label>
-            <div class="form-field">
+            <div class="form-field" ng-class="{'error': ShippingCtrl.isFormSend && ShippingCtrl.form.state.$invalid}">
 
               <select id="state" name="state" class="form-control"
                       ng-model="ShippingCtrl.user.shipping.state"
@@ -91,9 +102,10 @@
 
           <div class="form-group">
             <label for="zipcode">Zip Code</label>
-            <div class="form-field">
+            <div class="form-field" ng-class="{'error': ShippingCtrl.isFormSend && ShippingCtrl.form.zipCode.$invalid}">
               <input type="number" id="zipcode" name="zipCode" class="form-control"
                      ng-required="true"
+                     ng-pattern='/(^\d{5}$)|(^\d{5}-\d{4}$)/'
                      ng-model="ShippingCtrl.user.shipping.zipCode">
             </div> <!-- /.form-field -->
           </div> <!-- /.form-group -->

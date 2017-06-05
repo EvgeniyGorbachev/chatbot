@@ -1,5 +1,7 @@
 backend/node_modules/
+backend/assets/img/user_files/*.*
 backend/.env
+backend/npm-debug.log
 .idea/
 db.json
 .DS_Store

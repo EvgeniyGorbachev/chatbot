@@ -13,7 +13,6 @@ angular.module('myApp.shipping', ['ngRoute'])
 .controller('ShippingCtrl', ['$location', 'userService', function($location, userService) {
   var vm = this;
   vm.user = userService.getUser();
-  vm.isFormFalid = false;
   vm.isFormSend = false;
 
   vm.go = function ( path ) {
@@ -21,6 +20,7 @@ angular.module('myApp.shipping', ['ngRoute'])
     if (!vm.form.$valid && path == '/payment') {
       return false;
     }
+
     userService.saveUser(vm.user);
     $location.path( path );
   };

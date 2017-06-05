@@ -24,7 +24,7 @@ sequelize db:migrate
 ```sh
 npm run api
 ```
-Now browse to the app at [`localhost:8000`].
+Now browse to the app at [`localhost:8181`].
 
 
 ##Frontend - AngularJS apps
@@ -42,7 +42,7 @@ npm install
 
 #### Setup REST API url
 
-Open the main file frontend/angular-seed/app/app.js and change the local url (http://localhost:8181) to actual domain instead
+Create new file like frontend/angular-seed/app/config.js, use for example config.example.js and set the local url (http://localhost:8181) to actual domain instead
 
 
 #### Run the Application
@@ -56,7 +56,7 @@ npm start
 Now browse to the app at [`localhost:8000`].
 
 #### How to pass parameters to an application
-Example: http://localhost:8000/#/main?userName=Mick&email=email@google.com&phone=123456789&shipping={"address":"123 king st"}&billing={"address":"321 Queen st"}
+Example: http://localhost:8000/#/main?userName=Mick&email=email@google.com&phone=123456789
 
 ## Troubleshooting:
 

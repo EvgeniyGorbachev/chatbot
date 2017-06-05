@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true // Automatically gets converted to SERIAL for postgres
       },
+        invoiceId: {
+          type: Sequelize.STRING
+        },
         userName: {
           type: Sequelize.STRING
         },

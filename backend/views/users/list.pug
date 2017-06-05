@@ -1,0 +1,108 @@
+doctype html
+html(ng-app='campaignsApp' ng-cloak)
+    include ../header
+    body
+        #wrapper
+            include ../navigation
+            #page-wrapper.gray-bg
+                .row.border-bottom
+                    nav.navbar.navbar-static-top(role='navigation', style='margin-bottom: 0')
+                        .navbar-header
+                            a.navbar-minimalize.minimalize-styl-2.btn.btn-primary(href='#')
+                                i.fa.fa-bars
+                            form.navbar-form-custom(role='search', method='post', action='search_results.html')
+                        ul.nav.navbar-top-links.navbar-right
+                            li
+                                a(href='/logout')
+                                    i.fa.fa-sign-out
+                                    |  Log out
+                .row.wrapper.border-bottom.white-bg.page-heading
+                    .col-lg-10
+                        h2 Users
+                        ol.breadcrumb
+                            li
+                                a(href='/dashboard') Home
+                            li
+                                a Chatbot
+                            li.active
+                                strong Users
+                    .col-lg-2
+                .wrapper.wrapper-content.animated.fadeInRight
+                    .row
+                        .col-lg-12
+                            .ibox.float-e-margins
+                                if updated
+                                    .alert.alert-success.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  User was updated
+                                if created
+                                    .alert.alert-success.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  User was created
+                                if deleted
+                                    .alert.alert-success.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  User was deleted
+                                if err
+                                    .alert.alert-danger.alert-dismissable
+                                        button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                        |  Error
+                                .ibox-title
+                                    h5 Users
+                                    .ibox-tools
+                                        a.collapse-link
+                                            i.fa.fa-chevron-up
+                                        a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                            i.fa.fa-wrench
+                                        ul.dropdown-menu.dropdown-user
+                                            li
+                                                a(href='#') Config option 1
+                                            li
+                                                a(href='#') Config option 2
+                                        a.close-link
+                                            i.fa.fa-times
+                                .ibox-content
+                                    if id
+                                        .alert.alert-success.alert-dismissable
+                                            button.close(aria-hidden='true', data-dismiss='alert', type='button') &times;
+                                            |  Created successfully
+                                            |
+                                            b ID #{id}
+                                            | .
+                                    .row
+                                        a.btn.btn-info.btn-rounded.pull-right(href="/users/new") Add
+                                    form.form-horizontal#main(method='post', action='/users', role='form', novalidate)
+                                        table.table.table-striped.table-bordered.table-hover.dataTables-example(data-order='[[ 0, "DESC" ]]' )
+                                            thead
+                                                tr
+                                                    th uid
+                                                    th User Name
+                                                    th Email
+                                                    th Phone
+                                                    th Role
+                                                    th Created at
+                                                    th
+                                            tbody
+                                                each item in usersList
+                                                    tr.gradeA
+                                                        td= item.id
+                                                        td= item.username
+                                                        td= item.email
+                                                        td= item.phone
+                                                        td= item.userRole
+                                                        td= item.createdAt
+                                                        td
+                                                            a.btn.btn-warning.btn-rounded(href="/users/" + item.id + "") Update
+                                                            |
+                                                            |
+                                                            a.btn.btn-danger.btn-rounded(href="/users/delete/" + item.id + "") Delete
+                                            tfoot
+                                                tr
+                                                    th uid
+                                                    th User Name
+                                                    th Email
+                                                    th Phone
+                                                    th Role
+                                                    th Created at
+                                                    th
+                include ../footer
