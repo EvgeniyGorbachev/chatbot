@@ -94,6 +94,7 @@ module.exports = function(dashboardChat) {
       })
     });
 
+
     // Send message
     socket.on('sendMessage', function(msg){
       db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
@@ -127,5 +128,37 @@ module.exports = function(dashboardChat) {
         });
       })
     });
+
+    // Link twilio
+    socket.on('linkTwilio', function(msg){
+      db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
+
+        const smooch = new Smooch({
+          keyId : campaign.smooch_app_key_id,
+          secret: campaign.smooch_app_secret,
+          scope : 'app'
+        });
+
+            smooch.appUsers.linkChannel(msg.user_id, {
+                type: 'twilio',
+                phoneNumber: msg.phone,
+                confirmation: {
+                    type: 'prompt'
+                }
+            }).then((response) => {
+              // console.log('SEND MESSAGE: ', response);
+              socket.emit('linkTwilioChannel', response)
+
+            }).catch((err) => {
+              console.log(3131313131313, err)
+              socket.emit('err', err.response.statusText)
+            });
+
+      }).catch((err) => {
+        console.log(5151515151, err)
+        socket.emit('err', err.response.statusText)
+      });
+  });
+
   });
 }

@@ -64,6 +64,82 @@ module.exports = function(webChat) {
       });
     })
 
+    // Link twilio
+    socket.on('linkTwilio', function(msg){
+      db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
+
+        const smooch = new Smooch({
+          keyId : campaign.smooch_app_key_id,
+          secret: campaign.smooch_app_secret,
+          scope : 'app'
+        });
+
+        db.Users.findOne({where: {id: msg.user_id}}).then(function (dbUser) {
+
+            smooch.appUsers.linkChannel(msg.user_id, {
+                type: 'twilio',
+                phoneNumber: dbUser.phone,
+                confirmation: {
+                    type: 'prompt'
+                }
+            }).then((response) => {
+              // console.log('SEND MESSAGE: ', response);
+              socket.emit('linkTwilioChannel', response)
+
+            }).catch((err) => {
+              console.log(3131313131313, err)
+              socket.emit('err', err.response.statusText)
+            });
+
+        }).catch((err) => {
+            console.log(4141414141, err)
+            socket.emit('err', err.response.statusText)
+        });
+
+      }).catch((err) => {
+        console.log(5151515151, err)
+        socket.emit('err', err.response.statusText)
+      });
+    })
+
+    // Link facebook messenger
+    socket.on('linkFacebook', function(msg){
+      db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
+
+        const smooch = new Smooch({
+          keyId : campaign.smooch_app_key_id,
+          secret: campaign.smooch_app_secret,
+          scope : 'app'
+        });
+
+        db.Users.findOne({where: {id: msg.user_id}}).then(function (dbUser) {
+
+            smooch.appUsers.linkChannel(msg.user_id, {
+              type: 'messenger',
+              phoneNumber: dbUser.phone,
+              confirmation: {
+                  type: 'prompt'
+              }
+            }).then((response) => {
+              // console.log('SEND MESSAGE: ', response);
+              socket.emit('linkTwilioChannel', response)
+
+            }).catch((err) => {
+              console.log(3131313131313, err)
+              socket.emit('err', err.response.statusText)
+            });
+
+        }).catch((err) => {
+            console.log(4141414141, err)
+            socket.emit('err', err.response.statusText)
+        });
+
+      }).catch((err) => {
+        console.log(41414141414, err)
+        socket.emit('err', err.response.statusText)
+      });
+    })
+
     // Get user messages
     socket.on('getMessages', function(msg){
       db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
