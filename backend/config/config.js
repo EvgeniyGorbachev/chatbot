@@ -10,7 +10,7 @@ module.exports = {
   },
   "production": {
     "username": "root",
-    "password": "null",
+    "password": null,
     "database": "xxx",
     "host": "127.0.0.1",
     "dialect": "postgres"
