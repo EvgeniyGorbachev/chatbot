@@ -210,6 +210,18 @@ angular.module('campaignsApp.agentChat', [])
       $(".emojionearea-editor").empty()
     };
 
+    vm.linkFacebook = function() {
+        vm.isSend = false;
+        console.log("linking Facebook");
+        socket.emit('linkFacebook', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": '', "direction": 1, "phone": vm.phone});
+    }
+
+    vm.linkTwilio = function() {
+        vm.isSend = false;
+        console.log("linking Twilio");
+        socket.emit('linkTwilio', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": '', "direction": 1, "phone": vm.phone});
+    }
+
     vm.isValidFile = function(file) {
 
       if (!file) return false;

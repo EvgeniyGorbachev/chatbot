@@ -37,7 +37,7 @@
     "pug": "^2.0.0-beta11",
     "request": "^2.81.0",
     "sequelize": "^3.23.6",
-    "sequelize-cli": "^2.5.1",
+    "sequelize-cli": "^2.7.0",
     "smooch-core": "^3.5.0",
     "socket.io": "^2.0.1",
     "socket.io-stream": "^0.9.1",
