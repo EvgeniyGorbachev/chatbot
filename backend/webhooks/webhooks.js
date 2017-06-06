@@ -12,21 +12,20 @@ exports.webChat = (req, res) => {
     req.webChatSocket.emit('webhook', {type: 'new message', userId: req.body.appUser['_id'], appId: req.body.app['_id'], messages: req.body.messages});
 
     // Hack for lambda
-    // if (req.body.appUser['_id'] && req.body.app['_id']) {
-    //   let dataToLambda = {
-    //     "trigger":"delivery:success",
-    //     "app":{"_id":req.body.app['_id']},
-    //     "appUser":{"_id":req.body.appUser['_id']},
-    //     "destination":{"type":"api"},
-    //     "messages":[{"text":"emulation"}],
-    //     "timestamp":1493914595.09
-    //   }
-    //
-    //   request.post({url: process.env.CONFIRM_ORDER_CALLBACK, body: dataToLambda, json:true}, function(err,httpResponse,body){
-    //     if (err) console.log('Get err from lambda: ', err)
-    //     console.log('Get response from lambda: ', body)
-    //   })
-    // }
+    if (req.body.appUser['_id'] && req.body.app['_id']) {
+      let dataToLambda = {
+        "trigger":"delivery:success",
+        "app":{"_id":req.body.app['_id']},
+        "appUser":{"_id":req.body.appUser['_id']},
+        "destination":{"type":"api"},
+        "timestamp":1493914595.09
+      }
+
+      request.post({url: process.env.CONFIRM_ORDER_CALLBACK, body: dataToLambda, json:true}, function(err,httpResponse,body){
+        if (err) console.log('Get err from lambda: ', err)
+        console.log('Get response from lambda: ', body)
+      })
+    }
 
     // Attach manager to conversation
     if (req.body.appUser && req.body.appUser['_id']) {
