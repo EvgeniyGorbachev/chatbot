@@ -3,7 +3,15 @@ const Smooch = require('smooch-core')
 let jwt = require('jsonwebtoken');
 let SmoochCore =  require('smooch-core');
 
-// var client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+var client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+
+client.messages.create({
+    to: "+12818090012 ",
+    from: "+15756802274 ",
+    body: "YES"
+}, function(err, message) {
+    console.log(message.sid);
+});
 
 // client.availablePhoneNumbers("US").local.list({
 //   number: "+12035804010"
@@ -24,12 +32,12 @@ let SmoochCore =  require('smooch-core');
 
 
 // let token = jwt.sign({scope: 'account'}, SECRET, {header: {kid: KEY_ID}});
-
-let APP_TOKEN = '7bq6xywnz8h8gvbfxfyrvxlgy';
-// Initializing Smooch Core with an app scoped token
-let smoochApp = new SmoochCore({
-  appToken: APP_TOKEN
-});
+//
+// let APP_TOKEN = '7bq6xywnz8h8gvbfxfyrvxlgy';
+// // Initializing Smooch Core with an app scoped token
+// let smoochApp = new SmoochCore({
+//   appToken: APP_TOKEN
+// });
 
 
 // Initializing Smooch Core with an account scoped key
@@ -135,22 +143,23 @@ let smoochApp = new SmoochCore({
 //   console.log(response)
 // });
 
-
-const smooch = new Smooch({
-  keyId: 'app_5900b9a92f588d5a016a1e8d',
-  secret: 'PWUIlzOX113c2Enqj5_AzDQj',
-  scope: 'app' });
-// console.log(smooch)
-smooch.appUsers.getMessages('67aef89989d281e454174bd5').then((response) => {
-
-  console.log('1111111111', response)
-
-}).catch((err) => {
-  console.log(55555555, err)
-
-});
+//
+// const smooch = new Smooch({
+//   keyId: 'app_5900b9a92f588d5a016a1e8d',
+//   secret: 'PWUIlzOX113c2Enqj5_AzDQj',
+//   scope: 'app' });
+// // console.log(smooch)
+// smooch.appUsers.getMessages('67aef89989d281e454174bd5').then((response) => {
+//
+//   console.log('1111111111', response)
+//
+// }).catch((err) => {
+//   console.log(55555555, err)
+//
+// });
 
 // "bb8b6834c5c3998d629a70951f5ab92b782c5d06@test.com"
 // _id
 //   :
 //   "4457035d0aa999f500ce96e4"
+
