@@ -120,45 +120,92 @@ module.exports = function(dashboardChat) {
             })
 
           }).catch(function(err) {
-            socket.emit('err', err.response.statusText)
+              console.log(2929292929229, err)
+              socket.emit('err', 'Can not create new row in ConversationHistory')
           })
 
         }).catch((err) => {
-          socket.emit('err', err.response.statusText)
+            console.log(575757575577557, err)
+          socket.emit('err', 'Smooch can not send message')
         });
       })
     });
 
     // Link twilio
     socket.on('linkTwilio', function(msg){
-      db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
+      if (msg.phone) {
+          db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
 
-        const smooch = new Smooch({
-          keyId : campaign.smooch_app_key_id,
-          secret: campaign.smooch_app_secret,
-          scope : 'app'
-        });
+              if (campaign) {
+                  const smooch = new Smooch({
+                      keyId: campaign.smooch_app_key_id,
+                      secret: campaign.smooch_app_secret,
+                      scope: 'app'
+                  });
 
-            smooch.appUsers.linkChannel(msg.user_id, {
-                type: 'twilio',
-                phoneNumber: msg.phone,
-                confirmation: {
-                    type: 'prompt'
+                  smooch.appUsers.linkChannel(msg.user_id, {
+                      type: 'twilio',
+                      phoneNumber: msg.phone,
+                      confirmation: {
+                          type: 'prompt'
+                      }
+                  }).then((response) => {
+                      // console.log('SEND MESSAGE: ', response);
+                      socket.emit('linkTwilioChannel', response)
+
+                  }).catch((err) => {
+                      console.log(3131313131313, err)
+                      socket.emit('err', 'Smooch can not link to chanel')
+                  });
+              } else {
+                  socket.emit('err', 'Wrong campaign id')
+              }
+          }).catch((err) => {
+              console.log(5151515151, err)
+              socket.emit('err', 'Can not find campaign by id')
+          });
+      } else {
+          socket.emit('err', 'No phone number')
+      }
+    });
+
+
+      // Link facebook messenger
+      socket.on('linkFacebook', function(msg){
+          if (msg.phone) {
+            db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
+                if (campaign) {
+                  const smooch = new Smooch({
+                      keyId : campaign.smooch_app_key_id,
+                      secret: campaign.smooch_app_secret,
+                      scope : 'app'
+                  });
+
+                    smooch.appUsers.linkChannel(msg.user_id, {
+                        type: 'messenger',
+                        phoneNumber: msg.phone,
+                        confirmation: {
+                            type: 'prompt'
+                        }
+                    }).then((response) => {
+                        // console.log('SEND MESSAGE: ', response);
+                        socket.emit('linkFacebookChannel', true)
+
+                    }).catch((err) => {
+                        console.log(3131313131313, err)
+                        socket.emit('err', 'Smooch can not link to chanel')
+                    });
+
+                } else {
+                    socket.emit('err', 'Wrong campaign id')
                 }
-            }).then((response) => {
-              // console.log('SEND MESSAGE: ', response);
-              socket.emit('linkTwilioChannel', response)
-
             }).catch((err) => {
-              console.log(3131313131313, err)
-              socket.emit('err', err.response.statusText)
+                console.log(41414141414, err)
+                socket.emit('err', 'Can not find campaign by id')
             });
-
-      }).catch((err) => {
-        console.log(5151515151, err)
-        socket.emit('err', err.response.statusText)
-      });
-  });
-
+          } else {
+              socket.emit('err', 'No messenger number')
+          }
+      })
   });
 }

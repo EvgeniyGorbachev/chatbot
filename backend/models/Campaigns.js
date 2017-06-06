@@ -12,10 +12,6 @@ module.exports = function (sequelize, DataTypes) {
             type: Sequelize.STRING,
             allowNull: false
         },
-        channel: {
-            type: Sequelize.STRING,
-            allowNull: false
-        },
         phone: {
             type: Sequelize.STRING,
             allowNull: false
