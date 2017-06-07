@@ -199,11 +199,11 @@ angular.module('campaignsApp.agentChat', [])
     };
 
     vm.toggleTextArea = function () {
-      if (!vm.currentUser.isPaused) {
-        $(".emojionearea").addClass("disablearea")
-      } else {
-        $(".emojionearea").removeClass("disablearea")
-      }
+      // if (!vm.currentUser.isPaused) {
+      //   $(".emojionearea").addClass("disablearea")
+      // } else {
+      //   $(".emojionearea").removeClass("disablearea")
+      // }
     };
 
     vm.cleanTextArea = function () {
