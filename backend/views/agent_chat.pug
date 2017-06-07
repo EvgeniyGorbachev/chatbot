@@ -30,7 +30,7 @@ html(ng-app='campaignsApp' ng-cloak)
                                                         .chat-discussion
                                                             h2(ng-if='chatAgentCtr.userConversation.length == 0') No messages
                                                             h2.text-danger(ng-if='chatAgentCtr.websocketIsError') Websocket Error!
-                                                            .chat-message(ng-repeat='conv in chatAgentCtr.userConversation track by $index', ,='', ng-if='conv.text && conv.text != "emulation" && conv.text != ""' ng-class="{'direct1': conv.direction == 1, 'direct0': conv.direction == 0}")
+                                                            .chat-message(ng-repeat='conv in chatAgentCtr.userConversation track by $index', ,='', ng-if='conv.text && conv.text != "EMULATION" && conv.text != ""' ng-class="{'direct1': conv.direction == 1, 'direct0': conv.direction == 0}")
                                                                 img.message-avatar(src='/assets/img/person-black.png', ng-if='conv.direction == 1')
                                                                 img.message-avatar(src='/assets/img/person-white.png', ng-if='conv.direction == 0')
                                                                 .message
