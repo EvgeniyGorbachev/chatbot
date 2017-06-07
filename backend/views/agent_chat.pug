@@ -38,7 +38,6 @@ html(ng-app='campaignsApp' ng-cloak)
                                                                     a.message-author(href='#', ng-if='conv.direction == 0')  {{ chatAgentCtr.currentUser.username }}
                                                                     span.message-date   Fri Jan 25 2015 - 11:12:36
                                                                     span.message-content(ng-if="conv.text", ng-bind-html="conv.text | emojiOneShortnameToImage | trust")
-                                                                    span.message-content(ng-if="!conv.text") Empty message.
                                                 .row
                                                     .col-lg-12
                                                         .chat-message-form
