@@ -44,13 +44,13 @@ html(ng-app='campaignsApp' ng-cloak)
                                                         .chat-message-form
                                                             .form-group(ng-show="chatAgentCtr.currentUser.id")
                                                                 textarea.form-control.message-input(ng-model='chatAgentCtr.messageText', name='message', placeholder='Enter message text', id='messageEditor')
-                                                                a.btn.btn-w-m.btn-warning.chat-button(ng-click='chatAgentCtr.paused()') {{ chatAgentCtr.currentUser.isPaused? 'Unpause Bot':'Pause Bot';}}
+                                                                //a.btn.btn-w-m.btn-warning.chat-button(ng-click='chatAgentCtr.paused()') {{ chatAgentCtr.currentUser.isPaused? 'Unpause Bot':'Pause Bot';}}
 
-                                                                div(ng-show="chatAgentCtr.currentUser.isPaused")
-                                                                    a.btn.btn-w-m.btn-info.chat-button(ng-click='chatAgentCtr.sendMessage()', ng-show='!chatAgentCtr.isSend', ng-disabled='!chatAgentCtr.currentUser.sender') Send
-                                                                    a.btn.btn-w-m.btn-info.chat-button(disabled='', ng-show='chatAgentCtr.isSend', href='/') Sending...
-                                                                    input.btn.btn-w-m.btn-success.chat-button(ng-disabled='(chatAgentCtr.currentUser.sender && chatAgentCtr.isDownloadingFile ) || !chatAgentCtr.currentUser.sender', id="file" type="file")
-                                                                    p.text-danger(ng-show='chatAgentCtr.fileErrorText') {{ chatAgentCtr.fileErrorText }}
+                                                                //div(ng-show="chatAgentCtr.currentUser.isPaused")
+                                                                a.btn.btn-w-m.btn-info.chat-button(ng-click='chatAgentCtr.sendMessage()', ng-show='!chatAgentCtr.isSend', ng-disabled='!chatAgentCtr.currentUser.sender') Send
+                                                                a.btn.btn-w-m.btn-info.chat-button(disabled='', ng-show='chatAgentCtr.isSend', href='/') Sending...
+                                                                input.btn.btn-w-m.btn-success.chat-button(ng-disabled='(chatAgentCtr.currentUser.sender && chatAgentCtr.isDownloadingFile ) || !chatAgentCtr.currentUser.sender', id="file" type="file")
+                                                                p.text-danger(ng-show='chatAgentCtr.fileErrorText') {{ chatAgentCtr.fileErrorText }}
 
                                                                     //input.form-control(ng-model='chatAgentCtr.phone', name='phone', placeholder='Customer phone number', id='phoneNumber')
                                                                     //a.btn.btn-w-m.btn-success.chat-button(ng-click='chatAgentCtr.linkTwilio()') Link Twilio
