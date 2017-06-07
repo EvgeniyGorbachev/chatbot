@@ -18,6 +18,7 @@ exports.webChat = (req, res) => {
         "app":{"_id":req.body.app['_id']},
         "appUser":{"_id":req.body.appUser['_id']},
         "destination":{"type":"api"},
+        "messages":[{"text":"emulation"}],
         "timestamp":1493914595.09
       }
 
