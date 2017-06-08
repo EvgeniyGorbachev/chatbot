@@ -283,9 +283,11 @@ html(ng-app='campaignsApp' ng-cloak)
 
                                 var t = href.split('.');
                                 var fileFormat = t[t.length-1];
+                                var thumbnailUrl = host + '/assets/img/user_files/thumbnail/' + fileName;
+                                // Replace spaces in link
+                                thumbnailUrl = thumbnailUrl.replace(/\s/g,"%20");
 
-                                var pathToThumbnail =  (fileFormat == 'png' || fileFormat == 'jpeg')? host + "/assets/img/user_files/thumbnail/" + fileName : host + "/assets/img/fileformats/" + fileFormat + "-fileformat.png";
-
+                                var pathToThumbnail =  (fileFormat == 'png' || fileFormat == 'jpeg')? thumbnailUrl : host + "/assets/img/fileformats/" + fileFormat + "-fileformat.png";
                                 var text = '<strong><a href="' + host + href + '" download="true" ><img src=' + pathToThumbnail + ' /></a></strong>';
 
                                 // Add new messages html
