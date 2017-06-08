@@ -3,15 +3,20 @@ const Smooch = require('smooch-core')
 let jwt = require('jsonwebtoken');
 let SmoochCore =  require('smooch-core');
 
-var client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+const smooch = new Smooch({
+    keyId: 'app_5900b9a92f588d5a016a1e8d',
+    secret: 'PWUIlzOX113c2Enqj5_AzDQj',
+    scope: 'app' });
 
-client.messages.create({
-    to: "+12818090012 ",
-    from: "+15756802274 ",
-    body: "YES"
-}, function(err, message) {
-    console.log(message.sid);
-});
+// var client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+//
+// client.messages.create({
+//     to: "+12818090012 ",
+//     from: "+15756802274 ",
+//     body: "YES"
+// }, function(err, message) {
+//     console.log(message.sid);
+// });
 
 // client.availablePhoneNumbers("US").local.list({
 //   number: "+12035804010"
@@ -115,9 +120,9 @@ client.messages.create({
 // });
 
 //get user
-// smoochApp.appUsers.get('b6c1efdff3764c97afa38043').then((response) => {
-//   console.log(response)
-// });
+smooch.appUsers.get('67aef89989d281e454174bd5').then((response) => {
+  console.log(response.appUser.devices)
+});
 
 //link channel
 // smoochApp.appUsers.linkChannel('mike@example.com', {
@@ -144,12 +149,9 @@ client.messages.create({
 // });
 
 //
-// const smooch = new Smooch({
-//   keyId: 'app_5900b9a92f588d5a016a1e8d',
-//   secret: 'PWUIlzOX113c2Enqj5_AzDQj',
-//   scope: 'app' });
-// // console.log(smooch)
-// smooch.appUsers.getMessages('67aef89989d281e454174bd5').then((response) => {
+
+// console.log(smooch)
+// smooch.appUsers.getMessages('af1975a3-622a-4777-8bc0-871c32526885').then((response) => {
 //
 //   console.log('1111111111', response)
 //
@@ -157,6 +159,24 @@ client.messages.create({
 //   console.log(55555555, err)
 //
 // });
+
+//
+// smooch.appUsers.linkChannel('67aef89989d281e454174bd5', {
+//     type: 'twilio',
+//     phoneNumber: '+15756802274',
+//     confirmation: {
+//         type: 'immediate'
+//     }
+// }).then((response) => {
+//     console.log('SEND MESSAGE: ', response);
+//
+//
+// }).catch((err) => {
+//     console.log(3131313131313, err)
+//
+// });
+
+
 
 // "bb8b6834c5c3998d629a70951f5ab92b782c5d06@test.com"
 // _id
