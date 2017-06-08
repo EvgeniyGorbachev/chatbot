@@ -275,17 +275,17 @@ html(ng-app='campaignsApp' ng-cloak)
 
                             var link = $.parseHTML(messageText);
                             var donwloadLinkJqueryObject = $(link);
-                            var isDownloadLink = donwloadLinkJqueryObject.attr("data-file-name");
+                            var fileName = donwloadLinkJqueryObject.attr("data-file-name");
 
                             // Parse download link
-                            if (isDownloadLink) {
+                            if (fileName) {
                                 var href = donwloadLinkJqueryObject.attr('href');
 
                                 var fileFormat = href.split('.')[1];
 
-                                var link =  host + "/assets/img/fileformats/" + fileFormat + "-fileformat.png";
+                                var pathToThumbnail =  (fileFormat == 'png' || fileFormat == 'jpeg')? host + "/assets/img/user_files/thumbnail/" + fileName : host + "/assets/img/fileformats/" + fileFormat + "-fileformat.png";
 
-                                var text = '<strong><a href="' + host + href + '" download="true" ><img src=' + link + ' /></a></strong>';
+                                var text = '<strong><a href="' + host + href + '" download="true" ><img src=' + pathToThumbnail + ' /></a></strong>';
 
                                 // Add new messages html
                                 messageJqueryObject.find('.sk-message-item').html(text);

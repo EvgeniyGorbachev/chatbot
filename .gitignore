@@ -1,5 +1,6 @@
 backend/node_modules/
 backend/assets/img/user_files/*.*
+backend/assets/img/user_files/thumbnail/*.*
 backend/.env
 backend/npm-debug.log
 .idea/

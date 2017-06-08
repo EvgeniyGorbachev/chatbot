@@ -5,6 +5,7 @@ const ss = require('socket.io-stream')
 const stream = ss.createStream()
 const fs = require('fs')
 const path = require('path')
+const gm = require('gm').subClass({imageMagick: true});
 
 module.exports = function(dashboardChat) {
 
@@ -13,14 +14,29 @@ module.exports = function(dashboardChat) {
     ss(socket).on('file', function(stream, data) {
 
       let dir = path.resolve("./assets/img/user_files")
+      let thumbnailDir = path.resolve("./assets/img/user_files/thumbnail")
 
       if (!fs.existsSync(dir)){
         fs.mkdirSync(dir);
       }
 
+      if (!fs.existsSync(thumbnailDir)){
+        fs.mkdirSync(thumbnailDir);
+      }
+
       let filename =  data.userId + "_" + new Date().getTime() + "_"+ data.name
       let filenameFullPath = path.resolve( "./assets/img/user_files/" + filename)
+
       stream.pipe(fs.createWriteStream(filenameFullPath))
+
+      stream.on('finish', function () {
+          // Create thumbnail
+          gm( "./assets/img/user_files/" + filename)
+              .resize(200, 200)
+              .write( "./assets/img/user_files/thumbnail/" + filename, function (err) {
+                  if (err) console.log('Created thumbnail err: ', err);
+              });
+      });
 
       socket.emit('fileSaved', {"fileName": filename, "userId": data.userId, "campaign_id": data.campaign_id})
     });

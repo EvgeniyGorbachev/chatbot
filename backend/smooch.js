@@ -120,9 +120,9 @@ const smooch = new Smooch({
 // });
 
 //get user
-smooch.appUsers.get('67aef89989d281e454174bd5').then((response) => {
-  console.log(response.appUser.devices)
-});
+// smooch.appUsers.get('67aef89989d281e454174bd5').then((response) => {
+//   console.log(response.appUser.devices)
+// });
 
 //link channel
 // smoochApp.appUsers.linkChannel('mike@example.com', {
