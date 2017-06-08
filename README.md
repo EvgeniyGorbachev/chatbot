@@ -2,6 +2,7 @@
 ### Local Setup
 
 Install [Node.js](https://nodejs.org/) stable release. This will also include the node package manager (npm).
+Install [imagemagick](http://www.imagemagick.org/) on the server.
 
 #### Change directory:
 ```sh
