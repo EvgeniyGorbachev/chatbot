@@ -18,7 +18,8 @@ exports.getDashboardById = (req, res) => {
             conversations     : conversations,
             conversationsCount: conversations.length,
             paymentsCount     : users.length,
-                campaign      : campaign
+            campaign          : campaign,
+            fileHostName      : process.env.FILE_HOST_NAME
           })
         } else {
           res.redirect('/campaigns')

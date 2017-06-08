@@ -6,6 +6,7 @@ DB_HOST=127.0.0.1
 DB_DIALECT=postgres
 CONFIRM_ORDER_CALLBACK=https://aws-lambda.com/twillio
 WEBCHAT_WEBHOOK=http://brighttest.singlecomm.com:8181/webhook/web-chat
+FILE_HOST_NAME=http://brighttest.singlecomm.com:8181
 SMOOCH_ACC_KEY=safdffaf
 SMOOCH_ACC_SECRET=sdfsdf
 SMOOCH_API_URL=https://api.smooch.io/v1

@@ -213,6 +213,8 @@ html(ng-app='campaignsApp' ng-cloak)
                 script.
                     $(document).ready(function () {
 
+                        var host = '#{fileHostName}';
+
                         var skPromise = Smooch.init({
                             appToken: '#{campaign.smooch_app_token}'
                         });
@@ -268,24 +270,31 @@ html(ng-app='campaignsApp' ng-cloak)
                                         textArray[index] = '<strong><a href="' + text + '" target="_blank">link</a></strong>';
                                     }
                                 }
-                                /*
-                                 var link = $.parseHTML(text)[0];
-                                 var donwloadLinkJqueryObject = $(link);
-                                 var isDownloadLink = donwloadLinkJqueryObject.attr("data-file-name");
 
-                                 // Parse download link
-                                 if (isDownloadLink) {
-                                 var href = donwloadLinkJqueryObject.attr('href');
-                                 var url = 'http://brighttest.singlecomm.com:8181/';
-                                 textArray[index] = '<strong><a href="' + url + href + '" target="_blank">Download</a></strong>';
-                                 }
-                                 */
                             });
 
-                            html = textArray.join(" ");
-                            html += iFrame;
-                            // Add new messages html
-                            messageJqueryObject.find('.sk-message-item').html(html);
+                            var link = $.parseHTML(messageText);
+                            var donwloadLinkJqueryObject = $(link);
+                            var isDownloadLink = donwloadLinkJqueryObject.attr("data-file-name");
+
+                            // Parse download link
+                            if (isDownloadLink) {
+                                var href = donwloadLinkJqueryObject.attr('href');
+
+                                var fileFormat = href.split('.')[1];
+
+                                var link =  host + "/assets/img/fileformats/" + fileFormat + "-fileformat.png";
+
+                                var text = '<strong><a href="' + host + href + '" download="true" ><img src=' + link + ' /></a></strong>';
+
+                                // Add new messages html
+                                messageJqueryObject.find('.sk-message-item').html(text);
+                            } else {
+                                html = textArray.join(" ");
+                                html += iFrame;
+                                // Add new messages html
+                                messageJqueryObject.find('.sk-message-item').html(html);
+                            }
                         }
 
                         function getLastMessages() {
