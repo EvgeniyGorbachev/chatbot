@@ -282,7 +282,7 @@ html(ng-app='campaignsApp' ng-cloak)
                                 var href = donwloadLinkJqueryObject.attr('href');
 
                                 var t = href.split('.');
-                                var fileFormat = t[t-1];
+                                var fileFormat = t[t.length-1];
 
                                 var pathToThumbnail =  (fileFormat == 'png' || fileFormat == 'jpeg')? host + "/assets/img/user_files/thumbnail/" + fileName : host + "/assets/img/fileformats/" + fileFormat + "-fileformat.png";
 
