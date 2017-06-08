@@ -288,7 +288,7 @@ html(ng-app='campaignsApp' ng-cloak)
                                 thumbnailUrl = thumbnailUrl.replace(/\s/g,"%20");
 
                                 var pathToThumbnail =  (fileFormat == 'png' || fileFormat == 'jpeg')? thumbnailUrl : host + "/assets/img/fileformats/" + fileFormat + "-fileformat.png";
-                                var text = '<strong><a href="' + host + href + '" download="true" ><img src=' + pathToThumbnail + ' /></a></strong>';
+                                var text = '<strong><a href="' + host + href + '" download><img src=' + pathToThumbnail + ' /></a></strong>';
 
                                 // Add new messages html
                                 messageJqueryObject.find('.sk-message-item').html(text);
