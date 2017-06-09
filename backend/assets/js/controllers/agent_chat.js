@@ -51,21 +51,23 @@ angular.module('campaignsApp.agentChat', [])
 
         // Save all except image files on our backend
         if (vm.isValidFile(file) && file.type != 'image/png' && file.type != 'image/jpeg') {
+
           // Upload a file to the server.
           ss(socket).emit('file', stream, {"name": file.name, "userId": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id,});
           ss.createBlobReadStream(file).pipe(stream);
         } else {
+
             // Save all images on Smooch API
-            var smooch = new SmoochCore.Smooch({
+            let smooch = new SmoochCore.Smooch({
                 jwt: vm.currentUser.smoochJwt
             });
 
             smooch.appUsers.uploadImage(vm.currentUser.sender, file,
                 {
                     role: 'appMaker'
-
                 }).then(() => {
-                // async code
+                vm.isDownloadingFile = false;
+                socket.emit('getUserConversation', {"smoochUserId": vm.currentUser.sender, "campaignId": vm.currentUser.campaign_id});
             });
         }
 
@@ -89,7 +91,7 @@ angular.module('campaignsApp.agentChat', [])
     });
 
     socket.on('userConversation', function (data) {
-      vm.userConversation = data;
+      vm.userConversation = data.messages;
 
       // Scroll to bottom
       $(".chat-discussion").scrollTop($(".chat-discussion")[0].scrollHeight);
@@ -118,7 +120,7 @@ angular.module('campaignsApp.agentChat', [])
     socket.on('userConversationUpdate', function (data) {
       vm.messageText = '';
       vm.isSend = false;
-      vm.userConversation = data;
+      vm.userConversation.push(data);
       $scope.$digest();
     });
 
@@ -140,7 +142,7 @@ angular.module('campaignsApp.agentChat', [])
 
           // If open window with webhook user, refresh messages
           if (data.userId == conv.sender && conv.sender == vm.currentUser.sender) {
-            socket.emit('getUserConversation', {"userId": vm.currentUser.sender});
+              socket.emit('getUserConversation', {"smoochUserId": vm.currentUser.sender, "campaignId": vm.currentUser.campaign_id});
           }
         })
       }
@@ -149,19 +151,19 @@ angular.module('campaignsApp.agentChat', [])
         console.log('webhook. Get message from bot: ', data)
         // If open window with webhook user, refresh messages
         if (data.userId == vm.currentUser.sender) {
-          socket.emit('getUserConversation', {"userId": vm.currentUser.sender});
+            socket.emit('getUserConversation', {"smoochUserId": vm.currentUser.sender, "campaignId": vm.currentUser.campaign_id});
         }
       }
 
       if (data.type == 'new conversation added') {
         console.log('webhook. Add new conversation to agent: ', data)
-        socket.emit('getConversationByUserId', data.userId);
+        socket.emit('getConversationBySmoochUserId', data.userId);
       }
       $scope.$digest();
     });
 
     socket.on('err', function (data) {
-      console.log('WebSocket error: ', data);
+      console.error('WebSocket error: ', data);
       vm.websocketIsError = true;
       vm.isSend = false;
       $scope.$digest();
@@ -193,7 +195,7 @@ angular.module('campaignsApp.agentChat', [])
 
       vm.currentUser = user;
       console.log('Check new user: ', vm.currentUser);
-      socket.emit('getUserConversation', {"userId": vm.currentUser.sender});
+      socket.emit('getUserConversation', {"smoochUserId": vm.currentUser.sender, "campaignId": vm.currentUser.campaign_id});
 
       vm.toggleTextArea();
       vm.cleanTextArea();

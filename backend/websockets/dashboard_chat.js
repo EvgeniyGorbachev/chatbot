@@ -57,7 +57,7 @@ module.exports = function(dashboardChat) {
     });
 
     // Get new conversation by user id
-    socket.on('getConversationByUserId', function(msg){
+    socket.on('getConversationBySmoochUserId', function(msg){
 
       db.Conversations.findOne({where: { sender: msg }, include: [{
         model: db.Campaigns
@@ -106,9 +106,24 @@ module.exports = function(dashboardChat) {
 
     // Get user conversation
     socket.on('getUserConversation', function(msg){
-      db.ConversationsHistory.findAll({where: {"user_id": msg.userId}, order: [['id', 'ASC']]}).then(function (history) {
-        socket.emit('userConversation', history)
-      })
+        db.Campaigns.findOne({where: {id: msg.campaignId}}).then(function (campaign) {
+
+            const smooch = new Smooch({
+                keyId : campaign.smooch_app_key_id,
+                secret: campaign.smooch_app_secret,
+                scope : 'app'
+            });
+
+            smooch.appUsers.getMessages(msg.smoochUserId).then((response) => {
+                socket.emit('userConversation', response)
+            }).catch(function(err) {
+                console.log(err)
+                socket.emit('err', 'Can not get messages from Smooch')
+            })
+        }).catch(function(err) {
+            console.log(err)
+            socket.emit('err', 'Can not find Campaign')
+        })
     });
 
 
@@ -128,18 +143,7 @@ module.exports = function(dashboardChat) {
           role: 'appMaker'
         }).then((response) => {
 
-          db.ConversationsHistory.create(msg).then(function(data) {
-
-            db.ConversationsHistory.findAll({where: {"campaign_id": msg.campaign_id, "user_id": msg.user_id}, order: [['id', 'ASC']]}).then(function (history) {
-
-              socket.emit('userConversationUpdate', history)
-
-            })
-
-          }).catch(function(err) {
-              console.log(2929292929229, err)
-              socket.emit('err', 'Can not create new row in ConversationHistory')
-          })
+            socket.emit('userConversationUpdate', response.message)
 
         }).catch((err) => {
             console.log(575757575577557, err)
