@@ -1,13 +1,12 @@
 require('dotenv').config()
 const Smooch = require('smooch-core')
-let jwt = require('jsonwebtoken');
-let SmoochCore =  require('smooch-core');
+
 
 const smooch = new Smooch({
     keyId: 'app_5900b9a92f588d5a016a1e8d',
     secret: 'PWUIlzOX113c2Enqj5_AzDQj',
     scope: 'app' });
-
+console.log(smooch.authHeaders)
 // var client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 //
 // client.messages.create({

@@ -49,11 +49,26 @@ angular.module('campaignsApp.agentChat', [])
         let file = e.target.files[0];
         let stream = ss.createStream();
 
-        if (vm.isValidFile(file)) {
+        // Save all except image files on our backend
+        if (vm.isValidFile(file) && file.type != 'image/png' && file.type != 'image/jpeg') {
           // Upload a file to the server.
           ss(socket).emit('file', stream, {"name": file.name, "userId": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id,});
           ss.createBlobReadStream(file).pipe(stream);
+        } else {
+            // Save all images on Smooch API
+            var smooch = new SmoochCore.Smooch({
+                jwt: vm.currentUser.smoochJwt
+            });
+
+            smooch.appUsers.uploadImage(vm.currentUser.sender, file,
+                {
+                    role: 'appMaker'
+
+                }).then(() => {
+                // async code
+            });
         }
+
       });
     });
 
@@ -234,6 +249,7 @@ angular.module('campaignsApp.agentChat', [])
       let availableExtention = {
         "doc" : true,
         "jpeg": true,
+        "jpg": true,
         "pdf" : true,
         "png" : true,
         "xls" : true,
@@ -243,7 +259,7 @@ angular.module('campaignsApp.agentChat', [])
       let fileExtenstion = file.name.split('.').pop();
 
       if (!availableExtention[fileExtenstion]) {
-        vm.fileErrorText = 'Only files with extension are allowed: .png, .jpeg, .pdf, .doc, .xlsx, .xls';
+        vm.fileErrorText = 'Only files with extension are allowed: .png, .jpeg, .jpg, .pdf, .doc, .xlsx, .xls';
         return false;
       }
 

@@ -6,6 +6,7 @@ const stream = ss.createStream()
 const fs = require('fs')
 const path = require('path')
 const gm = require('gm').subClass({imageMagick: true});
+const helper = require('../lib/helper')
 
 module.exports = function(dashboardChat) {
 
@@ -60,9 +61,9 @@ module.exports = function(dashboardChat) {
 
       db.Conversations.findOne({where: { sender: msg }, include: [{
         model: db.Campaigns
-      }]}).then(function (conversations) {
-
-        socket.emit('addedNewConversation', conversations)
+      }]}).then(function (conversation) {
+        conversation.dataValues.smoochJwt = helper.getSmoochJwt(conversation.Campaign)
+        socket.emit('addedNewConversation', conversation)
 
       }).catch(function(err) {
         console.log('err1: ', err)
