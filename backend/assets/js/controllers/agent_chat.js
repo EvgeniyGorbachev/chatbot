@@ -11,6 +11,7 @@ angular.module('campaignsApp.agentChat', [])
     vm.isDownloadingFile = false;
     vm.smoochAppId = null;
     vm.fileErrorText = null;
+    vm.channel = null;
 
     vm.userConversation = [];
     vm.userList = [];
@@ -20,7 +21,7 @@ angular.module('campaignsApp.agentChat', [])
       "text": '',
       "user_id": '',
       "campaign_id": '',
-      "direction": 1
+      "platform": ''
     };
 
     $(function() {
@@ -71,6 +72,10 @@ angular.module('campaignsApp.agentChat', [])
             });
         }
 
+      });
+
+      $('#channelType').change(function(e){
+          vm.channel = $("#channelType").find(":selected").text();
       });
     });
 
@@ -203,7 +208,9 @@ angular.module('campaignsApp.agentChat', [])
 
     vm.sendMessage = function() {
       vm.isSend = true;
-      socket.emit('sendMessage', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": vm.messageText});
+
+      socket.emit('sendMessage', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": vm.messageText, "channel": vm.channel});
+
       vm.messageText = '';
 
       vm.cleanTextArea();
@@ -230,13 +237,13 @@ angular.module('campaignsApp.agentChat', [])
     vm.linkFacebook = function() {
         vm.isSend = false;
         console.log("linking Facebook");
-        socket.emit('linkFacebook', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": '', "direction": 1, "phone": vm.phone});
+        socket.emit('linkFacebook', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": '', "phone": vm.phone});
     }
 
     vm.linkTwilio = function() {
         vm.isSend = false;
         console.log("linking Twilio");
-        socket.emit('linkTwilio', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": '', "direction": 1, "phone": vm.phone});
+        socket.emit('linkTwilio', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": '', "phone": vm.phone});
     }
 
     vm.isValidFile = function(file) {

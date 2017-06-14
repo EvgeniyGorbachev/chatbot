@@ -137,6 +137,7 @@ module.exports = function(dashboardChat) {
           scope : 'app'
         });
 
+
           // Get user data
           smooch.appUsers.get(msg.user_id).then((res) => {
             console.log(111111, res)
