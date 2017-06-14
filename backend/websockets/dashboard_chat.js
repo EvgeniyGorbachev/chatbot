@@ -137,18 +137,40 @@ module.exports = function(dashboardChat) {
           scope : 'app'
         });
 
-        smooch.appUsers.sendMessage(msg.user_id, {
-          type: 'text',
-          text: msg.text,
-          role: 'appMaker'
-        }).then((response) => {
+          // Get user data
+          smooch.appUsers.get(msg.user_id).then((res) => {
+            console.log(111111, res)
+            console.log(222222, res.appUser.clients)
 
-            socket.emit('userConversationUpdate', response.message)
+              let dest = null
+              // Check users channels
+              if (res.appUser.clients[0]) {
+                  dest = {
+                      "integrationId": res.appUser.clients[0].id,
+                      "integrationType": res.appUser.clients[0].platform
+                  }
+              }
 
-        }).catch((err) => {
-            console.log(575757575577557, err)
-          socket.emit('err', 'Smooch can not send message')
-        });
+              // Send messages
+              smooch.appUsers.sendMessage(msg.user_id, {
+                  type: 'text',
+                  text: msg.text,
+                  role: 'appMaker',
+                  metadata: msg.smoochMessageMetadata || null,
+                  destination: dest
+              }).then((response) => {
+
+                  socket.emit('userConversationUpdate', response.message)
+
+              }).catch((err) => {
+                  console.log(575757575577557, err)
+                  socket.emit('err', 'Smooch can not send message')
+              });
+          }).catch((err) => {
+              console.log(19191919, err)
+              socket.emit('err', 'Smooch can not get user data')
+          });
+
       })
     });
 
@@ -163,6 +185,22 @@ module.exports = function(dashboardChat) {
                       secret: campaign.smooch_app_secret,
                       scope: 'app'
                   });
+
+                  // Get user data
+                  smooch.appUsers.get(msg.user_id).then((res) => {
+                      let linkChannels = res.appUser.clients
+
+                      // Delete all old channels
+                      if (linkChannels.length > 0) {
+                          linkChannels.forEach(function(channel) {
+                              smooch.appUsers.unlinkChannel(msg.user_id, channel.platform).catch((err) => {
+                                  console.log(909090909090, err)
+                                  socket.emit('err', 'Smooch can not delete user channel')
+                              });
+                          })
+                      }
+
+                  })
 
                   smooch.appUsers.linkChannel(msg.user_id, {
                       type: 'twilio',
@@ -201,6 +239,22 @@ module.exports = function(dashboardChat) {
                       secret: campaign.smooch_app_secret,
                       scope : 'app'
                   });
+
+                    // Get user data
+                    smooch.appUsers.get(msg.user_id).then((res) => {
+                        let linkChannels = res.appUser.clients
+
+                        // Delete all old channels
+                        if (linkChannels.length > 0) {
+                            linkChannels.forEach(function(channel) {
+                                smooch.appUsers.unlinkChannel(msg.user_id, channel.platform).catch((err) => {
+                                    console.log(909090909090, err)
+                                    socket.emit('err', 'Smooch can not delete user channel')
+                                });
+                            })
+                        }
+
+                    })
 
                     smooch.appUsers.linkChannel(msg.user_id, {
                         type: 'messenger',

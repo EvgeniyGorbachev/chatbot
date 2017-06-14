@@ -172,7 +172,7 @@ angular.module('campaignsApp.agentChat', [])
     socket.on('fileSaved', function (data) {
       let link = '/assets/img/user_files/' + data.fileName
       let text = '<a data-file-name= "'+ data.fileName +'" href="' + link +'" download>Download link</a>'
-      socket.emit('sendMessage', {"user_id": data.userId, "campaign_id": data.campaign_id, "text": text, "direction": 1});
+      socket.emit('sendMessage', {"user_id": data.userId, "campaign_id": data.campaign_id, "text": text, "smoochMessageMetadata": {"fileType": 'download link'}});
       vm.isDownloadingFile = false;
     });
 
@@ -203,7 +203,7 @@ angular.module('campaignsApp.agentChat', [])
 
     vm.sendMessage = function() {
       vm.isSend = true;
-      socket.emit('sendMessage', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": vm.messageText, "direction": 1});
+      socket.emit('sendMessage', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": vm.messageText});
       vm.messageText = '';
 
       vm.cleanTextArea();
