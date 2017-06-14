@@ -144,12 +144,17 @@ module.exports = function(dashboardChat) {
             console.log(222222, res.appUser.clients)
 
               let dest = null
+              let channels = res.appUser.clients
               // Check users channels
-              if (res.appUser.clients[0]) {
-                  dest = {
-                      "integrationId": res.appUser.clients[0].id,
-                      "integrationType": res.appUser.clients[0].platform
-                  }
+              if (channels.length > 0) {
+                  channels.forEach(function(channel) {
+                      if (channel.platform == msg.channel) {
+                          dest = {
+                              "integrationId": channel.id,
+                              "integrationType": channel.platform
+                          }
+                      }
+                  })
               }
 
               // Send messages
