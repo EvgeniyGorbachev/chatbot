@@ -137,11 +137,15 @@ module.exports = function(dashboardChat) {
           scope : 'app'
         });
 
-        smooch.appUsers.sendMessage(msg.user_id, {
-          type: 'text',
-          text: msg.text,
-          role: 'appMaker'
-        }).then((response) => {
+        var message = {
+            type: 'text',
+            text: msg.text,
+            role: 'appMaker'
+        };
+
+        Object.assign(message, msg.channel ? {destination: { integrationType: msg.channel }}: null);
+        console.log(message);
+        smooch.appUsers.sendMessage(msg.user_id, message).then((response) => {
 
             socket.emit('userConversationUpdate', response.message)
 

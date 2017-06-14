@@ -11,6 +11,7 @@ angular.module('campaignsApp.agentChat', [])
     vm.isDownloadingFile = false;
     vm.smoochAppId = null;
     vm.fileErrorText = null;
+    vm.channel = null;
 
     vm.userConversation = [];
     vm.userList = [];
@@ -20,7 +21,8 @@ angular.module('campaignsApp.agentChat', [])
       "text": '',
       "user_id": '',
       "campaign_id": '',
-      "direction": 1
+      "direction": 1,
+      "platform": ''
     };
 
     $(function() {
@@ -71,6 +73,10 @@ angular.module('campaignsApp.agentChat', [])
             });
         }
 
+      });
+
+      $('#channelType').change(function(e){
+          vm.channel = $("#channelType").find(":selected").text();
       });
     });
 
@@ -203,7 +209,7 @@ angular.module('campaignsApp.agentChat', [])
 
     vm.sendMessage = function() {
       vm.isSend = true;
-      socket.emit('sendMessage', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": vm.messageText, "direction": 1});
+      socket.emit('sendMessage', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": vm.messageText, "direction": 1, "channel": vm.channel});
       vm.messageText = '';
 
       vm.cleanTextArea();

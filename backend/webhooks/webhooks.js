@@ -50,11 +50,13 @@ exports.webChat = (req, res) => {
   }
 
   if (req.body.trigger == 'message:appUser') {
-    req.dashboardChatSocket.emit('webhook', {type: 'new message from user', userId: req.body.appUser['_id'], appId: req.body.app['_id'], messages: req.body.messages});
+      console.log(req.body);
+      req.dashboardChatSocket.emit('webhook', {type: 'new message from user', userId: req.body.appUser['_id'], appId: req.body.app['_id'], messages: req.body.messages});
   }
 
   if (req.body.trigger == 'message:appMaker') {
-    req.dashboardChatSocket.emit('webhook', {type: 'new message from bot', userId: req.body.appUser['_id'], appId: req.body.app['_id'], messages: req.body.messages});
+      console.log(req.body);
+      req.dashboardChatSocket.emit('webhook', {type: 'new message from bot', userId: req.body.appUser['_id'], appId: req.body.app['_id'], messages: req.body.messages});
   }
 
   res.sendStatus(201);
