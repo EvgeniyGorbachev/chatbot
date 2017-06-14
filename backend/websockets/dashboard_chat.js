@@ -187,22 +187,6 @@ module.exports = function(dashboardChat) {
                       scope: 'app'
                   });
 
-                  // Get user data
-                  smooch.appUsers.get(msg.user_id).then((res) => {
-                      let linkChannels = res.appUser.clients
-
-                      // Delete all old channels
-                      if (linkChannels.length > 0) {
-                          linkChannels.forEach(function(channel) {
-                              smooch.appUsers.unlinkChannel(msg.user_id, channel.platform).catch((err) => {
-                                  console.log(909090909090, err)
-                                  socket.emit('err', 'Smooch can not delete user channel')
-                              });
-                          })
-                      }
-
-                  })
-
                   smooch.appUsers.linkChannel(msg.user_id, {
                       type: 'twilio',
                       phoneNumber: msg.phone,
@@ -240,22 +224,6 @@ module.exports = function(dashboardChat) {
                       secret: campaign.smooch_app_secret,
                       scope : 'app'
                   });
-
-                    // Get user data
-                    smooch.appUsers.get(msg.user_id).then((res) => {
-                        let linkChannels = res.appUser.clients
-
-                        // Delete all old channels
-                        if (linkChannels.length > 0) {
-                            linkChannels.forEach(function(channel) {
-                                smooch.appUsers.unlinkChannel(msg.user_id, channel.platform).catch((err) => {
-                                    console.log(909090909090, err)
-                                    socket.emit('err', 'Smooch can not delete user channel')
-                                });
-                            })
-                        }
-
-                    })
 
                     smooch.appUsers.linkChannel(msg.user_id, {
                         type: 'messenger',
