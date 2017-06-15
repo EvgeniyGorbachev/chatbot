@@ -147,21 +147,20 @@ module.exports = function(dashboardChat) {
                   type: 'text',
                   text: msg.text,
                   role: 'appMaker',
-                  metadata: msg.smoochMessageMetadata || null
+                  metadata: msg.smoochMessageMetadata || {}
               }
 
               let channels = res.appUser.clients
               // Check users channels
-              if (channels.length > 0) {
-                  channels.forEach(function(channel) {
-                      if (channel.platform == msg.channel) {
-                          smoochOptions.destination = {
-                              "integrationId": channel.id,
-                              "integrationType": channel.platform
-                          }
-                      }
-                  })
-              }
+              // if (channels.length > 0) {
+              //     channels.forEach(function(channel) {
+              //         if (channel.platform == msg.channel) {
+              //             smoochOptions.destination = {
+              //                 "integrationType": channel.platform
+              //             }
+              //         }
+              //     })
+              // }
 
               // Send messages
               smooch.appUsers.sendMessage(msg.user_id, smoochOptions).then((response) => {
