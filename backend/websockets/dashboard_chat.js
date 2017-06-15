@@ -196,7 +196,7 @@ module.exports = function(dashboardChat) {
                       type: 'twilio',
                       phoneNumber: msg.phone,
                       confirmation: {
-                          type: 'prompt'
+                          type: 'immediate'
                       }
                   }).then((response) => {
                       // console.log('SEND MESSAGE: ', response);
@@ -234,7 +234,7 @@ module.exports = function(dashboardChat) {
                         type: 'messenger',
                         phoneNumber: msg.phone,
                         confirmation: {
-                            type: 'prompt'
+                            type: 'immediate'
                         }
                     }).then((response) => {
                         // console.log('SEND MESSAGE: ', response);

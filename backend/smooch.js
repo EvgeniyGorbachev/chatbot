@@ -6,20 +6,20 @@ const smooch = new Smooch({
     keyId: 'app_5900b9a92f588d5a016a1e8d',
     secret: 'PWUIlzOX113c2Enqj5_AzDQj',
     scope: 'app' });
-// console.log(smooch.authHeaders)
+// // console.log(smooch.authHeaders)
+//
+//
+// smooch.appUsers.getMessages('47e40dc095ea78066c66f8cb').then((response) => {
+//     console.log(response.messages)
+// });
 
-
-smooch.appUsers.getMessages('47e40dc095ea78066c66f8cb').then((response) => {
-    console.log(response.messages)
-});
-
-
+// Send SMS
 // var client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 //
 // client.messages.create({
 //     to: "+12818090012 ",
-//     from: "+15756802274 ",
-//     body: "YES"
+//     from: "+15756802274",
+//     body: "hi"
 // }, function(err, message) {
 //     console.log(message.sid);
 // });
