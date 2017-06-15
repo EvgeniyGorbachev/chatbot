@@ -6,7 +6,13 @@ const smooch = new Smooch({
     keyId: 'app_5900b9a92f588d5a016a1e8d',
     secret: 'PWUIlzOX113c2Enqj5_AzDQj',
     scope: 'app' });
-// // console.log(smooch.authHeaders)
+console.log(smooch.authHeaders)
+
+// smooch.integrations.list('5900b9a97651104b00b141cc').then((response) => {
+//     console.log(response)
+// });
+
+
 //
 //
 // smooch.appUsers.getMessages('47e40dc095ea78066c66f8cb').then((response) => {
@@ -19,7 +25,7 @@ const smooch = new Smooch({
 // client.messages.create({
 //     to: "+12818090012 ",
 //     from: "+15756802274",
-//     body: "hi"
+//     body: "my address from twilio"
 // }, function(err, message) {
 //     console.log(message.sid);
 // });
@@ -126,19 +132,26 @@ const smooch = new Smooch({
 // });
 
 //get user
-// smooch.appUsers.get('67aef89989d281e454174bd5').then((response) => {
-//   console.log(response.appUser.devices)
+// smooch.appUsers.get('bf94cfa4cdeb770f238828b7').then((response) => {
+//   console.log(response.appUser.clients)
 // });
 
 //link channel
-// smoochApp.appUsers.linkChannel('mike@example.com', {
+// smooch.appUsers.linkChannel('bf94cfa4cdeb770f238828b7', {
 //   type: 'twilio',
-//   phoneNumber: '+15145555555'
+//   phoneNumber: '+15756802274',
+//     confirmation: {
+//         type: 'immediate'
+//     }
 // }).then((response) => {
-//   // async code
+//     console.log(response)
 // }).catch((err) => {
 //   console.log(err)
 // });
+
+smooch.integrations.list('55c8d9758590aa1900b9b9f6').then((response) => {
+    // async code
+});
 
 // send message
 // let userId = 'b0e7711936f9e0f44d3b5b41';

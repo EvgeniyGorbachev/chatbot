@@ -143,13 +143,19 @@ module.exports = function(dashboardChat) {
             console.log(111111, res)
             console.log(222222, res.appUser.clients)
 
-              let dest = null
+              let smoochOptions = {
+                  type: 'text',
+                  text: msg.text,
+                  role: 'appMaker',
+                  metadata: msg.smoochMessageMetadata || null
+              }
+
               let channels = res.appUser.clients
               // Check users channels
               if (channels.length > 0) {
                   channels.forEach(function(channel) {
                       if (channel.platform == msg.channel) {
-                          dest = {
+                          smoochOptions.destination = {
                               "integrationId": channel.id,
                               "integrationType": channel.platform
                           }
@@ -158,13 +164,7 @@ module.exports = function(dashboardChat) {
               }
 
               // Send messages
-              smooch.appUsers.sendMessage(msg.user_id, {
-                  type: 'text',
-                  text: msg.text,
-                  role: 'appMaker',
-                  metadata: msg.smoochMessageMetadata || null,
-                  destination: dest
-              }).then((response) => {
+              smooch.appUsers.sendMessage(msg.user_id, smoochOptions).then((response) => {
 
                   socket.emit('userConversationUpdate', response.message)
 
