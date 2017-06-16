@@ -156,7 +156,7 @@ module.exports = function(dashboardChat) {
               //     channels.forEach(function(channel) {
               //         if (channel.platform == msg.channel) {
               //             smoochOptions.destination = {
-              //                 "integrationType": channel.platform
+              //                 integrationType: channel.platform
               //             }
               //         }
               //     })

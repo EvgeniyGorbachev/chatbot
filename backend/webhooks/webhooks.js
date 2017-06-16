@@ -30,35 +30,40 @@ exports.webChat = (req, res) => {
 
     // Attach manager to conversation
     if (req.body.appUser && req.body.appUser['_id']) {
-      db.Conversations.findOne({where: {sender: req.body.appUser['_id']}}).then(function (conv) {
-        if (conv && conv.userId == null) {
-
-          // Attention HARDCODE
-          conv.update({"userId": '1'}).then(function(c) {
-            console.log('Webhookkkkkk assign user to conversation', c);
-
-            req.dashboardChatSocket.emit('webhook', {type: 'new conversation added', userId: req.body.appUser['_id'], appId: req.body.app['_id'], agentId: c.userId});
-
-          }).catch((err) => {
-            console.log('Webhookkkkkk ERRRRRR assign user to conversation: ', err);
-          });
-        }
-      }).catch((err) => {
-        console.log('Webhookkkkkk ERRRRRR find user: ', err);
-      });
+        attachConversationToAgent(req)
     }
+
+    console.log(req.body);
+    req.dashboardChatSocket.emit('webhook', {type: 'new message from bot', userId: req.body.appUser['_id'], appId: req.body.app['_id'], messages: req.body.messages});
   }
 
   if (req.body.trigger == 'message:appUser') {
       console.log(req.body);
       req.dashboardChatSocket.emit('webhook', {type: 'new message from user', userId: req.body.appUser['_id'], appId: req.body.app['_id'], messages: req.body.messages});
-  }
-
-  if (req.body.trigger == 'message:appMaker') {
-      console.log(req.body);
-      req.dashboardChatSocket.emit('webhook', {type: 'new message from bot', userId: req.body.appUser['_id'], appId: req.body.app['_id'], messages: req.body.messages});
+      attachConversationToAgent(req)
   }
 
   res.sendStatus(201);
+
+  function attachConversationToAgent(req) {
+    if (req.body.appUser['_id'] && req.body.app['_id']) {
+        db.Conversations.findOne({where: {sender: req.body.appUser['_id']}}).then(function (conv) {
+            if (conv && conv.userId == null) {
+
+                // Attention HARDCODE
+                conv.update({"userId": '1'}).then(function(c) {
+                    console.log('Webhookkkkkk assign user to conversation', c);
+
+                    req.dashboardChatSocket.emit('webhook', {type: 'new conversation added', userId: req.body.appUser['_id'], appId: req.body.app['_id'], agentId: c.userId});
+
+                }).catch((err) => {
+                    console.log('Webhookkkkkk ERRRRRR assign user to conversation: ', err);
+                });
+            }
+        }).catch((err) => {
+            console.log('Webhookkkkkk ERRRRRR find user: ', err);
+        });
+    }
+  }
 
 };
