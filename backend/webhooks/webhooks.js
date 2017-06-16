@@ -12,30 +12,19 @@ exports.webChat = (req, res) => {
 
     // Hack for lambda
     if (req.body.appUser['_id'] && req.body.app['_id']) {
+      let dataToLambda = {
+        "trigger":"delivery:success",
+        "app":{"_id":req.body.app['_id']},
+        "appUser":{"_id":req.body.appUser['_id']},
+        "destination":{"type":"api"},
+        "messages":[{"text":"emulation"}],
+        "timestamp":1493914595.09
+      }
 
-        db.Conversations.findOne({where: { sender: req.body.appUser['_id'] }, include: [{
-            model: db.Campaigns
-        }]}).then(function (conversation) {
-
-            if (conversation.Campaign.isActive) {
-                let dataToLambda = {
-                    "trigger":"delivery:success",
-                    "app":{"_id":req.body.app['_id']},
-                    "appUser":{"_id":req.body.appUser['_id']},
-                    "destination":{"type":"api"},
-                    "messages":[{"text":"emulation"}],
-                    "timestamp":1493914595.09
-                }
-
-                request.post({url: process.env.CONFIRM_ORDER_CALLBACK, body: dataToLambda, json:true}, function(err,httpResponse,body){
-                    if (err) console.log('Get err from lambda: ', err)
-                    console.log('Get response from lambda: ', body)
-                })
-            }
-
-        }).catch(function(err) {
-            console.log('err1: ', err)
-        })
+      request.post({url: process.env.CONFIRM_ORDER_CALLBACK, body: dataToLambda, json:true}, function(err,httpResponse,body){
+        if (err) console.log('Get err from lambda: ', err)
+        console.log('Get response from lambda: ', body)
+      })
     }
 
     // Attach manager to conversation
