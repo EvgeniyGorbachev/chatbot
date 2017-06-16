@@ -54,7 +54,7 @@ exports.webChat = (req, res) => {
 
         db.Conversations.findAll().then(function (cc) {
             console.log('attachConversationToAgent  6666666666', cc)
-        }
+        })
 
 
         db.Conversations.findOne({where: {sender: req.body.appUser['_id']}}).then(function (conv) {
