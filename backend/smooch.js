@@ -20,15 +20,15 @@ console.log(smooch.authHeaders)
 // });
 
 // Send SMS
-var client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-
-client.messages.create({
-    to: "+12818090012 ",
-    from: "+15756802274",
-    body: "hi from smsmsmsmsmsm"
-}, function(err, message) {
-    console.log(message.sid);
-});
+// var client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+//
+// client.messages.create({
+//     to: "+12818090012 ",
+//     from: "+15756802274",
+//     body: "hi from smsmsmsmsmsm"
+// }, function(err, message) {
+//     console.log(message.sid);
+// });
 
 // client.availablePhoneNumbers("US").local.list({
 //   number: "+12035804010"
@@ -170,14 +170,14 @@ client.messages.create({
 //
 
 // console.log(smooch)
-// smooch.appUsers.getMessages('af1975a3-622a-4777-8bc0-871c32526885').then((response) => {
-//
-//   console.log('1111111111', response)
-//
-// }).catch((err) => {
-//   console.log(55555555, err)
-//
-// });
+smooch.appUsers.getMessages('a8dc091c4faef477e7898131').then((response) => {
+
+  console.log('1111111111', response)
+
+}).catch((err) => {
+  console.log(55555555, err)
+
+});
 
 //
 // smooch.appUsers.linkChannel('67aef89989d281e454174bd5', {

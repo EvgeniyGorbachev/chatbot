@@ -9,23 +9,33 @@ exports.webChat = (req, res) => {
   console.log('Get webhookkkkkk: ', req.body);
 
   if (req.body.trigger == 'message:appMaker') {
-    req.webChatSocket.emit('webhook', {type: 'new message', userId: req.body.appUser['_id'], appId: req.body.app['_id'], messages: req.body.messages});
 
     // Hack for lambda
     if (req.body.appUser['_id'] && req.body.app['_id']) {
-      let dataToLambda = {
-        "trigger":"delivery:success",
-        "app":{"_id":req.body.app['_id']},
-        "appUser":{"_id":req.body.appUser['_id']},
-        "destination":{"type":"api"},
-        "messages":[{"text":"emulation"}],
-        "timestamp":1493914595.09
-      }
 
-      request.post({url: process.env.CONFIRM_ORDER_CALLBACK, body: dataToLambda, json:true}, function(err,httpResponse,body){
-        if (err) console.log('Get err from lambda: ', err)
-        console.log('Get response from lambda: ', body)
-      })
+        db.Conversations.findOne({where: { sender: req.body.appUser['_id'] }, include: [{
+            model: db.Campaigns
+        }]}).then(function (conversation) {
+
+            if (conversation.Campaign.isActive) {
+                let dataToLambda = {
+                    "trigger":"delivery:success",
+                    "app":{"_id":req.body.app['_id']},
+                    "appUser":{"_id":req.body.appUser['_id']},
+                    "destination":{"type":"api"},
+                    "messages":[{"text":"emulation"}],
+                    "timestamp":1493914595.09
+                }
+
+                request.post({url: process.env.CONFIRM_ORDER_CALLBACK, body: dataToLambda, json:true}, function(err,httpResponse,body){
+                    if (err) console.log('Get err from lambda: ', err)
+                    console.log('Get response from lambda: ', body)
+                })
+            }
+
+        }).catch(function(err) {
+            console.log('err1: ', err)
+        })
     }
 
     // Attach manager to conversation
@@ -35,7 +45,9 @@ exports.webChat = (req, res) => {
     }
 
     console.log(req.body);
+
     req.dashboardChatSocket.emit('webhook', {type: 'new message from bot', userId: req.body.appUser['_id'], appId: req.body.app['_id'], messages: req.body.messages});
+    req.webChatSocket.emit('webhook', {type: 'new message', userId: req.body.appUser['_id'], appId: req.body.app['_id'], messages: req.body.messages});
   }
 
   if (req.body.trigger == 'message:appUser') {
