@@ -14,7 +14,7 @@ html(ng-app='campaignsApp' ng-cloak)
                                     .panel-options
                                         ul.nav.nav-tabs(ng-if='chatAgentCtr.conversations')
                                             li(ng-repeat='conv in chatAgentCtr.conversations')
-                                                a(data-toggle='tab', href='{{ conv.id }}' ng-click='chatAgentCtr.getConversation(conv)') {{ conv.username || 'No name' }} &nbsp
+                                                a(data-toggle='tab', href='{{ conv.id }}' ng-click='chatAgentCtr.getConversation(conv)') {{ (!conv.username || conv.username == 'emulation') ? 'No name': conv.username }} &nbsp
                                                     span.pull-right.label.label-primary(ng-show='!chatAgentCtr.currentUser || (conv.newMessages > 0 && conv.id != chatAgentCtr.currentUser.id)') {{ conv.newMessages }}
                                                     span.pull-right.badge.badge-danger.attention-sign(ng-show='conv.isPaused && conv.pauseInitiator == "bot"') !
 
