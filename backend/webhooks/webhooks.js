@@ -50,7 +50,13 @@ exports.webChat = (req, res) => {
   function attachConversationToAgent(req) {
       console.log('attachConversationToAgent  111111111')
     if (req.body.appUser['_id'] && req.body.app['_id']) {
-        console.log('attachConversationToAgent  222222222')
+        console.log('attachConversationToAgent  222222222', req.body.appUser['_id'])
+
+        db.Conversations.findAll().then(function (cc) {
+            console.log('attachConversationToAgent  6666666666', cc)
+        }
+
+
         db.Conversations.findOne({where: {sender: req.body.appUser['_id']}}).then(function (conv) {
             console.log('attachConversationToAgent  3333333', conv)
             if (conv && conv.userId == null) {
