@@ -52,7 +52,7 @@ exports.webChat = (req, res) => {
     if (req.body.appUser['_id'] && req.body.app['_id']) {
         console.log('attachConversationToAgent  222222222')
         db.Conversations.findOne({where: {sender: req.body.appUser['_id']}}).then(function (conv) {
-            console.log('attachConversationToAgent  3333333')
+            console.log('attachConversationToAgent  3333333', conv)
             if (conv && conv.userId == null) {
                 console.log('attachConversationToAgent  44444444')
                 // Attention HARDCODE
