@@ -6,6 +6,8 @@ const db = require('../models/index.js')
  * Webhook for web chat (Smooch integration)
  */
 exports.webChat = (req, res) => {
+
+    res.sendStatus(201);
   console.log('Get webhookkkkkk: ', req.body);
 
   if (req.body.trigger == 'message:appMaker') {
@@ -29,8 +31,6 @@ exports.webChat = (req, res) => {
       // Attention HACK, 7 seconds we wait while the chat bot in a database creates record
       setTimeout(attachConversationToAgent, 7000, req);
   }
-
-  res.sendStatus(201);
 
   function attachConversationToAgent(req) {
     if (req.body.appUser['_id'] && req.body.app['_id']) {
