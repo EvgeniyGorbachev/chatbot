@@ -169,15 +169,42 @@ console.log(smooch.authHeaders)
 
 //
 
-// console.log(smooch)
-smooch.appUsers.getMessages('a8dc091c4faef477e7898131').then((response) => {
+smooch.appUsers.get('69cbafd0ecb7045da42b6f07').then((response) => {
 
-  console.log('1111111111', response)
-
+    console.log('1111111111', response.appUser.clients)
+    console.log('2222222222', response)
 }).catch((err) => {
   console.log(55555555, err)
 
 });
+
+// smooch.appUsers.unlinkChannel('69cbafd0ecb7045da42b6f07', 'web')
+//     .then(() => {
+//         // async code
+//     }).catch((err) => {
+//     console.log(55555555, err)
+//
+// });
+
+
+// 9a4a8cf4c32df4cce2f2bcc5 twilio  +15756802274
+// a8dc091c4faef477e7898131 facebook
+
+// console.log(smooch)
+// smooch.appUsers.getMessages('9a4a8cf4c32df4cce2f2bcc5').then((response) => {
+//
+//   console.log('1111111111', response)
+//
+// }).catch((err) => {
+//   console.log(55555555, err)
+//
+// });
+
+// smooch.appUsers.deleteMessages('a8dc091c4faef477e7898131').then(() => {
+//     // async code
+// });
+
+
 
 //
 // smooch.appUsers.linkChannel('67aef89989d281e454174bd5', {
