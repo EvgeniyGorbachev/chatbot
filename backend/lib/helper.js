@@ -1,5 +1,5 @@
 const db = require('../models/index.js')
-const Smooch = require('smooch-core')
+const jwt = require('jsonwebtoken')
 
 
 /**
@@ -61,13 +61,12 @@ exports.updateStopWord = (stopWords, campaignId) => {
  * Create smooch jwt token
  */
 exports.getSmoochJwt = (campaign) => {
-
-  if (campaign) {
-      const smooch = new Smooch({
-          keyId: campaign.smooch_app_key_id,
-          secret: campaign.smooch_app_secret,
-          scope: 'app' });
-      let arr = smooch.authHeaders.Authorization.split(' ')
-      return arr[1];
+  if (campaign && campaign.smooch_app_secret && campaign.smooch_app_key_id) {
+      const token = jwt.sign(
+          {scope: 'app'},
+          campaign.smooch_app_secret,
+          {header: { kid: campaign.smooch_app_key_id }
+      });
+      return token;
   }
 };

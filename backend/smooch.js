@@ -8,6 +8,18 @@ const smooch = new Smooch({
     scope: 'app' });
 console.log(smooch.authHeaders)
 
+const jwt = require('jsonwebtoken');
+
+const token = jwt.sign({
+    scope: 'app'
+}, 'PWUIlzOX113c2Enqj5_AzDQj', {
+    header: { kid: 'app_5900b9a92f588d5a016a1e8d' }
+});
+
+console.log(token)
+
+
+
 // smooch.integrations.list('5900b9a97651104b00b141cc').then((response) => {
 //     console.log(response)
 // });
@@ -169,14 +181,14 @@ console.log(smooch.authHeaders)
 
 //
 
-smooch.appUsers.get('69cbafd0ecb7045da42b6f07').then((response) => {
-
-    console.log('1111111111', response.appUser.clients)
-    console.log('2222222222', response)
-}).catch((err) => {
-  console.log(55555555, err)
-
-});
+// smooch.appUsers.get('69cbafd0ecb7045da42b6f07').then((response) => {
+//
+//     console.log('1111111111', response.appUser.clients)
+//     console.log('2222222222', response)
+// }).catch((err) => {
+//   console.log(55555555, err)
+//
+// });
 
 // smooch.appUsers.unlinkChannel('69cbafd0ecb7045da42b6f07', 'web')
 //     .then(() => {
