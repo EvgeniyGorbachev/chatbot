@@ -133,3 +133,10 @@ http.listen(8181, () => {
     console.log('App listening on port 8181!')
 })
 
+/**
+ * Error handler.
+ */
+app.use(function(err, req, res, next) {
+    console.log('ERR HANDLER: ', err)
+});
+
