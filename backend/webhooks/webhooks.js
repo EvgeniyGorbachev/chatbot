@@ -36,7 +36,6 @@ exports.webChat = (req, res) => {
     console.log(req.body);
 
     req.dashboardChatSocket.emit('webhook', {type: 'new message from bot', userId: req.body.appUser['_id'], appId: req.body.app['_id'], messages: req.body.messages});
-    req.webChatSocket.emit('webhook', {type: 'new message', userId: req.body.appUser['_id'], appId: req.body.app['_id'], messages: req.body.messages});
   }
 
   if (req.body.trigger == 'message:appUser') {

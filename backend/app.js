@@ -27,9 +27,7 @@ const chatController = require('./controllers/agent_chat')
  * WebSocket.
  */
 let dashboardChatSocket = io.of('/dashboardchat');
-let webChatSocket = io.of('/webchat');
 require('./websockets/dashboard_chat')(dashboardChatSocket)
-require('./websockets/web_chat')(webChatSocket)
 
 /**
  * Cron Job.
@@ -66,7 +64,6 @@ app.use(cors())
  */
 app.use(function(req,res,next){
   req.dashboardChatSocket = dashboardChatSocket;
-  req.webChatSocket = webChatSocket;
   next();
 });
 
