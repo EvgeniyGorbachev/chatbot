@@ -1,5 +1,4 @@
 const db     = require('../models/index.js')
-const Smooch = require('smooch-core')
 
 /**
  * GET /sessions/:id

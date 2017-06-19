@@ -1,5 +1,4 @@
 const db         = require('../models/index.js');
-const SmoochCore = require('smooch-core');
 const request    = require('request');
 
 /**

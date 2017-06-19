@@ -134,12 +134,7 @@ exports.updateCampaignById = (req, res) => {
     //if create
   } else {
 
-    // Initializing Smooch Core with an account scoped key
-    let smooch = new SmoochCore({
-      keyId: process.env.SMOOCH_ACC_KEY,
-      secret: process.env.SMOOCH_ACC_SECRET,
-      scope: 'account'
-    });
+    let smooch = req.smooch
 
     // Create Smooch app
     smooch.apps.create({
@@ -209,21 +204,14 @@ exports.updateCampaignById = (req, res) => {
         // Smooch add twilio integration
         smooch.integrations.create(campaign.smooch_app_id, integrationData).then((response) => {
 
-          // Initializing Smooch Core with as an app scoped key
-          let smoochApp = new SmoochCore({
-            keyId: campaign.smooch_app_key_id,
-            secret: campaign.smooch_app_secret,
-            scope: 'app'
-          });
-
           // Smooch add webhook for chatbot (Lambda)
-          smoochApp.webhooks.create({
+            smooch.webhooks.create(campaign.smooch_app_id, {
             target: process.env.CONFIRM_ORDER_CALLBACK,
             triggers: '*'
           }).then((response) => {
 
-            // Smooch add webhook for WebChat UI
-            smoochApp.webhooks.create({
+            // Smooch add webhook for dashboard_chat.js
+              smooch.webhooks.create(campaign.smooch_app_id, {
               target: process.env.WEBCHAT_WEBHOOK,
               triggers: '*'
             }).then((response) => {

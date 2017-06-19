@@ -1,5 +1,4 @@
 const db = require('./../models/index.js')
-const Smooch = require('smooch-core')
 const request = require('request')
 const ss = require('socket.io-stream')
 const stream = ss.createStream()
@@ -8,7 +7,7 @@ const path = require('path')
 const gm = require('gm').subClass({imageMagick: true});
 const helper = require('../lib/helper')
 
-module.exports = function(dashboardChat) {
+module.exports = function(dashboardChat, SMOOCH) {
 
   dashboardChat.on('connection', function(socket){
 
@@ -108,13 +107,7 @@ module.exports = function(dashboardChat) {
     socket.on('getUserConversation', function(msg){
         db.Campaigns.findOne({where: {id: msg.campaignId}}).then(function (campaign) {
 
-            const smooch = new Smooch({
-                keyId : campaign.smooch_app_key_id,
-                secret: campaign.smooch_app_secret,
-                scope : 'app'
-            });
-
-            smooch.appUsers.getMessages(msg.smoochUserId).then((response) => {
+            SMOOCH.appUsers.getMessages(campaign.smooch_app_id, msg.smoochUserId).then((response) => {
                 socket.emit('userConversation', response)
             }).catch(function(err) {
                 console.log(err)
@@ -131,15 +124,8 @@ module.exports = function(dashboardChat) {
     socket.on('sendMessage', function(msg){
       db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
 
-        const smooch = new Smooch({
-          keyId : campaign.smooch_app_key_id,
-          secret: campaign.smooch_app_secret,
-          scope : 'app'
-        });
-
-
           // Get user data
-          smooch.appUsers.get(msg.user_id).then((res) => {
+          SMOOCH.appUsers.get(campaign.smooch_app_id, msg.user_id).then((res) => {
             console.log(111111, res)
             console.log(222222, res.appUser.clients)
 
@@ -163,7 +149,7 @@ module.exports = function(dashboardChat) {
               // }
 
               // Send messages
-              smooch.appUsers.sendMessage(msg.user_id, smoochOptions).then((response) => {
+              SMOOCH.appUsers.sendMessage(campaign.smooch_app_id, msg.user_id, smoochOptions).then((response) => {
 
                   socket.emit('userConversationUpdate', response.message)
 
@@ -185,13 +171,8 @@ module.exports = function(dashboardChat) {
           db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
 
               if (campaign) {
-                  const smooch = new Smooch({
-                      keyId: campaign.smooch_app_key_id,
-                      secret: campaign.smooch_app_secret,
-                      scope: 'app'
-                  });
 
-                  smooch.appUsers.linkChannel(msg.user_id, {
+                  SMOOCH.appUsers.linkChannel(campaign.smooch_app_id, msg.user_id, {
                       type: 'twilio',
                       phoneNumber: msg.phone,
                       confirmation: {
@@ -223,13 +204,8 @@ module.exports = function(dashboardChat) {
           if (msg.phone) {
             db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
                 if (campaign) {
-                  const smooch = new Smooch({
-                      keyId : campaign.smooch_app_key_id,
-                      secret: campaign.smooch_app_secret,
-                      scope : 'app'
-                  });
 
-                    smooch.appUsers.linkChannel(msg.user_id, {
+                    SMOOCH.appUsers.linkChannel(campaign.smooch_app_id, msg.user_id, {
                         type: 'messenger',
                         phoneNumber: msg.phone,
                         confirmation: {

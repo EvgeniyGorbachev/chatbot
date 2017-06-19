@@ -6,6 +6,7 @@ const cors       = require('cors')
 const bodyParser = require('body-parser')
 const request    = require('request')
 const passport   = require('passport')
+const Smooch     = require('smooch-core')
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -24,10 +25,19 @@ const usersController = require('./controllers/users')
 const chatController = require('./controllers/agent_chat')
 
 /**
+ * Connect to Smooch API
+ */
+const smooch = new Smooch({
+    keyId: process.env.SMOOCH_ACC_KEY,
+    secret: process.env.SMOOCH_ACC_SECRET,
+    scope: 'account'
+});
+
+/**
  * WebSocket.
  */
 let dashboardChatSocket = io.of('/dashboardchat');
-require('./websockets/dashboard_chat')(dashboardChatSocket)
+require('./websockets/dashboard_chat')(dashboardChatSocket, smooch)
 
 /**
  * Cron Job.
@@ -60,10 +70,11 @@ app.use("/assets", express.static(__dirname + '/assets'))
 app.use(cors())
 
 /**
- * Make io accessible to app router
+ * Make accessible to app router
  */
 app.use(function(req,res,next){
   req.dashboardChatSocket = dashboardChatSocket;
+  req.smooch = smooch;
   next();
 });
 
