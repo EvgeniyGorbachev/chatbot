@@ -5,6 +5,8 @@ const ss = require('socket.io-stream')
 const stream = ss.createStream()
 const fs = require('fs')
 const path = require('path')
+const gm = require('gm').subClass({imageMagick: true});
+const helper = require('../lib/helper')
 
 module.exports = function(dashboardChat) {
 
@@ -13,14 +15,29 @@ module.exports = function(dashboardChat) {
     ss(socket).on('file', function(stream, data) {
 
       let dir = path.resolve("./assets/img/user_files")
+      let thumbnailDir = path.resolve("./assets/img/user_files/thumbnail")
 
       if (!fs.existsSync(dir)){
         fs.mkdirSync(dir);
       }
 
+      if (!fs.existsSync(thumbnailDir)){
+        fs.mkdirSync(thumbnailDir);
+      }
+
       let filename =  data.userId + "_" + new Date().getTime() + "_"+ data.name
       let filenameFullPath = path.resolve( "./assets/img/user_files/" + filename)
+
       stream.pipe(fs.createWriteStream(filenameFullPath))
+
+      stream.on('finish', function () {
+          // Create thumbnail
+          gm( "./assets/img/user_files/" + filename)
+              .resize(200, 200)
+              .write( "./assets/img/user_files/thumbnail/" + filename, function (err) {
+                  if (err) console.log('Created thumbnail err: ', err);
+              });
+      });
 
       socket.emit('fileSaved', {"fileName": filename, "userId": data.userId, "campaign_id": data.campaign_id})
     });
@@ -40,13 +57,13 @@ module.exports = function(dashboardChat) {
     });
 
     // Get new conversation by user id
-    socket.on('getConversationByUserId', function(msg){
+    socket.on('getConversationBySmoochUserId', function(msg){
 
       db.Conversations.findOne({where: { sender: msg }, include: [{
         model: db.Campaigns
-      }]}).then(function (conversations) {
-
-        socket.emit('addedNewConversation', conversations)
+      }]}).then(function (conversation) {
+        conversation.dataValues.smoochJwt = helper.getSmoochJwt(conversation.Campaign)
+        socket.emit('addedNewConversation', conversation)
 
       }).catch(function(err) {
         console.log('err1: ', err)
@@ -89,9 +106,24 @@ module.exports = function(dashboardChat) {
 
     // Get user conversation
     socket.on('getUserConversation', function(msg){
-      db.ConversationsHistory.findAll({where: {"user_id": msg.userId}, order: [['id', 'ASC']]}).then(function (history) {
-        socket.emit('userConversation', history)
-      })
+        db.Campaigns.findOne({where: {id: msg.campaignId}}).then(function (campaign) {
+
+            const smooch = new Smooch({
+                keyId : campaign.smooch_app_key_id,
+                secret: campaign.smooch_app_secret,
+                scope : 'app'
+            });
+
+            smooch.appUsers.getMessages(msg.smoochUserId).then((response) => {
+                socket.emit('userConversation', response)
+            }).catch(function(err) {
+                console.log(err)
+                socket.emit('err', 'Can not get messages from Smooch')
+            })
+        }).catch(function(err) {
+            console.log(err)
+            socket.emit('err', 'Can not find Campaign')
+        })
     });
 
 
@@ -105,60 +137,100 @@ module.exports = function(dashboardChat) {
           scope : 'app'
         });
 
-        smooch.appUsers.sendMessage(msg.user_id, {
-          type: 'text',
-          text: msg.text,
-          role: 'appMaker'
-        }).then((response) => {
+        var message = {
+            type: 'text',
+            text: msg.text,
+            role: 'appMaker'
+        };
 
-          db.ConversationsHistory.create(msg).then(function(data) {
+        Object.assign(message, msg.channel ? {destination: { integrationType: msg.channel }}: null);
+        console.log(message);
+        smooch.appUsers.sendMessage(msg.user_id, message).then((response) => {
 
-            db.ConversationsHistory.findAll({where: {"campaign_id": msg.campaign_id, "user_id": msg.user_id}, order: [['id', 'ASC']]}).then(function (history) {
-
-              socket.emit('userConversationUpdate', history)
-
-            })
-
-          }).catch(function(err) {
-            socket.emit('err', err.response.statusText)
-          })
+            socket.emit('userConversationUpdate', response.message)
 
         }).catch((err) => {
-          socket.emit('err', err.response.statusText)
+            console.log(575757575577557, err)
+          socket.emit('err', 'Smooch can not send message')
         });
       })
     });
 
     // Link twilio
     socket.on('linkTwilio', function(msg){
-      db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
+      if (msg.phone) {
+          db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
 
-        const smooch = new Smooch({
-          keyId : campaign.smooch_app_key_id,
-          secret: campaign.smooch_app_secret,
-          scope : 'app'
-        });
+              if (campaign) {
+                  const smooch = new Smooch({
+                      keyId: campaign.smooch_app_key_id,
+                      secret: campaign.smooch_app_secret,
+                      scope: 'app'
+                  });
 
-            smooch.appUsers.linkChannel(msg.user_id, {
-                type: 'twilio',
-                phoneNumber: msg.phone,
-                confirmation: {
-                    type: 'prompt'
+                  smooch.appUsers.linkChannel(msg.user_id, {
+                      type: 'twilio',
+                      phoneNumber: msg.phone,
+                      confirmation: {
+                          type: 'prompt'
+                      }
+                  }).then((response) => {
+                      // console.log('SEND MESSAGE: ', response);
+                      socket.emit('linkTwilioChannel', response)
+
+                  }).catch((err) => {
+                      console.log(3131313131313, err)
+                      socket.emit('err', 'Smooch can not link to chanel')
+                  });
+              } else {
+                  socket.emit('err', 'Wrong campaign id')
+              }
+          }).catch((err) => {
+              console.log(5151515151, err)
+              socket.emit('err', 'Can not find campaign by id')
+          });
+      } else {
+          socket.emit('err', 'No phone number')
+      }
+    });
+
+
+      // Link facebook messenger
+      socket.on('linkFacebook', function(msg){
+          if (msg.phone) {
+            db.Campaigns.findOne({where: {id: msg.campaign_id}}).then(function (campaign) {
+                if (campaign) {
+                  const smooch = new Smooch({
+                      keyId : campaign.smooch_app_key_id,
+                      secret: campaign.smooch_app_secret,
+                      scope : 'app'
+                  });
+
+                    smooch.appUsers.linkChannel(msg.user_id, {
+                        type: 'messenger',
+                        phoneNumber: msg.phone,
+                        confirmation: {
+                            type: 'prompt'
+                        }
+                    }).then((response) => {
+                        // console.log('SEND MESSAGE: ', response);
+                        socket.emit('linkFacebookChannel', true)
+
+                    }).catch((err) => {
+                        console.log(3131313131313, err)
+                        socket.emit('err', 'Smooch can not link to chanel')
+                    });
+
+                } else {
+                    socket.emit('err', 'Wrong campaign id')
                 }
-            }).then((response) => {
-              // console.log('SEND MESSAGE: ', response);
-              socket.emit('linkTwilioChannel', response)
-
             }).catch((err) => {
-              console.log(3131313131313, err)
-              socket.emit('err', err.response.statusText)
+                console.log(41414141414, err)
+                socket.emit('err', 'Can not find campaign by id')
             });
-
-      }).catch((err) => {
-        console.log(5151515151, err)
-        socket.emit('err', err.response.statusText)
-      });
-  });
-
+          } else {
+              socket.emit('err', 'No messenger number')
+          }
+      })
   });
 }

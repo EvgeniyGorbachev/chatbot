@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "text": "Hey! Thank you for your interest in PiYo."
+  },
+  {
+    "id": 2,
+    "text": "PiYo is America's bestselling in home fitness DVD program created by me, Chalene Johnson! What’s your first and last name?"
+  },
+  {
+    "id": 3,
+    "text": "Hi [name], it’s nice to meet you. With PiYo you’re getting a 30-day MBG."
+  },
+  {
+    "id": 4,
+    "text": "This is how confident I am about the results you’ll see with PiYo."
+  },
+  {
+    "id": 5,
+    "text": "You have absolutely nothing to lose but those unwanted pounds. What’s your complete mailing address?"
+  },
+  {
+    "id": 6,
+    "text": "Thanks, [name]! What’s your email address?"
+  },
+  {
+    "id": 7,
+    "text": "Awesome! Many clients ask me, “how can I get better results”. Click below to see what I tell them. http://youtu.be/LnuurRvsCx8"
+  },
+  {
+    "id": 8,
+    "text": "Are you ready to create your own success story? [Y/N]"
+  },
+  {
+    "id": 9,
+    "text": "As previously explained, the basic program is 3 payments of $19.95. But for an additional $19.95 per month, you can get my deluxe package. As an added bonus just for you, I’ll waive the additional shipping. Can I send this to you? [Y/N]"
+  },
+  {
+    "id": 10,
+    "text": "You’re all set [name]. Thank you for choosing my revolutionary program, PiYo, to help transform your body. Please click here to pay [link]"
+  },
+  {
+    "id": 11,
+    "text": "Welcome to my exclusive club. The work starts now! Here is your receipt [invoice link]. Don’t forget to follow me on social media at @CJPiYo"
+  }
+]

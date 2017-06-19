@@ -30,43 +30,40 @@ html(ng-app='campaignsApp' ng-cloak)
                                                         .chat-discussion
                                                             h2(ng-if='chatAgentCtr.userConversation.length == 0') No messages
                                                             h2.text-danger(ng-if='chatAgentCtr.websocketIsError') Websocket Error!
-                                                            .chat-message(ng-repeat='conv in chatAgentCtr.userConversation track by $index', ,='', ng-if='conv.text != "emulation"' ng-class="{'direct1': conv.direction == 1, 'direct0': conv.direction == 0}")
-                                                                img.message-avatar(src='/assets/img/person-black.png', ng-if='conv.direction == 1')
-                                                                img.message-avatar(src='/assets/img/person-white.png', ng-if='conv.direction == 0')
+                                                            .chat-message(ng-repeat='conv in chatAgentCtr.userConversation track by $index', ,='', ng-class="{'direct1': conv.role == 'appMaker', 'direct0': conv.role == 'appUser'}")
+                                                                img.message-avatar(src='/assets/img/person-black.png', ng-if='conv.role == "appMaker"')
+                                                                img.message-avatar(src='/assets/img/person-white.png', ng-if='conv.role == "appUser"')
                                                                 .message
-                                                                    a.message-author(href='#', ng-if='conv.direction == 1')  Chat bot
-                                                                    a.message-author(href='#', ng-if='conv.direction == 0')  {{ chatAgentCtr.currentUser.username }}
+                                                                    a.message-author(href='#', ng-if='conv.role == "appMaker"')  Chat bot
+                                                                    a.message-author(href='#', ng-if='conv.role == "appUser"')  {{ chatAgentCtr.currentUser.username }}
                                                                     span.message-date   Fri Jan 25 2015 - 11:12:36
                                                                     span.message-content(ng-if="conv.text", ng-bind-html="conv.text | emojiOneShortnameToImage | trust")
                                                                     span.message-content(ng-if="!conv.text") Empty message.
-                                                    //.col-md-3
-                                                    //    .chat-users
-                                                    //        .users-list
-                                                    //            .chat-user(ng-repeat='user in userList track by $index', ng-click='getConversation(user)', ng-class="{'current': user.id == currentUser.id}")
-                                                    //                span.pull-right.label.label-primary(ng-show='user.newMessages > 0 && user.id != currentUser.id') {{ user.newMessages }}
-                                                    //                img.chat-avatar(src='/assets/img/person-white.png', alt='')
-                                                    //                .chat-user-name
-                                                    //                    a {{ user.username || 'no name' }}
                                                 .row
                                                     .col-lg-12
                                                         .chat-message-form
                                                             .form-group(ng-show="chatAgentCtr.currentUser.id")
                                                                 textarea.form-control.message-input(ng-model='chatAgentCtr.messageText', name='message', placeholder='Enter message text', id='messageEditor')
-                                                                a.btn.btn-w-m.btn-success.chat-button(ng-click='chatAgentCtr.sendMessage()', ng-show='!chatAgentCtr.isSend', ng-disabled='!chatAgentCtr.currentUser.sender') Send
-                                                                a.btn.btn-w-m.btn-success.chat-button(disabled='', ng-show='chatAgentCtr.isSend', href='/') Sending...
+                                                                //a.btn.btn-w-m.btn-warning.chat-button(ng-click='chatAgentCtr.paused()') {{ chatAgentCtr.currentUser.isPaused? 'Unpause Bot':'Pause Bot';}}
+
+                                                                //div(ng-show="chatAgentCtr.currentUser.isPaused")
+                                                                a.btn.btn-w-m.btn-info.chat-button(ng-click='chatAgentCtr.sendMessage()', ng-show='!chatAgentCtr.isSend', ng-disabled='!chatAgentCtr.currentUser.sender') Send
+                                                                a.btn.btn-w-m.btn-info.chat-button(disabled='', ng-show='chatAgentCtr.isSend', href='/') Sending...
+
+                                                                select#channelType.select.form-control.input-lg
+                                                                    option(value="0", selected= true)
+                                                                    option(value="1") web
+                                                                    option(value="2") messenger
+                                                                    option(value="3") twilio
+
                                                                 input.btn.btn-w-m.btn-success.chat-button(ng-disabled='(chatAgentCtr.currentUser.sender && chatAgentCtr.isDownloadingFile ) || !chatAgentCtr.currentUser.sender', id="file" type="file")
                                                                 p.text-danger(ng-show='chatAgentCtr.fileErrorText') {{ chatAgentCtr.fileErrorText }}
-                                                                a.btn.btn-w-m.btn-warning.chat-button(ng-click='chatAgentCtr.paused()') {{ chatAgentCtr.currentUser.isPaused? 'Unpause Bot':'Pause Bot';}}
 
-                                                                div(ng-show="chatAgentCtr.currentUser.isPaused")
-                                                                    a.btn.btn-w-m.btn-info.chat-button(ng-click='chatAgentCtr.sendMessage()', ng-show='!chatAgentCtr.isSend', ng-disabled='!chatAgentCtr.currentUser.sender') Send
-                                                                    a.btn.btn-w-m.btn-info.chat-button(disabled='', ng-show='chatAgentCtr.isSend', href='/') Sending...
-                                                                    input.btn.btn-w-m.btn-success.chat-button(ng-disabled='(chatAgentCtr.currentUser.sender && chatAgentCtr.isDownloadingFile ) || !chatAgentCtr.currentUser.sender', id="file" type="file")
-                                                                    p.text-danger(ng-show='chatAgentCtr.fileErrorText') {{ chatAgentCtr.fileErrorText }}
-                                                            .form-group
-                                                                textarea.form-control.message-input(ng-model='chatAgentCtr.phone', name='phone', placeholder='Customer phone number', id='phoneNumber')
-                                                                a.btn.btn-w-m.btn-success.chat-button(ng-disabled='!chatAgentCtr.currentUser.sender', ng-click='chatAgentCtr.linkTwilio()') Link Twilio
-                                                                a.btn.btn-w-m.btn-success.chat-button(ng-disabled='!chatAgentCtr.currentUser.sender', ng-click='chatAgentCtr.linkFacebook()') Link Messenger
+                                                                input.form-control(ng-model='chatAgentCtr.phone', name='phone', placeholder='Customer phone number', id='phoneNumber')
+                                                                a.btn.btn-w-m.btn-success.chat-button(ng-click='chatAgentCtr.linkTwilio()') Link Twilio
+                                                                a.btn.btn-w-m.btn-success.chat-button(ng-click='chatAgentCtr.linkFacebook()') Link Messenger
+
+
 
 
             include footer.pug

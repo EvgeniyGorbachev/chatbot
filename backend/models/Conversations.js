@@ -43,6 +43,9 @@ module.exports = function(sequelize, DataTypes) {
     },
     pauseInitiator: {
       type: Sequelize.TEXT,
+    },
+    linked_channels: {
+        type: Sequelize.TEXT,
     }
   }, {
     classMethods:{

@@ -11,6 +11,7 @@ angular.module('campaignsApp.agentChat', [])
     vm.isDownloadingFile = false;
     vm.smoochAppId = null;
     vm.fileErrorText = null;
+    vm.channel = null;
 
     vm.userConversation = [];
     vm.userList = [];
@@ -20,7 +21,8 @@ angular.module('campaignsApp.agentChat', [])
       "text": '',
       "user_id": '',
       "campaign_id": '',
-      "direction": 1
+      "direction": 1,
+      "platform": ''
     };
 
     $(function() {
@@ -49,11 +51,32 @@ angular.module('campaignsApp.agentChat', [])
         let file = e.target.files[0];
         let stream = ss.createStream();
 
-        if (vm.isValidFile(file)) {
+        // Save all except image files on our backend
+        if (vm.isValidFile(file) && file.type != 'image/png' && file.type != 'image/jpeg') {
+
           // Upload a file to the server.
           ss(socket).emit('file', stream, {"name": file.name, "userId": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id,});
           ss.createBlobReadStream(file).pipe(stream);
+        } else {
+
+            // Save all images on Smooch API
+            let smooch = new SmoochCore.Smooch({
+                jwt: vm.currentUser.smoochJwt
+            });
+
+            smooch.appUsers.uploadImage(vm.currentUser.sender, file,
+                {
+                    role: 'appMaker'
+                }).then(() => {
+                vm.isDownloadingFile = false;
+                socket.emit('getUserConversation', {"smoochUserId": vm.currentUser.sender, "campaignId": vm.currentUser.campaign_id});
+            });
         }
+
+      });
+
+      $('#channelType').change(function(e){
+          vm.channel = $("#channelType").find(":selected").text();
       });
     });
 
@@ -74,7 +97,7 @@ angular.module('campaignsApp.agentChat', [])
     });
 
     socket.on('userConversation', function (data) {
-      vm.userConversation = data;
+      vm.userConversation = data.messages;
 
       // Scroll to bottom
       $(".chat-discussion").scrollTop($(".chat-discussion")[0].scrollHeight);
@@ -103,7 +126,7 @@ angular.module('campaignsApp.agentChat', [])
     socket.on('userConversationUpdate', function (data) {
       vm.messageText = '';
       vm.isSend = false;
-      vm.userConversation = data;
+      vm.userConversation.push(data);
       $scope.$digest();
     });
 
@@ -125,7 +148,7 @@ angular.module('campaignsApp.agentChat', [])
 
           // If open window with webhook user, refresh messages
           if (data.userId == conv.sender && conv.sender == vm.currentUser.sender) {
-            socket.emit('getUserConversation', {"userId": vm.currentUser.sender});
+              socket.emit('getUserConversation', {"smoochUserId": vm.currentUser.sender, "campaignId": vm.currentUser.campaign_id});
           }
         })
       }
@@ -134,19 +157,19 @@ angular.module('campaignsApp.agentChat', [])
         console.log('webhook. Get message from bot: ', data)
         // If open window with webhook user, refresh messages
         if (data.userId == vm.currentUser.sender) {
-          socket.emit('getUserConversation', {"userId": vm.currentUser.sender});
+            socket.emit('getUserConversation', {"smoochUserId": vm.currentUser.sender, "campaignId": vm.currentUser.campaign_id});
         }
       }
 
       if (data.type == 'new conversation added') {
         console.log('webhook. Add new conversation to agent: ', data)
-        socket.emit('getConversationByUserId', data.userId);
+        socket.emit('getConversationBySmoochUserId', data.userId);
       }
       $scope.$digest();
     });
 
     socket.on('err', function (data) {
-      console.log('WebSocket error: ', data);
+      console.error('WebSocket error: ', data);
       vm.websocketIsError = true;
       vm.isSend = false;
       $scope.$digest();
@@ -178,7 +201,7 @@ angular.module('campaignsApp.agentChat', [])
 
       vm.currentUser = user;
       console.log('Check new user: ', vm.currentUser);
-      socket.emit('getUserConversation', {"userId": vm.currentUser.sender});
+      socket.emit('getUserConversation', {"smoochUserId": vm.currentUser.sender, "campaignId": vm.currentUser.campaign_id});
 
       vm.toggleTextArea();
       vm.cleanTextArea();
@@ -186,7 +209,7 @@ angular.module('campaignsApp.agentChat', [])
 
     vm.sendMessage = function() {
       vm.isSend = true;
-      socket.emit('sendMessage', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": vm.messageText, "direction": 1});
+      socket.emit('sendMessage', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": vm.messageText, "direction": 1, "channel": vm.channel});
       vm.messageText = '';
 
       vm.cleanTextArea();
@@ -199,11 +222,11 @@ angular.module('campaignsApp.agentChat', [])
     };
 
     vm.toggleTextArea = function () {
-      if (!vm.currentUser.isPaused) {
-        $(".emojionearea").addClass("disablearea")
-      } else {
-        $(".emojionearea").removeClass("disablearea")
-      }
+      // if (!vm.currentUser.isPaused) {
+      //   $(".emojionearea").addClass("disablearea")
+      // } else {
+      //   $(".emojionearea").removeClass("disablearea")
+      // }
     };
 
     vm.cleanTextArea = function () {
@@ -234,6 +257,7 @@ angular.module('campaignsApp.agentChat', [])
       let availableExtention = {
         "doc" : true,
         "jpeg": true,
+        "jpg": true,
         "pdf" : true,
         "png" : true,
         "xls" : true,
@@ -243,7 +267,7 @@ angular.module('campaignsApp.agentChat', [])
       let fileExtenstion = file.name.split('.').pop();
 
       if (!availableExtention[fileExtenstion]) {
-        vm.fileErrorText = 'Only files with extension are allowed: .png, .jpeg, .pdf, .doc, .xlsx, .xls';
+        vm.fileErrorText = 'Only files with extension are allowed: .png, .jpeg, .jpg, .pdf, .doc, .xlsx, .xls';
         return false;
       }
 

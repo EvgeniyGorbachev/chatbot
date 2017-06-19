@@ -26,6 +26,19 @@
   margin-right: 5px;
 }
 
+/*Set iFrame size*/
+.sk-msg {
+  max-width: 230px !important;
+}
+
+.sk-message-item {
+  max-width: 230px !important;
+}
+
+.sk-message-item a{
+  color: blue;
+}
+
 /*
  *
  *   INSPINIA - Responsive Admin Theme

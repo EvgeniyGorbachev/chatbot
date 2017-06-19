@@ -209,3 +209,109 @@ html(ng-app='campaignsApp' ng-cloak)
                     .sk-message-item a{
                         color: blue;
                     }
+
+                script.
+                    $(document).ready(function () {
+
+                        var host = '#{fileHostName}';
+
+                        var skPromise = Smooch.init({
+                            appToken: '#{campaign.smooch_app_token}'
+                        });
+
+                        Smooch.on('ready', function () {
+                            // Check all old messages
+                            $.each(getAllMessages(), function (index, mes) {
+                                checkMessages(mes);
+                            });
+
+                            // Listen new messages
+                            $(".send").on('click', function () {
+                                checkMessages(getLastMessages());
+                            });
+
+                            $('.message-input').keyup(function (e) {
+                                if (e.keyCode == 13) {
+                                    checkMessages(getLastMessages());
+                                }
+                            });
+                        });
+
+                        // This event triggers when the user receives a message
+                        Smooch.on('message:received', function (message) {
+                            checkMessages(getLastMessages());
+                        });
+
+
+                        // Check for links and add iframe instead of all links.
+                        function checkMessages(mes) {
+                                let messageJqueryObject = $(mes);
+
+                                let html = '';
+                                let iFrame = '';
+                                let messageText = messageJqueryObject.text();
+                                let textArray = messageText.split(' ');
+
+                            // Checking each word in the sentence
+                            $.each(textArray, function (index, text) {
+                                // If valid link
+                                if (/^(ftp|http|https):\/\/[^ "]+$/.test(text)) {
+
+                                        let vimeoId = getVideoId(text);
+
+                                    if (vimeoId != 'error') {
+                                        iFrame += '<iframe width="200" height="200" src="https://player.vimeo.com/video/' + vimeoId + '" frameborder="0" allowfullscreen></iframe>';
+                                    } else {
+                                        iFrame += '<iframe width="200" height="200" src="' + text + '" frameborder="0" allowfullscreen></iframe>';
+                                    }
+
+                                    // If link too long, replace it
+                                    if (text.length > 60) {
+                                        textArray[index] = '<strong><a href="' + text + '" target="_blank">link</a></strong>';
+                                    }
+                                }
+
+                            });
+
+                            var link = $.parseHTML(messageText);
+                            var donwloadLinkJqueryObject = $(link);
+                            var fileName = donwloadLinkJqueryObject.attr("data-file-name");
+
+                            // Parse download link
+                            if (fileName) {
+                                var href = donwloadLinkJqueryObject.attr('href');
+
+                                var t = href.split('.');
+                                var fileFormat = t[t.length-1];
+                                var thumbnailUrl = host + '/assets/img/user_files/thumbnail/' + fileName;
+                                // Replace spaces in link
+                                thumbnailUrl = thumbnailUrl.replace(/\s/g,"%20");
+
+                                var pathToThumbnail =  (fileFormat == 'png' || fileFormat == 'jpeg')? thumbnailUrl : host + "/assets/img/fileformats/" + fileFormat + "-fileformat.png";
+                                var text = '<strong><a href="' + host + href + '" download><img src=' + pathToThumbnail + ' /></a></strong>';
+
+                                // Add new messages html
+                                messageJqueryObject.find('.sk-message-item').html(text);
+                            } else {
+                                html = textArray.join(" ");
+                                html += iFrame;
+                                // Add new messages html
+                                messageJqueryObject.find('.sk-message-item').html(html);
+                            }
+                        }
+
+                        function getLastMessages() {
+                            return $('.sk-messages').children().last();
+
+                        }
+
+                        function getAllMessages() {
+                            return $('.sk-messages').children();
+                        }
+
+                        function getVideoId(url) {
+                            var regExp = /^.*(vimeo\.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/))?([0-9]+)/;
+                            var match = url.match(regExp);
+                            return (match && match[5].length === 9) ? match[5] : 'error';
+                        }
+                    });
