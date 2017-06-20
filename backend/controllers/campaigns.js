@@ -1,13 +1,12 @@
 const db = require('../models/index.js')
 const helper = require('../lib/helper')
-const SmoochCore =  require('smooch-core')
 const request = require('request')
 
 /**
  * GET /campaigns
  * List of campaigns.
  */
-exports.getCampaigns = (req, res) => {
+exports.getCampaigns = (req, res, next) => {
   db.Campaigns.all({order: 'id DESC'}).then(function (campaigns) {
       res.render('campaigns', {
           campaignList  : campaigns,
@@ -17,55 +16,57 @@ exports.getCampaigns = (req, res) => {
           err           : req.query.err
       })
   })
+  .catch(next);
 };
 
 /**
  * GET /campaigns/:id
  * Get campaign by id.
  */
-exports.getCampaignById = (req, res) => {
+exports.getCampaignById = (req, res, next) => {
 
   let id = req.params.id
 
-  db.Campaigns.findOne({ where: {id: id}, include: [{
-    model: db.StopWords
-  }]}).then(function(campaign) {
-    db.Users.all({order: 'id DESC'}).then(function (users) {
-      db.UsersHasCampaign.findAll({where: {campaign_id: id}}).then(function(items){
+    Promise.all([
+            db.Campaigns.findOne({ where: {id: id}, include: [{model: db.StopWords}]}),
+            db.Users.all({order: 'id DESC'}),
+            db.UsersHasCampaign.findAll({where: {campaign_id: id}})
+        ])
+        .then(function(data) {
+            let campaign = data[0]
+            let users = data[1]
+            let items = data[2]
 
-        let usersId = []
-        items.forEach(function(item) {
-          usersId.push(item.user_id);
-        });
+            let usersId = []
+            items.forEach(function(item) {
+                usersId.push(item.user_id);
+            });
 
-        if (campaign.StopWords.length > 0){
-          let stop_word_string = ''
-          for(let i in campaign.StopWords){
-            stop_word_string +=  campaign.StopWords[i].word + ', ';
+            if (campaign.StopWords.length > 0){
+                let stop_word_string = ''
 
-          }
-          campaign.dataValues.stop_word = stop_word_string;
-        }
+                campaign.StopWords.forEach(function(StopWord) {
+                    stop_word_string +=  StopWord.word + ', '
+                })
 
-        campaign.dataValues.users = usersId;
-        let data = JSON.stringify(campaign)
-        res.render('campaigns_edit', {
-          campaign: data,
-          users: users
+                campaign.dataValues.stop_word = stop_word_string;
+            }
+
+            campaign.dataValues.users = usersId;
+
+            res.render('campaigns_edit', {
+                campaign: JSON.stringify(campaign),
+                users: users
+            })
         })
-      })
-    })
-  }).catch(function(err) {
-    console.log('555555 errr', err)
-      res.render('campaigns_edit')
-  })
+        .catch(next);
 };
 
 /**
  * POST /campaigns/:id
  * Update campaign by id.
  */
-exports.updateCampaignById = (req, res) => {
+exports.updateCampaignById = (req, res, next) => {
   let campaign = JSON.parse(req.body.jsonData)
 
   campaign.startDate = (new Date(campaign.startDate))
@@ -73,64 +74,51 @@ exports.updateCampaignById = (req, res) => {
 
   //if update
   if (campaign.id) {
-    db.Campaigns.findOne({ where: {id: campaign.id} }).then(function(item) {
-      item.update(campaign).then(function() {
-
-        if(campaign.users){
-          db.UsersHasCampaign.destroy({
-            where:{
-              campaign_id: campaign.id
-            }
-          });
-
-          for(let i in campaign.users){
-            let obj = {
-              user_id: campaign.users[i],
-              campaign_id: campaign.id
-            };
-
-            db.UsersHasCampaign.create(obj);
-          }
-
-        } else {
-          db.UsersHasCampaign.destroy({
-            where:{
-              campaign_id: campaign.id
-            }
-          });
-        }
-
-        // Update stop word
-        helper.updateStopWord(campaign.stop_word, campaign.id)
-
-
-        res.redirect('/campaigns?updated=true');
-      }).catch(function(err) {
-        console.log(err)
-
-        db.Users.all({order: 'id DESC'}).then(function (users) {
-          res.render('campaigns_edit', {
-            campaign: campaigns,
-            users: users,
-            err  : 'Update wrong'
+      db.Campaigns.findOne({ where: {id: campaign.id} })
+          .then(function (item) {
+              return item.update(campaign)
           })
-        })
+          .then(function () {
+              if(campaign.users){
+                  db.UsersHasCampaign.destroy({
+                      where:{
+                          campaign_id: campaign.id
+                      }
+                  });
 
-      })
-    }).catch(function(err) {
-      console.log(err)
-      db.Campaigns.all().then(function (campaigns)
-      {
-        db.Users.all({order: 'id DESC'}).then(function (users) {
-          res.render('campaigns_edit', {
-            campaign: campaigns,
-            users: users,
-            err  : 'Campaign not found'
+                  campaign.users.forEach(function (user) {
+                      let obj = {
+                          user_id: user,
+                          campaign_id: campaign.id
+                      };
+
+                      db.UsersHasCampaign.create(obj);
+                  })
+
+              } else {
+                  db.UsersHasCampaign.destroy({
+                      where:{
+                          campaign_id: campaign.id
+                      }
+                  });
+              }
+
+              // Update stop word
+              helper.updateStopWord(campaign.stop_word, campaign.id)
+
+              res.redirect('/campaigns?updated=true');
           })
-        })
-
-      })
-    })
+          .catch(function (err) {
+              db.Users.all({order: 'id DESC'})
+                .then(function (users) {
+                  res.render('campaigns_edit', {
+                      campaign: campaigns,
+                      users: users,
+                      err  : 'Update wrong'
+                  })
+              })
+              next()
+          })
     //if create
   } else {
 
@@ -267,35 +255,37 @@ exports.updateCampaignById = (req, res) => {
  * DELETE /campaigns/:id
  * Delete campaign by id.
  */
-exports.deleteCampaignById = (req, res) => {
+exports.deleteCampaignById = (req, res, next) => {
   let id = req.params.id
 
-  db.Campaigns.findOne({where: {id: id}}).then(function (campaign) {
-    campaign.destroy().then(function () {
-      res.redirect('/campaigns?deleted=true');
-    });
-
-  }).catch(function (err) {
-    res.redirect('/campaigns');
-  })
+  db.Campaigns.findOne({where: {id: id}})
+      .then(function (campaign) {
+        return campaign.destroy()
+      })
+      .then(function () {
+          res.redirect('/campaigns?deleted=true');
+      })
+      .catch(function (err) {
+        res.redirect('/campaigns');
+        next()
+      })
 };
 
 /**
  * POST /campaigns/:id
  * Update campaign status.
  */
-exports.updateCampaignStatus = (req, res) => {
+exports.updateCampaignStatus = (req, res, next) => {
   let campaign = JSON.parse(req.body.jsonData)
   let bool     = campaign.isActive ? 1 : 0
-  db.Campaigns.findOne({where: {id: campaign.id}}).then(function (campaign) {
-    campaign.update({
-      isActive: bool
-    }).then(function () {
-      res.redirect('/campaigns?updated=true')
-    }).catch(function (err) {
-      console.log(err)
+  db.Campaigns.findOne({where: {id: campaign.id}})
+    .then(function (campaign) {
+        campaign.update({isActive: bool})
     })
-  })
+    .then(function () {
+      res.redirect('/campaigns?updated=true')
+    })
+    .catch(next)
 };
 
 /**
@@ -303,13 +293,17 @@ exports.updateCampaignStatus = (req, res) => {
  *
  *  Reset conversation for selected campaign
  */
-exports.resetCampaignConversationById = (req, res) => {
+exports.resetCampaignConversationById = (req, res, next) => {
     let id = req.params.id
 
-    db.Conversations.findAll({where: {campaign_id: id}}).then(campaigns => {
-        for(let i in campaigns){
-          campaigns[i].destroy();
-        }
-        res.redirect('/campaigns?updated=true')
-    });
+    db.Conversations.findAll({where: {campaign_id: id}})
+        .then(campaigns => {
+            if (campaigns) {
+                campaigns.map(function(campaign) {
+                    campaign.destroy();
+                })
+            }
+            res.redirect('/campaigns?updated=true')
+        })
+        .catch(next)
 }

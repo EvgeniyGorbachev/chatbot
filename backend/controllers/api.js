@@ -14,7 +14,7 @@ exports.welcome = (req, res) => {
  * POST /api/user
  * User payment processing
  */
-exports.paymentProcessing = (req, res) => {
+exports.paymentProcessing = (req, res, next) => {
   var shipping = JSON.stringify(req.body.shipping)
   var billing  = JSON.stringify(req.body.billing)
 
@@ -68,11 +68,11 @@ exports.paymentProcessing = (req, res) => {
     })
 
   }).catch(db.Sequelize.ValidationError, function (err) {
-    console.log(err)
     res.json({msg: 'Database error, unsaved.'})
+    next()
   }).catch(function (err) {
-    console.log("error", err)
     res.status(500).json({msg: 'An error has occurred'})
+    next()
   })
 };
 
@@ -93,6 +93,6 @@ exports.getInvoice = (req, res) => {
 
   }).catch(function (err) {
     res.status(500).json({msg: 'An error has occurred'})
-    console.log(err)
+    next()
   })
 };
