@@ -38,6 +38,7 @@ console.log(token)
 //     to: "+12818090012 ",
 //     from: "+15756802274",
 //     body: "hi from smsmsmsmsmsm"
+
 // }, function(err, message) {
 //     console.log(message.sid);
 // });
@@ -144,6 +145,7 @@ console.log(token)
 // });
 
 //get user
+
 // smooch.appUsers.get('9a4a8cf4c32df4cce2f2bcc5').then((response) => {
 //   console.log(response.appUser.clients)
 // });
@@ -179,8 +181,6 @@ console.log(token)
 //   console.log(response)
 // });
 
-//
-
 // smooch.appUsers.get('69cbafd0ecb7045da42b6f07').then((response) => {
 //
 //     console.log('1111111111', response.appUser.clients)
@@ -204,6 +204,7 @@ console.log(token)
 
 // console.log(smooch)
 // smooch.appUsers.getMessages('9a4a8cf4c32df4cce2f2bcc5').then((response) => {
+
 //
 //   console.log('1111111111', response)
 //
@@ -212,11 +213,10 @@ console.log(token)
 //
 // });
 
+
 // smooch.appUsers.deleteMessages('a8dc091c4faef477e7898131').then(() => {
 //     // async code
 // });
-
-
 
 //
 // smooch.appUsers.linkChannel('67aef89989d281e454174bd5', {

@@ -95,6 +95,7 @@ module.exports = function(dashboardChat, SMOOCH) {
 
     // Get user conversation
     socket.on('getUserConversation', function(msg){
+
         db.Campaigns.findOne({where: {id: msg.campaignId}})
             .then(function(campaign) {
                 return SMOOCH.appUsers.getMessages(campaign.smooch_app_id, msg.smoochUserId)
@@ -111,6 +112,7 @@ module.exports = function(dashboardChat, SMOOCH) {
 
     // Send message
     socket.on('sendMessage', function(msg){
+
         db.Campaigns.findOne({where: {id: msg.campaign_id}})
             .then(function(campaign) {
                 let smoochOptions = {
@@ -132,6 +134,7 @@ module.exports = function(dashboardChat, SMOOCH) {
     // Link twilio
     socket.on('linkTwilio', function(msg){
       if (msg.phone) {
+
           db.Campaigns.findOne({where: {id: msg.campaign_id}})
               .then(function(campaign) {
                   if (campaign) {

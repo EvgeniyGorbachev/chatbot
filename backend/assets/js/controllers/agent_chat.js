@@ -208,9 +208,7 @@ angular.module('campaignsApp.agentChat', [])
 
     vm.sendMessage = function() {
       vm.isSend = true;
-
       socket.emit('sendMessage', {"user_id": vm.currentUser.sender, "campaign_id": vm.currentUser.campaign_id, "text": vm.messageText, "channel": vm.channel});
-
       vm.messageText = '';
 
       vm.cleanTextArea();
