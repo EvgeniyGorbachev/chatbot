@@ -2,15 +2,15 @@
 
 module.exports = {
     campaignTableName: 'campaign',
-    up: function(queryInterface, Sequelize) {
+    up: function (queryInterface, Sequelize) {
         return queryInterface.addColumn(
-            'Users',
-            'campaign_id',
-            Sequelize.INTEGER
+          'Users',
+          'campaign_id',
+          Sequelize.INTEGER
         )
     },
 
-    down: function(queryInterface, Sequelize) {
+    down: function (queryInterface, Sequelize) {
         return queryInterface.removeColumn('Users', 'campaign_id')
     }
 };

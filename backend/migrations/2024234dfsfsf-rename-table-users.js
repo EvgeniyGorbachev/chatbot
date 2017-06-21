@@ -2,11 +2,11 @@
 
 module.exports = {
     campaignTableName: 'Users',
-    up: function(queryInterface, Sequelize) {
+    up: function (queryInterface, Sequelize) {
         return queryInterface.renameTable('Users', 'Payments')
     },
 
-    down: function(queryInterface, Sequelize) {
+    down: function (queryInterface, Sequelize) {
 
     }
 };

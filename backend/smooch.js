@@ -6,7 +6,7 @@ const smooch = new Smooch({
     keyId: 'app_5900b9a92f588d5a016a1e8d',
     secret: 'PWUIlzOX113c2Enqj5_AzDQj',
     scope: 'app' });
-console.log(smooch.authHeaders)
+    //console.log(smooch.authHeaders)
 
 const jwt = require('jsonwebtoken');
 
@@ -16,20 +16,6 @@ const token = jwt.sign({
     header: { kid: 'app_5900b9a92f588d5a016a1e8d' }
 });
 
-console.log(token)
-
-
-
-// smooch.integrations.list('5900b9a97651104b00b141cc').then((response) => {
-//     console.log(response)
-// });
-
-
-//
-//
-// smooch.appUsers.getMessages('47e40dc095ea78066c66f8cb').then((response) => {
-//     console.log(response.messages)
-// });
 
 // Send SMS
 // var client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
@@ -37,8 +23,7 @@ console.log(token)
 // client.messages.create({
 //     to: "+12818090012 ",
 //     from: "+15756802274",
-//     body: "hi from smsmsmsmsmsm"
-
+//     body: "SMS msg"
 // }, function(err, message) {
 //     console.log(message.sid);
 // });
@@ -145,27 +130,11 @@ console.log(token)
 // });
 
 //get user
-
 // smooch.appUsers.get('9a4a8cf4c32df4cce2f2bcc5').then((response) => {
 //   console.log(response.appUser.clients)
 // });
 
-//link channel
-// smooch.appUsers.linkChannel('bf94cfa4cdeb770f238828b7', {
-//   type: 'twilio',
-//   phoneNumber: '+15756802274',
-//     confirmation: {
-//         type: 'immediate'
-//     }
-// }).then((response) => {
-//     console.log(response)
-// }).catch((err) => {
-//   console.log(err)
-// });
-//
-// smooch.integrations.list('55c8d9758590aa1900b9b9f6').then((response) => {
-//     // async code
-// });
+
 
 // send message
 // let userId = 'b0e7711936f9e0f44d3b5b41';
@@ -181,30 +150,11 @@ console.log(token)
 //   console.log(response)
 // });
 
-// smooch.appUsers.get('69cbafd0ecb7045da42b6f07').then((response) => {
 //
-//     console.log('1111111111', response.appUser.clients)
-//     console.log('2222222222', response)
-// }).catch((err) => {
-//   console.log(55555555, err)
-//
-// });
 
-// smooch.appUsers.unlinkChannel('69cbafd0ecb7045da42b6f07', 'web')
-//     .then(() => {
-//         // async code
-//     }).catch((err) => {
-//     console.log(55555555, err)
-//
-// });
-
-
-// 9a4a8cf4c32df4cce2f2bcc5 twilio  +15756802274
-// a8dc091c4faef477e7898131 facebook
 
 // console.log(smooch)
 // smooch.appUsers.getMessages('9a4a8cf4c32df4cce2f2bcc5').then((response) => {
-
 //
 //   console.log('1111111111', response)
 //
@@ -214,9 +164,7 @@ console.log(token)
 // });
 
 
-// smooch.appUsers.deleteMessages('a8dc091c4faef477e7898131').then(() => {
-//     // async code
-// });
+
 
 //
 // smooch.appUsers.linkChannel('67aef89989d281e454174bd5', {

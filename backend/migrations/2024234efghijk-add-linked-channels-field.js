@@ -2,15 +2,15 @@
 
 module.exports = {
     campaignTableName: 'conversations',
-    up: function(queryInterface, Sequelize) {
+    up: function (queryInterface, Sequelize) {
         return queryInterface.addColumn(
-            'conversations',
-            'linked_channels',
-            Sequelize.STRING
+          'conversations',
+          'linked_channels',
+          Sequelize.STRING
         )
     },
 
-    down: function(queryInterface, Sequelize) {
+    down: function (queryInterface, Sequelize) {
         return queryInterface.removeColumn('conversations', 'linked_channels')
     }
 };
