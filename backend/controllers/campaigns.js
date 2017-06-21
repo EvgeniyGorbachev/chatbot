@@ -1,5 +1,5 @@
-const db = require('../models/index.js')
-const helper = require('../lib/helper')
+const db      = require('../models/index.js')
+const helper  = require('../lib/helper')
 const request = require('request')
 
 /**
@@ -106,17 +106,11 @@ exports.updateCampaignById = (req, res, next) => {
               // Update stop word
               helper.updateStopWord(campaign.stop_word, campaign.id)
 
-              res.redirect('/campaigns?updated=true');
+              return res.redirect('/campaigns?updated=true');
           })
           .catch(function (err) {
-              db.Users.all({order: 'id DESC'})
-                .then(function (users) {
-                  res.render('campaigns_edit', {
-                      campaign: campaigns,
-                      users: users,
-                      err  : 'Update wrong'
-                  })
-              })
+              console.log(err)
+              return res.redirect('/campaigns?update=false');
               next()
           })
     //if create

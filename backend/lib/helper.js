@@ -1,4 +1,4 @@
-const db = require('../models/index.js')
+const db  = require('../models/index.js')
 const jwt = require('jsonwebtoken')
 
 
@@ -18,41 +18,45 @@ exports.updateStopWord = (stopWords, campaignId) => {
 
     let words = stopWords.split(",")
     if (words.length > 0) {
-      for(let i in words){
+      words.map(function (word) {
 
         // Filter word, to lowercase and trim spaces from start and end of string
-        let w = words[i].toLowerCase().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+        let w = word.toLowerCase().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
 
         if (w) {
-          db.StopWords.findOne({where: {word: w}}).then(word => {
-            if (word) {
-              let obj = {
-                stop_word_id: word.id,
-                campaign_id: campaignId
-              };
+            db.StopWords.findOne({where: {word: w}})
+                .then(function (word) {
+                    if (word) {
+                        let obj = {
+                            stop_word_id: word.id,
+                            campaign_id: campaignId
+                        };
 
-              // Attach new word to campaign
-              db.StopWordHasCampaign.create(obj);
+                        // Attach new word to campaign
+                        db.StopWordHasCampaign.create(obj);
+                        return Promise.resolve(undefined)
 
-            } else {
-              // Save new stop word
-              db.StopWords.create({"word": w}).then(function(data) {
-                let obj = {
-                  stop_word_id: data.id,
-                  campaign_id: campaignId
-                };
+                    } else {
+                        // Save new stop word
+                        return db.StopWords.create({"word": w})
+                    }
+                })
+                .then(function (data) {
+                    if (data) {
+                        let obj = {
+                            stop_word_id: data.id,
+                            campaign_id: campaignId
+                        };
 
-                // Attach new word to campaign
-                db.StopWordHasCampaign.create(obj);
-              }).catch(function(err) {
-                console.log(8787878878,  err)
-              })
-            }
-          }).catch(function(err) {
-            console.log(2323232323,  err)
-          })
+                        // Attach new word to campaign
+                        db.StopWordHasCampaign.create(obj);
+                    }
+                })
+                .catch(function (err) {
+                    console.log(err)
+                })
         }
-      }
+      })
     }
   }
 };

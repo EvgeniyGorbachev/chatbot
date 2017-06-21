@@ -16,13 +16,13 @@ require('dotenv').config()
 /**
  * Controllers (route handlers).
  */
-const campaingController = require('./controllers/campaigns')
+const campaingController  = require('./controllers/campaigns')
 const dashboardController = require('./controllers/dashboard')
-const apiController = require('./controllers/api')
-const authController = require('./controllers/authentication')
-const sessionsController = require('./controllers/sessions')
-const usersController = require('./controllers/users')
-const chatController = require('./controllers/agent_chat')
+const apiController       = require('./controllers/api')
+const authController      = require('./controllers/authentication')
+const sessionsController  = require('./controllers/sessions')
+const usersController     = require('./controllers/users')
+const chatController      = require('./controllers/agent_chat')
 
 /**
  * Connect to Smooch API
@@ -96,17 +96,17 @@ app.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), 
 /**
  * Primary app routes.
  */
-app.get('/dashboard/:id',                   authController.ensureAuthenticated, role.require(['admin']), dashboardController.getDashboardById)
-app.post('/campaigns',                      authController.ensureAuthenticated, role.require(['admin']), campaingController.updateCampaignStatus)
+app.get('/dashboard/:id',                   authController.ensureAuthenticated, role.require(['admin']),                    dashboardController.getDashboardById)
+app.post('/campaigns',                      authController.ensureAuthenticated, role.require(['admin']),                    campaingController.updateCampaignStatus)
 app.get('/campaigns',                       authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), campaingController.getCampaigns)
 app.get('/campaigns/:id',                   authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), campaingController.getCampaignById)
-app.post('/campaigns/:id',                  authController.ensureAuthenticated, role.require(['admin']), campaingController.updateCampaignById)
-app.get('/campaigns/delete/:id',            authController.ensureAuthenticated, role.require(['admin']), campaingController.deleteCampaignById)
-app.get('/campaigns/reset_conversation/:id',authController.ensureAuthenticated, role.require(['admin']), campaingController.resetCampaignConversationById)
+app.post('/campaigns/:id',                  authController.ensureAuthenticated, role.require(['admin']),                    campaingController.updateCampaignById)
+app.get('/campaigns/delete/:id',            authController.ensureAuthenticated, role.require(['admin']),                    campaingController.deleteCampaignById)
+app.get('/campaigns/reset_conversation/:id',authController.ensureAuthenticated, role.require(['admin']),                    campaingController.resetCampaignConversationById)
 app.get('/campaigns/:campaignid/sessions',  authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), sessionsController.getSessionsById)
 app.get('/agent/:userid',                   authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), sessionsController.getSessionsByUserId)
-app.get('/users',                           authController.ensureAuthenticated, role.require(['admin']), usersController.getUsers)
-app.get('/users/:id',                       authController.ensureAuthenticated, role.require(['admin']), usersController.getUserById)
+app.get('/users',                           authController.ensureAuthenticated, role.require(['admin']),                    usersController.getUsers)
+app.get('/users/:id',                       authController.ensureAuthenticated, role.require(['admin']),                    usersController.getUserById)
 app.post('/users/:id',                      authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), usersController.updateUserById)
 app.get('/chat/agent/:id',                  chatController.getAgentChats)
 
