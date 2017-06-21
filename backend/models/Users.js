@@ -1,8 +1,8 @@
 let Sequelize = require("sequelize")
 let moment = require('moment')
 
-module.exports = function (sequelize, DataTypes) {
-  const users =  sequelize.define('Users', {
+module.exports = function(sequelize, DataTypes) {
+    const users = sequelize.define('Users', {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -30,25 +30,34 @@ module.exports = function (sequelize, DataTypes) {
         },
         createdAt: {
             type: Sequelize.DATE,
-            get      : function()  {
+            get: function() {
                 return moment(this.getDataValue('createdAt')).format("MM/DD/YYYY");
             }
         },
         updatedAt: {
             type: Sequelize.DATE,
-            get      : function()  {
+            get: function() {
                 return moment(this.getDataValue('updatedAt')).format("MM/DD/YYYY");
             }
         }
     }, {
-      classMethods:{
-        associate:function(models){
-          users.belongsTo(models.Roles, { foreignKey: 'userRole'} );
-          users.belongsToMany(models.Campaigns, {through: 'UsersHasCampaign', foreignKey: 'user_id', otherKey: 'campaign_id'})
-          users.hasMany(models.Conversations, {foreignKey: 'userId', sourceKey: 'id'});
+        classMethods: {
+            associate: function(models) {
+                users.belongsTo(models.Roles, {
+                    foreignKey: 'userRole'
+                });
+                users.belongsToMany(models.Campaigns, {
+                    through: 'UsersHasCampaign',
+                    foreignKey: 'user_id',
+                    otherKey: 'campaign_id'
+                })
+                users.hasMany(models.Conversations, {
+                    foreignKey: 'userId',
+                    sourceKey: 'id'
+                });
+            }
         }
-      }
     });
 
-  return users;
+    return users;
 };

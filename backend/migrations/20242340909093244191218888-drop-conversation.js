@@ -2,9 +2,9 @@
 
 module.exports = {
     campaignTableName: 'conversations',
-    up: function (queryInterface, Sequelize) {
+    up: function(queryInterface, Sequelize) {
         return queryInterface.dropTable('conversations')
     },
 
-    down: function (queryInterface, Sequelize) {}
+    down: function(queryInterface, Sequelize) {}
 };

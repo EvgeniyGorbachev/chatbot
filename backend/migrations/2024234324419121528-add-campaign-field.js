@@ -2,15 +2,15 @@
 
 module.exports = {
     campaignTableName: 'campaign',
-    up: function (queryInterface, Sequelize) {
+    up: function(queryInterface, Sequelize) {
         return queryInterface.addColumn(
-          'campaign',
-          'isActive',
-          Sequelize.BOOLEAN
+            'campaign',
+            'isActive',
+            Sequelize.BOOLEAN
         )
     },
 
-    down: function (queryInterface, Sequelize) {
+    down: function(queryInterface, Sequelize) {
         return queryInterface.removeColumn('campaign', 'isActive')
     }
 };

@@ -1,12 +1,12 @@
 'use strict';
 
 module.exports = {
-  campaignTableName: 'stopWordHasCampaign',
-  up: function (queryInterface, Sequelize) {
-    return queryInterface.renameTable('stopWordHasConversation', 'stopWordHasCampaign')
-  },
+    campaignTableName: 'stopWordHasCampaign',
+    up: function(queryInterface, Sequelize) {
+        return queryInterface.renameTable('stopWordHasConversation', 'stopWordHasCampaign')
+    },
 
-  down: function (queryInterface, Sequelize) {
+    down: function(queryInterface, Sequelize) {
 
-  }
+    }
 };
