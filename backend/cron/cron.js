@@ -16,19 +16,15 @@ let j = schedule.scheduleJob('*/1 * * * *', function() {
                     where: {
                         id: conversation.id
                     }
-                }).then(function(conv) {
-
-                    conv.update({
+                })
+                .then(function(conv) {
+                    return conv.update({
                         isPaused: false,
                         pausedTime: null,
                         pauseInitiator: null
-                    }).then(function() {
-
-                    }).catch(function(err) {
-                        console.log('cron err 111111: ', err)
                     })
-
-                }).catch(function(err) {
+                })
+                .catch(function(err) {
                     console.log('cron err 22222: ', err)
                 })
             })
