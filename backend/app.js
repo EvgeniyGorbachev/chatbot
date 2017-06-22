@@ -1,12 +1,12 @@
-const express    = require('express')
-const app        = express()
-const http       = require('http').Server(app)
-const io         = require('socket.io')(http)
-const cors       = require('cors')
+const express = require('express')
+const app = express()
+const http = require('http').Server(app)
+const io = require('socket.io')(http)
+const cors = require('cors')
 const bodyParser = require('body-parser')
-const request    = require('request')
-const passport   = require('passport')
-const Smooch     = require('smooch-core')
+const request = require('request')
+const passport = require('passport')
+const Smooch = require('smooch-core')
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -16,13 +16,13 @@ require('dotenv').config()
 /**
  * Controllers (route handlers).
  */
-const campaingController  = require('./controllers/campaigns')
+const campaingController = require('./controllers/campaigns')
 const dashboardController = require('./controllers/dashboard')
-const apiController       = require('./controllers/api')
-const authController      = require('./controllers/authentication')
-const sessionsController  = require('./controllers/sessions')
-const usersController     = require('./controllers/users')
-const chatController      = require('./controllers/agent_chat')
+const apiController = require('./controllers/api')
+const authController = require('./controllers/authentication')
+const sessionsController = require('./controllers/sessions')
+const usersController = require('./controllers/users')
+const chatController = require('./controllers/agent_chat')
 
 /**
  * Connect to Smooch API
@@ -58,13 +58,20 @@ const webhooks = require('./webhooks/webhooks')
 /**
  * API keys and Passport configuration.
  */
-require('./config/passport')({'app': app})
+require('./config/passport')({
+    'app': app
+})
 
 /**
  * Express configuration.
  */
-app.use(bodyParser.json({limit: '50mb'}))
-app.use(bodyParser.urlencoded({extended: true, limit: '50mb'}))
+app.use(bodyParser.json({
+    limit: '50mb'
+}))
+app.use(bodyParser.urlencoded({
+    extended: true,
+    limit: '50mb'
+}))
 app.set('view engine', 'pug')
 app.use("/assets", express.static(__dirname + '/assets'))
 app.use(cors())
@@ -72,16 +79,22 @@ app.use(cors())
 /**
  * Make accessible to app router
  */
-app.use(function(req,res,next){
-  req.dashboardChatSocket = dashboardChatSocket;
-  req.smooch = smooch;
-  next();
+app.use(function(req, res, next) {
+    req.dashboardChatSocket = dashboardChatSocket;
+    req.smooch = smooch;
+    next();
 });
 
 // app.use(require('morgan')('combined'))
 app.use(require('cookie-parser')())
-app.use(require('body-parser').urlencoded({extended: true}))
-app.use(require('express-session')({secret: 'keyboard cat', resave: false, saveUninitialized: false}))
+app.use(require('body-parser').urlencoded({
+    extended: true
+}))
+app.use(require('express-session')({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+}))
 
 app.use(passport.initialize())
 app.use(passport.session())
@@ -89,7 +102,7 @@ app.use(passport.session())
 /**
  * Set current user data to session.
  */
-app.use(function(req,res,next){
+app.use(function(req, res, next) {
     res.locals.user = req.user;
     next();
 })
@@ -99,26 +112,28 @@ app.use(function(req,res,next){
  */
 app.get('/login', authController.getLoginPage)
 app.get('/logout', authController.logout)
-app.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), authController.login)
+app.post('/login', passport.authenticate('local', {
+    failureRedirect: '/login'
+}), authController.login)
 
 /**
  * Primary app routes.
  */
-app.get('/dashboard/:id',                   authController.ensureAuthenticated, role.require(['admin']),                    dashboardController.getDashboardById)
-app.post('/campaigns',                      authController.ensureAuthenticated, role.require(['admin']),                    campaingController.updateCampaignStatus)
-app.get('/campaigns',                       authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), campaingController.getCampaigns)
-app.get('/campaigns/:id',                   authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), campaingController.getCampaignById)
-app.post('/campaigns/:id',                  authController.ensureAuthenticated, role.require(['admin']),                    campaingController.updateCampaignById)
-app.get('/campaigns/delete/:id',            authController.ensureAuthenticated, role.require(['admin']),                    campaingController.deleteCampaignById)
-app.get('/campaigns/reset_conversation/:id',authController.ensureAuthenticated, role.require(['admin']),                    campaingController.resetCampaignConversationById)
-app.get('/campaigns/:campaignid/sessions',  authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), sessionsController.getSessionsById)
-app.get('/agent/:userid',                   authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), sessionsController.getSessionsByUserId)
-app.get('/users',                           authController.ensureAuthenticated, role.require(['admin']),                    usersController.getUsers)
-app.get('/users/:id',                       authController.ensureAuthenticated, role.require(['admin']),                    usersController.getUserById)
-app.post('/users/:id',                      authController.ensureAuthenticated, role.require(['admin','agent', 'manager']), usersController.updateUserById)
-app.get('/chat/agent/:id',                  chatController.getAgentChats)
+app.get('/dashboard/:id', authController.ensureAuthenticated, role.require(['admin']), dashboardController.getDashboardById)
+app.post('/campaigns', authController.ensureAuthenticated, role.require(['admin']), campaingController.updateCampaignStatus)
+app.get('/campaigns', authController.ensureAuthenticated, role.require(['admin', 'agent', 'manager']), campaingController.getCampaigns)
+app.get('/campaigns/:id', authController.ensureAuthenticated, role.require(['admin', 'agent', 'manager']), campaingController.getCampaignById)
+app.post('/campaigns/:id', authController.ensureAuthenticated, role.require(['admin']), campaingController.updateCampaignById)
+app.get('/campaigns/delete/:id', authController.ensureAuthenticated, role.require(['admin']), campaingController.deleteCampaignById)
+app.get('/campaigns/reset_conversation/:id', authController.ensureAuthenticated, role.require(['admin']), campaingController.resetCampaignConversationById)
+app.get('/campaigns/:campaignid/sessions', authController.ensureAuthenticated, role.require(['admin', 'agent', 'manager']), sessionsController.getSessionsById)
+app.get('/agent/:userid', authController.ensureAuthenticated, role.require(['admin', 'agent', 'manager']), sessionsController.getSessionsByUserId)
+app.get('/users', authController.ensureAuthenticated, role.require(['admin']), usersController.getUsers)
+app.get('/users/:id', authController.ensureAuthenticated, role.require(['admin']), usersController.getUserById)
+app.post('/users/:id', authController.ensureAuthenticated, role.require(['admin', 'agent', 'manager']), usersController.updateUserById)
+app.get('/chat/agent/:id', chatController.getAgentChats)
 
-app.get('/webchat/campaign/:id',            chatController.getChatExample)
+app.get('/webchat/campaign/:id', chatController.getChatExample)
 
 app.post('/webhook/web-chat', webhooks.webChat)
 

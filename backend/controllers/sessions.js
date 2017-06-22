@@ -4,16 +4,19 @@ const db = require('../models/index.js')
  * GET /campaigns/:campaignid/sessions
  * Get sessions by id.
  */
-exports.getSessionsById = (req, res, next) =>
-{
+exports.getSessionsById = (req, res, next) => {
     let campaignId = req.params.campaignid || false
-    db.Campaigns.findOne({where: {id: campaignId}})
-        .then(function (campaign) {
+    db.Campaigns.findOne({
+            where: {
+                id: campaignId
+            }
+        })
+        .then(function(campaign) {
             res.render('sessions', {
                 campaign: campaign
             })
         })
-        .catch(function () {
+        .catch(function() {
             res.redirect('/campaigns')
             next()
         })
@@ -23,14 +26,25 @@ exports.getSessionsById = (req, res, next) =>
  * GET /agent/:userid
  * Get sessions by user id.
  */
-exports.getSessionsByUserId = (req, res, next) =>
-{
+exports.getSessionsByUserId = (req, res, next) => {
     let userId = req.params.userid || false
 
     Promise.all([
-        db.Users.findOne({where: {id: userId}, include: [{model: db.Campaigns,}]}),
-        db.Conversations.findAll({where: { userId: userId }, attributes: ['id', 'campaign_id']})
-    ])
+            db.Users.findOne({
+                where: {
+                    id: userId
+                },
+                include: [{
+                    model: db.Campaigns,
+                }]
+            }),
+            db.Conversations.findAll({
+                where: {
+                    userId: userId
+                },
+                attributes: ['id', 'campaign_id']
+            })
+        ])
         .then(function(data) {
             let user = data[0]
             let conversations = data[1]

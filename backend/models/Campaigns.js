@@ -1,7 +1,7 @@
 let Sequelize = require("sequelize")
 let moment = require('moment')
 
-module.exports = function (sequelize, DataTypes) {
+module.exports = function(sequelize, DataTypes) {
     let campaign = sequelize.define('Campaigns', {
         id: {
             type: Sequelize.INTEGER,
@@ -21,25 +21,25 @@ module.exports = function (sequelize, DataTypes) {
         },
         startDate: {
             type: Sequelize.DATE,
-            get      : function()  {
+            get: function() {
                 return moment(this.getDataValue('startDate')).format("MM/DD/YYYY");
             }
         },
         endDate: {
             type: Sequelize.DATE,
-            get      : function()  {
+            get: function() {
                 return moment(this.getDataValue('endDate')).format("MM/DD/YYYY");
             }
         },
         createdAt: {
             type: Sequelize.DATE,
-            get      : function()  {
+            get: function() {
                 return moment(this.getDataValue('createdAt')).format("MM/DD/YYYY");
             }
         },
         updatedAt: {
             type: Sequelize.DATE,
-            get      : function()  {
+            get: function() {
                 return moment(this.getDataValue('updatedAt')).format("MM/DD/YYYY");
             }
         },
@@ -64,13 +64,24 @@ module.exports = function (sequelize, DataTypes) {
     }, {
         individualHooks: true,
         tableName: 'campaign',
-      classMethods:{
-        associate:function(models){
-          campaign.belongsToMany(models.Users, {through: 'UsersHasCampaign', foreignKey: 'campaign_id', otherKey: 'user_id'})
-          campaign.belongsToMany(models.StopWords, {through: 'StopWordHasCampaign', foreignKey: 'campaign_id', otherKey: 'stop_word_id'})
-          campaign.hasMany(models.Conversations, {foreignKey: 'campaign_id', sourceKey: 'id'});
+        classMethods: {
+            associate: function(models) {
+                campaign.belongsToMany(models.Users, {
+                    through: 'UsersHasCampaign',
+                    foreignKey: 'campaign_id',
+                    otherKey: 'user_id'
+                })
+                campaign.belongsToMany(models.StopWords, {
+                    through: 'StopWordHasCampaign',
+                    foreignKey: 'campaign_id',
+                    otherKey: 'stop_word_id'
+                })
+                campaign.hasMany(models.Conversations, {
+                    foreignKey: 'campaign_id',
+                    sourceKey: 'id'
+                });
+            }
         }
-      }
     });
-  return campaign;
+    return campaign;
 };

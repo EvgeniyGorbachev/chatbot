@@ -1,47 +1,43 @@
 'use strict';
 
 angular.module('campaignsApp.userEdit', [])
-    .controller('UserEditListController', function ($scope)
-    {
+    .controller('UserEditListController', function($scope) {
         console.info('UserEditListController');
-        let vm        = this;
-        vm.step       = 0;
+        let vm = this;
+        vm.step = 0;
         vm.isFormSend = false;
         vm.submit = submit;
         vm.options = {
-            "Admin" : 1,
-            "Manager" : 2
+            "Admin": 1,
+            "Manager": 2
         };
 
-        vm.steps       = [];
+        vm.steps = [];
         vm.flowStorage = {};
-        vm.user        = {
+        vm.user = {
             "object": null
         };
-        vm.data        = {
-            "id"  : '',
-            "username"  : '',
-            "password"  : '',
-            "phone"     : '',
-            "email"     : '',
-            "userRole"  : '',
+        vm.data = {
+            "id": '',
+            "username": '',
+            "password": '',
+            "phone": '',
+            "email": '',
+            "userRole": '',
             "created_at": ''
         };
 
         //when edit user
-        $scope.$watch('user.object', function ()
-        {
+        $scope.$watch('user.object', function() {
             vm.data = vm.user.object;
         });
 
-        $(".datapicker").bind("keydown", function (event)
-        {
+        $(".datapicker").bind("keydown", function(event) {
             event.preventDefault();
         });
 
 
-        function submit(event)
-        {
+        function submit(event) {
             event.preventDefault();
             vm.isFormSend = true;
 

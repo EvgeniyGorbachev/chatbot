@@ -10,19 +10,19 @@ module.exports = function(options) {
 
     passport.deserializeUser(function(id, cb) {
         db.Users.findOne({
-            where: {
-                id: id
-            },
-            include: [{
-                model: db.Roles
-            }]
-        })
-        .then(function(user) {
-            cb(null, user)
-        })
-        .catch(function(err) {
-            return cb('err')
-        })
+                where: {
+                    id: id
+                },
+                include: [{
+                    model: db.Roles
+                }]
+            })
+            .then(function(user) {
+                cb(null, user)
+            })
+            .catch(function(err) {
+                return cb('err')
+            })
     })
 
     /**
@@ -31,25 +31,25 @@ module.exports = function(options) {
     passport.use(new Strategy(
         function(username, password, done) {
             db.Users.findOne({
-                where: {
-                    username: username
-                },
-                include: [{
-                    model: db.Roles
-                }]
-            })
-            .then(function(user) {
-                if (!user) {
-                    return done(null, false)
-                }
-                if (user.password != password) {
-                    return done(null, false)
-                }
-                return done(null, user)
-            })
-            .catch(function(err) {
-                return done(err)
-            })
+                    where: {
+                        username: username
+                    },
+                    include: [{
+                        model: db.Roles
+                    }]
+                })
+                .then(function(user) {
+                    if (!user) {
+                        return done(null, false)
+                    }
+                    if (user.password != password) {
+                        return done(null, false)
+                    }
+                    return done(null, user)
+                })
+                .catch(function(err) {
+                    return done(err)
+                })
         }
     ))
 }

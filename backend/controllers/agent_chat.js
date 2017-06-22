@@ -1,4 +1,4 @@
-const db     = require('../models/index.js')
+const db = require('../models/index.js')
 const helper = require('../lib/helper')
 
 /**
@@ -6,11 +6,25 @@ const helper = require('../lib/helper')
  * Get agent`s chats
  */
 exports.getAgentChats = (req, res, next) => {
-  let userId = req.params.id || false
+    let userId = req.params.id || false
 
     Promise.all([
-            db.Users.findOne({where: {id: userId}, include: [{model: db.Campaigns,}]}),
-            db.Conversations.findAll({where: { userId: userId }, include: [{model: db.Campaigns}]})
+            db.Users.findOne({
+                where: {
+                    id: userId
+                },
+                include: [{
+                    model: db.Campaigns,
+                }]
+            }),
+            db.Conversations.findAll({
+                where: {
+                    userId: userId
+                },
+                include: [{
+                    model: db.Campaigns
+                }]
+            })
         ])
         .then(function(data) {
             let user = data[0]
@@ -35,6 +49,8 @@ exports.getAgentChats = (req, res, next) => {
  * Get web chat example
  */
 exports.getChatExample = (req, res) => {
-  let id = req.params.id || false
-  res.render('web_chat_example', {id: id})
+    let id = req.params.id || false
+    res.render('web_chat_example', {
+        id: id
+    })
 };
