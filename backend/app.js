@@ -87,6 +87,14 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 /**
+ * Set current user data to session.
+ */
+app.use(function(req,res,next){
+    res.locals.user = req.user;
+    next();
+})
+
+/**
  * Authentication routes.
  */
 app.get('/login', authController.getLoginPage)
@@ -139,4 +147,3 @@ http.listen(8181, () => {
 app.use(function(err, req, res, next) {
     console.log('ERR HANDLER: ', err)
 });
-

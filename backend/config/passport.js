@@ -16,9 +16,11 @@ module.exports = function(options) {
             include: [{
                 model: db.Roles
             }]
-        }).then(function(user) {
+        })
+        .then(function(user) {
             cb(null, user)
-        }).catch(function(err) {
+        })
+        .catch(function(err) {
             return cb('err')
         })
     })
@@ -43,11 +45,6 @@ module.exports = function(options) {
                 if (user.password != password) {
                     return done(null, false)
                 }
-
-                // Set user to app
-                options.app.locals.user = user.dataValues
-                options.app.locals.user.roleName = user.Role.label
-
                 return done(null, user)
             })
             .catch(function(err) {
