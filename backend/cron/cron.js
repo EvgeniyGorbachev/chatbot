@@ -13,20 +13,20 @@ let j = schedule.scheduleJob('*/1 * * * *', function() {
             console.log('Cron conversation: ', conversations)
             conversations.forEach(function(conversation) {
                 db.Conversations.findOne({
-                    where: {
-                        id: conversation.id
-                    }
-                })
-                .then(function(conv) {
-                    return conv.update({
-                        isPaused: false,
-                        pausedTime: null,
-                        pauseInitiator: null
+                        where: {
+                            id: conversation.id
+                        }
                     })
-                })
-                .catch(function(err) {
-                    console.log('cron err 22222: ', err)
-                })
+                    .then(function(conv) {
+                        return conv.update({
+                            isPaused: false,
+                            pausedTime: null,
+                            pauseInitiator: null
+                        })
+                    })
+                    .catch(function(err) {
+                        console.log('cron err 22222: ', err)
+                    })
             })
         } else {
             console.log('No cron work')
